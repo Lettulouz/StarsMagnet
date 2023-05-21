@@ -24,7 +24,6 @@ def register(request, *args, **kwargs):
     else:
         data = serializer.errors
         status_code=status.HTTP_400_BAD_REQUEST
-        data
     return Response(data,status=status_code)
 
 
