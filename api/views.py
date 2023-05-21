@@ -2,6 +2,7 @@ from django.shortcuts import render
 import json
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework import status
 
 
 from .serializers.RegisterSerializer import RegisterSerializer
@@ -15,11 +16,15 @@ def test(request, *args, **kwargs):
 def register(request, *args, **kwargs):
     serializer = RegisterSerializer(data=request.data)
     data = {}
+    status_code=None
     if serializer.is_valid():
         account = serializer.save()
         data['response']="successfully registered a new user"
+        status_code=status.HTTP_200_OK
     else:
         data = serializer.errors
-    return Response(data)
+        status_code=status.HTTP_400_BAD_REQUEST
+        data
+    return Response(data,status=status_code)
 
 
