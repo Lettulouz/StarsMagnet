@@ -69,7 +69,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'StarsMagnet.urls'
-CORS_URLS_REGEX = r"^/api/.*$"
+# CORS_URLS_REGEX = r"^/api/.*$"
 if DEBUG:
     CORS_ALLOW_ALL_ORIGINS=True
 else:
@@ -158,6 +158,7 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=1),
 }
 
+AUTH_USER_MODEL="api.User"
 
 
 
