@@ -36,6 +36,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -69,7 +71,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'StarsMagnet.urls'
-# CORS_URLS_REGEX = r"^/api/.*$"
+CORS_URLS_REGEX = r"^/api/.*$"
 if DEBUG:
     CORS_ALLOW_ALL_ORIGINS=True
 else:
@@ -159,6 +161,14 @@ SIMPLE_JWT = {
 }
 
 AUTH_USER_MODEL="api.User"
+
+JAZZMIN_SETTINGS = {
+    "site_title": "Stars Magnet",
+
+    "site_brand": "PISIOREX",
+
+    "copyright": "StarsMagnet",
+}
 
 
 
