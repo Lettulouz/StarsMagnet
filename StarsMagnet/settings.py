@@ -49,8 +49,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'corsheaders',
 
-    'api',
 
+    'api.apps.ApiConfig',
 ]
 
 REST_FRAMEWORK = {
@@ -152,7 +152,7 @@ STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ["Bearer"],
@@ -160,7 +160,7 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=1),
 }
 
-AUTH_USER_MODEL="api.User"
+AUTH_USER_MODEL = "api.User"
 
 JAZZMIN_SETTINGS = {
     "site_title": "Stars Magnet",
