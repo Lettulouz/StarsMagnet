@@ -12,6 +12,7 @@ urlpatterns = [
     path('register', views.register),
     path('company', views.company),
     path('company/<int:pk>', views.company),
+    path('opinion', views.opinion),
 
 
     path('login', TokenObtainPairView.as_view(), name='token_obtain_pair'),

@@ -8,6 +8,7 @@ from django.shortcuts import get_object_or_404
 from .serializers.RegisterSerializer import RegisterSerializer
 from .serializers.RegisterCompanySerializer import RegisterCompanySerializer
 from .serializers.CompanySerializer import CompanySerializer
+from .serializers.MakeOpinionSerializer import MakeOpinionSerializer
 from .models import Companies
 
 
@@ -55,3 +56,20 @@ def company(request, pk=None,  *args, **kwargs):
             data = serializer.errors
             status_code = status.HTTP_400_BAD_REQUEST
         return Response(data, status=status_code)
+
+
+@api_view(['POST'])
+def opinion(request, *arg, **kwargs):
+    data = {}
+    print(request.user)
+    if not request.user.is_authenticated:
+        return Response(data, status=status.HTTP_400_BAD_REQUEST)
+    serializer = MakeOpinionSerializer(data=request.data, context={'request': request})
+    if serializer.is_valid():
+        serializer.save()
+        data['response'] = "successfully added a new opinion"
+        status_code = status.HTTP_200_OK
+    else:
+        data = serializer.errors
+        status_code = status.HTTP_400_BAD_REQUEST
+    return Response(data, status=status_code)
