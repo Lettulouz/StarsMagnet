@@ -1,5 +1,7 @@
 from django.shortcuts import render
 import json
+import requests
+
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
@@ -9,6 +11,7 @@ from .serializers.RegisterSerializer import RegisterSerializer
 from .serializers.RegisterCompanySerializer import RegisterCompanySerializer
 from .serializers.CompanySerializer import CompanySerializer
 from .serializers.MakeOpinionSerializer import MakeOpinionSerializer
+from .serializers.SafeWordsSerializer import SafeWordsSerializer
 from .models import Companies
 
 
@@ -49,9 +52,33 @@ def company(request, pk=None,  *args, **kwargs):
         serializer = RegisterCompanySerializer(data=request.data)
         data = {}
         if serializer.is_valid():
-            serializer.save()
-            data['response'] = "successfully registered a new company"
-            status_code = status.HTTP_200_OK
+            api_url = "https://random-word-api.vercel.app/api?words=10&length=7";
+            response = requests.get(api_url)
+            if response.status_code == requests.codes.ok:
+                print(response.text)
+            else:
+                print("Error:", response.status_code, response.text)
+                data['response'] = "Word API error"
+                status_code = status.HTTP_400_BAD_REQUEST
+                return Response(data, status=status_code)
+            json_response = json.loads(response.text)
+            dict = {}
+            for index, word in enumerate(json_response, start=1):
+                key = "word" + str(index)
+                dict[key] = word
+            json_response2 = json.dumps(dict)
+
+            created_id = serializer.save()
+            serializer2 = SafeWordsSerializer(data=dict, context={'id': created_id.id})
+            if serializer2.is_valid():
+                serializer2.save()
+                data['response'] = "Successfully registered a new company"
+                data['responseWords'] = json_response2
+                status_code = status.HTTP_200_OK
+            else:
+                created_id.delete()
+                data = serializer2.errors
+                status_code = status.HTTP_400_BAD_REQUEST
         else:
             data = serializer.errors
             status_code = status.HTTP_400_BAD_REQUEST
