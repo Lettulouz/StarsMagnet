@@ -1,18 +1,23 @@
 from django.db import models
 from django.conf import settings
 from .companies import Companies
-
-
+from django.core.exceptions import ValidationError
 
 OPINIONS_SIDE = (
     ("user", "User comment"),
     ("company", "Company reply")
 )
 
+
+def validate_interval(value):
+    if value < 0.0 or value > 10.0:
+        raise ValidationError('Rating must be in range [0, 10]')
+
+
 class Opinions(models.Model):
-    rating = models.FloatField()
-    comment = models.TextField()
-    side_of_comment = models.CharField(choices=OPINIONS_SIDE, max_length=30)
+    rating = models.FloatField(validators=[validate_interval])
+    comment = models.TextField(null=True)
+    company_response = models.TextField(null=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, to_field='id', db_column='user_id', on_delete=models.CASCADE)
     company = models.ForeignKey(Companies, on_delete=models.CASCADE)
 
