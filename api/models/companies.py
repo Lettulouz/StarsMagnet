@@ -13,7 +13,13 @@ class Companies(models.Model):
     site = models.URLField()
     token = models.CharField(max_length=32)
     email = models.EmailField(unique=True)
-    login = models.CharField(max_length=150)
+    login = models.CharField(max_length=150, unique=True)
     password = models.CharField(max_length=150)
     status = models.CharField(choices=COMPANIES_STATUS, max_length=30, default='pending')
+
+    class Meta:
+        verbose_name_plural = "Companies"
+
+    def __str__(self):
+        return self.name
 
