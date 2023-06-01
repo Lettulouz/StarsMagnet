@@ -1,15 +1,35 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from api.forms.add_user_form import CustomUserForm
+from api.forms.add_company_form import CompanyForm
 from django.contrib.auth import get_user_model
-from django.contrib.admin.filters import AllValuesFieldListFilter
 from api.models import Companies, Opinions
 
 # Register your models here.
 
 User = get_user_model()
 
-# TODO: adding forms
+# TODO: adding forms/ update form for company
+
+class CompanyStatusListFilter(admin.SimpleListFilter):
+    title = "company status"
+    parameter_name = "status"
+
+    def lookups(self, request, model_admin):
+        return[
+            ('pending', 'Waiting for acceptation'),
+            ('accepted', 'Application accepted'),
+            ('rejected', 'Application rejected'),
+            ('banned', 'Company banned')
+        ]
+
+    def queryset(self, request, queryset):
+        if self.value() is None:
+            return queryset
+        return queryset.filter(status=self.value())
+
+
+# Registered models
 
 class CustomUserAdmin(UserAdmin):
     add_form = CustomUserForm
@@ -18,13 +38,15 @@ class CustomUserAdmin(UserAdmin):
 
 
 class CompaniesAdmin(admin.ModelAdmin):
+    form = CompanyForm
     list_display = ('name', 'login', 'email', 'status')
-    # TODO: filter by status
-    # list_filter = (('status',AllValuesFieldListFilter))
+    list_filter = [CompanyStatusListFilter]
+    search_fields = ['name', 'login', 'email']
 
 
 class OpinionsAdmin(admin.ModelAdmin):
     list_display = ('user', 'rating', 'company', 'rating_date')
+    search_fields = ['company']
 
 
 admin.site.register(User, CustomUserAdmin)
