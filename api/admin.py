@@ -32,16 +32,32 @@ class CompanyStatusListFilter(admin.SimpleListFilter):
 # Registered models
 
 class CustomUserAdmin(UserAdmin):
-    add_form = CustomUserForm
+    form = CustomUserForm
     list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff', 'is_superuser')
     list_filter = ('is_staff', 'is_superuser', 'is_active')
 
 
 class CompaniesAdmin(admin.ModelAdmin):
+    fieldsets = (
+        (None, {"fields": ["name", "site", "status"]}),
+        ("Auth", {"fields": ["login", "email", "token"]}),
+        ("Pass", {"fields": ["password", "confirm_password"]})
+    )
+
+    add_fieldsets = (
+        (None,
+         {"fields": ("name", "site", "login", "email", "token", "password", "confirm_password", "status")}),
+    )
+
     form = CompanyForm
     list_display = ('name', 'login', 'email', 'status')
     list_filter = [CompanyStatusListFilter]
     search_fields = ['name', 'login', 'email']
+
+    def get_fieldsets(self, request, obj=None):
+        if not obj:
+            return self.add_fieldsets
+        return super().get_fieldsets(request, obj)
 
 
 class OpinionsAdmin(admin.ModelAdmin):

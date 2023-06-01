@@ -2,14 +2,23 @@ from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
+from api.models import Companies
 
 User = get_user_model()
 
+def UniqueLogin(value):
+    if Companies.objects.filter(login=value).exists():
+        raise serializers.ValidationError("This field must be unique.")
 
 class RegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
         required=True,
-        validators=[UniqueValidator(queryset=User.objects.all())]
+        validators=[UniqueValidator(queryset=User.objects.all()), UniqueValidator(queryset=Companies.objects.all())]
+    )
+
+    username = serializers.CharField(
+        required=True,
+        validators=[UniqueValidator(queryset=User.objects.all()), UniqueLogin]
     )
 
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
