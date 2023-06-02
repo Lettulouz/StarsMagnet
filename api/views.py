@@ -12,7 +12,10 @@ from .serializers.RegisterCompanySerializer import RegisterCompanySerializer
 from .serializers.CompanySerializer import CompanySerializer
 from .serializers.MakeOpinionSerializer import MakeOpinionSerializer
 from .serializers.SafeWordsSerializer import SafeWordsSerializer
+from .serializers.CategoriesSerializer import CategoriesSerializer
 from .models import Companies
+from .models import Categories
+from .models import CategoriesOfCompanies
 
 
 # Create your views here.
@@ -36,13 +39,13 @@ def register(request, *args, **kwargs):
 
 
 @api_view(['POST', 'GET'])
-def company(request, pk=None,  *args, **kwargs):
+def company(request, pk_categ=None, pk_comp=None, *args, **kwargs):
     method = request.method
 
     if method == "GET":
-        if pk is not None:
-            obj = get_object_or_404(Companies, pk=pk, status="accepted")
-            data = CompanySerializer(obj, many=False,  context={'many': False}).data
+        if pk_categ is not None and pk_comp is not None:
+            obj = get_object_or_404(CategoriesOfCompanies, category_id=pk_categ, company_id=pk_comp)
+            data = CompanySerializer(obj, many=False, context={'many': False}).data
             return Response(data)
         qs = Companies.objects.filter(status="accepted")
         data = CompanySerializer(qs, many=True, context={'many': True}).data
@@ -93,3 +96,10 @@ def opinion(request, *arg, **kwargs):
         data = serializer.errors
         status_code = status.HTTP_400_BAD_REQUEST
     return Response(data, status=status_code)
+
+
+@api_view(['GET'])
+def categories(request, *arg, **kwargs):
+    category = Categories.objects.all()
+    data = CategoriesSerializer(category, many=True, context={'many': True}).data
+    return Response(data)
