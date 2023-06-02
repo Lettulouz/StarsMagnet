@@ -40,19 +40,19 @@ class CustomUserAdmin(UserAdmin):
 class CompaniesAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {"fields": ["name", "site", "status"]}),
-        ("Auth", {"fields": ["login", "email", "token"]}),
+        ("Auth", {"fields": ["username", "email", "token"]}),
         ("Pass", {"fields": ["password", "confirm_password"]})
     )
 
     add_fieldsets = (
         (None,
-         {"fields": ("name", "site", "login", "email", "token", "password", "confirm_password", "status")}),
+         {"fields": ("name", "site", "username", "email", "token", "password", "confirm_password", "status")}),
     )
 
     form = CompanyForm
-    list_display = ('name', 'login', 'email', 'status')
+    list_display = ('name', 'username', 'email', 'status')
     list_filter = [CompanyStatusListFilter]
-    search_fields = ['name', 'login', 'email']
+    search_fields = ['name', 'username', 'email']
 
     def get_fieldsets(self, request, obj=None):
         if not obj:

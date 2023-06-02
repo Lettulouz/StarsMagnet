@@ -14,7 +14,7 @@ class CustomUserForm(UserCreationForm):
         if User.objects.filter(email=email).exclude(pk=self.instance.pk).exists() or Companies.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
             self.add_error("email", "Email already taken")
 
-        if User.objects.filter(username=username).exclude(pk=self.instance.pk).exists() or Companies.objects.filter(login=username).exclude(pk=self.instance.pk).exists():
+        if User.objects.filter(username=username).exclude(pk=self.instance.pk).exists() or Companies.objects.filter(username=username).exclude(pk=self.instance.pk).exists():
             self.add_error("username", "Username already taken")
 
     class Meta:

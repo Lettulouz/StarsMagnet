@@ -3,11 +3,6 @@ from django.conf import settings
 from .companies import Companies
 from django.core.exceptions import ValidationError
 
-OPINIONS_SIDE = (
-    ("user", "User comment"),
-    ("company", "Company reply")
-)
-
 
 def validate_interval(value):
     if value < 0.0 or value > 10.0:

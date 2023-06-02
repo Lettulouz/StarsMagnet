@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="m1428_io_db@s26.mydevil.net" uuid="afbf4f1c-b8e3-45a7-a430-f58f79412f31">
+    <data-source source="LOCAL" name="m1242_iodb@mysql1.small.pl" uuid="afbf4f1c-b8e3-45a7-a430-f58f79412f31">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://s26.mydevil.net:3306/m1428_io_db</jdbc-url>
+      <jdbc-url>jdbc:mysql://mysql1.small.pl:3306/m1242_iodb</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

@@ -25,12 +25,12 @@ class CompanyForm(forms.ModelForm):
     )
     class Meta:
         model = Companies
-        fields = ('name', 'site',  'token', 'email', 'login', 'password', 'confirm_password', 'status')
+        fields = ('name', 'site',  'token', 'email', 'username', 'password', 'confirm_password', 'status')
 
     def clean(self):
         cln_data = super().clean()
         password = cln_data.get('password')
-        login = cln_data.get('login')
+        username = cln_data.get('username')
         email = cln_data.get('email')
         confirm_password = cln_data.get('confirm_password')
 
@@ -40,8 +40,8 @@ class CompanyForm(forms.ModelForm):
         if User.objects.filter(email=email).exclude(pk=self.instance.pk).exists() or Companies.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
             self.add_error("email", "Email already taken")
 
-        if User.objects.filter(username=login).exclude(pk=self.instance.pk).exists() or Companies.objects.filter(login=login).exclude(pk=self.instance.pk).exists():
-            self.add_error("login", "Username already taken")
+        if User.objects.filter(username=username).exclude(pk=self.instance.pk).exists() or Companies.objects.filter(username=username).exclude(pk=self.instance.pk).exists():
+            self.add_error("username", "Username already taken")
 
     def save(self, commit=True):
         company = super().save(commit=False)
@@ -49,7 +49,7 @@ class CompanyForm(forms.ModelForm):
         company = Companies.objects.create(
             name=self.cleaned_data['name'],
             site=self.cleaned_data['site'],
-            login=self.cleaned_data['login'],
+            username=self.cleaned_data['username'],
             password=make_password(self.cleaned_data['password']),
             token=self.cleaned_data['token'],
             email=self.cleaned_data['email'],

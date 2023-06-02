@@ -13,7 +13,7 @@ class Companies(models.Model):
     site = models.URLField()
     token = models.CharField(max_length=32)
     email = models.EmailField(unique=True)
-    login = models.CharField(max_length=150, unique=True)
+    username = models.CharField(max_length=150, unique=True)
     password = models.CharField(max_length=150)
     status = models.CharField(choices=COMPANIES_STATUS, max_length=30, default='pending')
 

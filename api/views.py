@@ -54,41 +54,34 @@ def company(request, pk=None,  *args, **kwargs):
         if serializer.is_valid():
             api_url = "https://random-word-api.vercel.app/api?words=10&length=7";
             response = requests.get(api_url)
-            if response.status_code == requests.codes.ok:
-                print(response.text)
-            else:
-                print("Error:", response.status_code, response.text)
+            if response.status_code != requests.codes.ok:
                 data['response'] = "Word API error"
                 status_code = status.HTTP_400_BAD_REQUEST
                 return Response(data, status=status_code)
             json_response = json.loads(response.text)
-            dict = {}
+            dictio = {}
             for index, word in enumerate(json_response, start=1):
                 key = "word" + str(index)
-                dict[key] = word
-            json_response2 = json.dumps(dict)
+                dictio[key] = word
 
             created_id = serializer.save()
-            serializer2 = SafeWordsSerializer(data=dict, context={'id': created_id.id})
+            serializer2 = SafeWordsSerializer(data=dictio, context={'id': created_id.id})
             if serializer2.is_valid():
                 serializer2.save()
                 data['response'] = "Successfully registered a new company"
-                data['responseWords'] = json_response2
+                data['responseWords'] = json.dumps(dictio)
                 status_code = status.HTTP_200_OK
+                return Response(data, status=status_code)
             else:
                 created_id.delete()
-                data = serializer2.errors
-                status_code = status.HTTP_400_BAD_REQUEST
-        else:
-            data = serializer.errors
-            status_code = status.HTTP_400_BAD_REQUEST
+        data = serializer.errors
+        status_code = status.HTTP_400_BAD_REQUEST
         return Response(data, status=status_code)
 
 
 @api_view(['POST'])
 def opinion(request, *arg, **kwargs):
     data = {}
-    print(request.user)
     if not request.user.is_authenticated:
         return Response(data, status=status.HTTP_400_BAD_REQUEST)
     serializer = MakeOpinionSerializer(data=request.data, context={'request': request})

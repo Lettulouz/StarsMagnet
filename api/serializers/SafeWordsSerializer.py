@@ -31,6 +31,5 @@ class SafeWordsSerializer(serializers.ModelSerializer):
             word10=self.validated_data['word10']
         )
 
-
         safe_word.save()
         return safe_word

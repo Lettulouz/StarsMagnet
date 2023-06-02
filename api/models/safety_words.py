@@ -1,6 +1,7 @@
 from django.db import models
 from .companies import Companies
 
+
 class Safety_Words(models.Model):
     user = models.ForeignKey(Companies, on_delete=models.CASCADE)
     word1 = models.CharField(max_length=7);

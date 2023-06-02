@@ -6,19 +6,26 @@ from api.models import Companies
 
 User = get_user_model()
 
-def UniqueLogin(value):
-    if Companies.objects.filter(login=value).exists():
+
+def unique_username(value):
+    if User.objects.filter(username=value).exists() or Companies.objects.filter(username=value).exists():
         raise serializers.ValidationError("This field must be unique.")
+
+
+def unique_email(value):
+    if User.objects.filter(email=value).exists() or Companies.objects.filter(email=value).exists():
+        raise serializers.ValidationError('This field must be unique.')
+
 
 class RegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
         required=True,
-        validators=[UniqueValidator(queryset=User.objects.all()), UniqueValidator(queryset=Companies.objects.all())]
+        validators=[unique_email]
     )
 
     username = serializers.CharField(
         required=True,
-        validators=[UniqueValidator(queryset=User.objects.all()), UniqueLogin]
+        validators=[unique_username]
     )
 
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
