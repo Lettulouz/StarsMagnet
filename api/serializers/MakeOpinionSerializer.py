@@ -1,5 +1,3 @@
-from functools import partial
-
 from rest_framework import serializers
 from api.models import Opinions, Companies
 import datetime
