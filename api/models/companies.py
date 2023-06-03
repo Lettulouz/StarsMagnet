@@ -23,3 +23,9 @@ class Companies(models.Model):
     def __str__(self):
         return self.name
 
+    def get_companies(self):
+        return{
+            'id': self.id,
+            'name': self.name,
+            'site': self.site
+        }

@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import render
 import json
 import requests
@@ -5,7 +6,9 @@ import requests
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
+from rest_framework.pagination import LimitOffsetPagination
 from django.shortcuts import get_object_or_404
+
 
 from .serializers.RegisterSerializer import RegisterSerializer
 from .serializers.RegisterCompanySerializer import RegisterCompanySerializer
@@ -99,7 +102,18 @@ def opinion(request, *arg, **kwargs):
 
 
 @api_view(['GET'])
-def categories(request, *arg, **kwargs):
-    category = Categories.objects.all()
-    data = CategoriesSerializer(category, many=True, context={'many': True}).data
-    return Response(data)
+def categories(request, pk=None, *arg, **kwargs):
+    paginator = LimitOffsetPagination()
+    if pk is None:
+        category = Categories.objects.all()
+        paginated_category = paginator.paginate_queryset(category, request)
+        paginated_data = CategoriesSerializer(paginated_category, many=True)
+    else:
+        categories_of_companies = CategoriesOfCompanies.objects.select_related('company').filter(category_id=pk)
+        if not categories_of_companies.exists():
+            raise Http404
+        company_ids = [category_of_company.company.id for category_of_company in categories_of_companies]
+        paginated_companies = paginator.paginate_queryset(company_ids, request)
+        companies = Companies.objects.filter(pk__in=paginated_companies)
+        paginated_data = CompanySerializer(companies, many=True)
+    return paginator.get_paginated_response(paginated_data.data)
