@@ -3,6 +3,7 @@ from api.models import Safety_Words
 
 
 class SafeWordsSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Safety_Words
         fields = ('word1',

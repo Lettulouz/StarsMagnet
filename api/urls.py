@@ -11,7 +11,8 @@ urlpatterns = [
     path('', views.test),
     path('register', views.register),
     path('company', views.company),
-    path('category/<int:pk_categ>/company/<int:pk_comp>', views.company),
+    path('category/<int:pk>', views.company),
+    path('company/<int:pk>', views.company),
     path('opinion', views.opinion),
     path('categories', views.categories),
 

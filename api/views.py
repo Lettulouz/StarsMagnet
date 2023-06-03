@@ -39,11 +39,11 @@ def register(request, *args, **kwargs):
 
 
 @api_view(['POST', 'GET'])
-def company(request, pk_categ=None, pk_comp=None, *args, **kwargs):
+def company(request, pk=None, *args, **kwargs):
     method = request.method
 
     if method == "GET":
-        if pk_categ is not None and pk_comp is not None:
+        if pk is not None:
             obj = get_object_or_404(CategoriesOfCompanies, category_id=pk_categ, company_id=pk_comp)
             data = CompanySerializer(obj, many=False, context={'many': False}).data
             return Response(data)
@@ -58,7 +58,6 @@ def company(request, pk_categ=None, pk_comp=None, *args, **kwargs):
             api_url = "https://random-word-api.vercel.app/api?words=10&length=7";
             response = requests.get(api_url)
             if response.status_code != requests.codes.ok:
-                data['response'] = "Word API error"
                 status_code = status.HTTP_400_BAD_REQUEST
                 return Response(data, status=status_code)
             json_response = json.loads(response.text)
@@ -71,8 +70,9 @@ def company(request, pk_categ=None, pk_comp=None, *args, **kwargs):
             serializer2 = SafeWordsSerializer(data=dictio, context={'id': created_id.id})
             if serializer2.is_valid():
                 serializer2.save()
+                data['token'] = Companies.objects.filter(pk=created_id.id).values('token').first()['token']
                 data['response'] = "Successfully registered a new company"
-                data['responseWords'] = json.dumps(dictio)
+                data['responseWords'] = json_response
                 status_code = status.HTTP_200_OK
                 return Response(data, status=status_code)
             else:
