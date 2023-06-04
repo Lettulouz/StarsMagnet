@@ -15,6 +15,8 @@ urlpatterns = [
     path('company/pageable', views.company_pageable),
     path('category/pageable/<int:amount>', views.category_pageable),
     path('company/pageable/<int:amount>', views.company_pageable),
+    path('search', views.search_companies),
+    path('search/', views.search_companies, name="query"),
 
     path('login', views.login),
     path('token/refresh', views.refresh_token),

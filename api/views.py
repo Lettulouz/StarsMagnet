@@ -158,11 +158,16 @@ def refresh_token(request, *arg, **kwargs):
         status_code = status.HTTP_401_UNAUTHORIZED
     return Response(data, status=status_code)
 
-"""
-@api_view(['POST', 'GET'])
-def search_companies(request, *arg, **kwargs):
-    if method == "GET":
 
-    elif method == "POSt":
-        return Response(data)
-"""
+@api_view(['GET'])
+def search_companies(request, *arg, **kwargs):
+    query = request.GET.get("query")
+    paginator = LimitOffsetPagination()
+    if query is not None:
+        results = Companies.objects.filter(name__icontains=query, status="accepted")
+    else:
+        results = Companies.objects.filter(status="accepted")
+    paginated_companies = paginator.paginate_queryset(results, request)
+    response_results = CompanySerializer(paginated_companies, many=True)
+    return paginator.get_paginated_response(response_results.data)
+
