@@ -15,8 +15,8 @@ urlpatterns = [
     path('opinion', views.opinion),
     path('category', views.categories),
     path('category/<int:pk>', views.categories),
-    path('category/pagable', views.category_pagable),
-    path('category/pagable/<int:amount>', views.category_pagable),
+    path('category/pageable', views.category_pagable),
+    path('category/pageable/<int:amount>', views.category_pagable),
 
     path('login', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh', TokenRefreshView.as_view(), name='token_refresh'),
