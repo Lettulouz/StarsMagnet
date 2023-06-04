@@ -50,9 +50,9 @@ def company(request, pk=None, *args, **kwargs):
             obj = get_object_or_404(CategoriesOfCompanies, category_id=pk_categ, company_id=pk_comp)
             data = CompanySerializer(obj, many=False, context={'many': False}).data
             return Response(data)
-        qs = Companies.objects.filter(status="accepted")
-        data = CompanySerializer(qs, many=True, context={'many': True}).data
-        return Response(data)
+        #qs = Companies.objects.filter(status="accepted")
+        #data = CompanySerializer(qs, many=True, context={'many': True}).data
+        #return Response(data)
 
     elif method == "POST":
         serializer = RegisterCompanySerializer(data=request.data)
@@ -117,3 +117,10 @@ def categories(request, pk=None, *arg, **kwargs):
         companies = Companies.objects.filter(pk__in=paginated_companies)
         paginated_data = CompanySerializer(companies, many=True)
     return paginator.get_paginated_response(paginated_data.data)
+
+
+@api_view(['GET'])
+def category_pagable(request, amount=6, *arg, **kwargs):
+    data = {'countAll': Categories.objects.count(),
+            'countAllPages': (-(-Categories.objects.count() // amount))}
+    return Response(data, status=status.HTTP_200_OK)
