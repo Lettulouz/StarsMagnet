@@ -26,14 +26,17 @@ class RefreshSerializer(serializers.Serializer):
         except jwt.DecodeError:
             raise serializers.ValidationError(
                 {'detail': 'invalid token'})
-        if payload['type'] == 'company':
+        if payload['token_type'] != 'refresh':
+            raise serializers.ValidationError(
+                {'detail': 'invalid token'})
+        if payload['user_type'] == 'company':
             user = Companies.objects.filter(id=payload.get('user_id')).first()
         else:
             users = get_user_model()
             user = users.objects.filter(id=payload.get('user_id')).first()
         if user is None:
             raise serializers.ValidationError("No active account found with the given credentials")
-        access = generate_access_token(user,payload['type'])
+        access = generate_access_token(user,payload['user_type'])
         return{
             'access': access,
         }

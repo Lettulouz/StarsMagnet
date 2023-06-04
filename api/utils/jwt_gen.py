@@ -6,8 +6,9 @@ from django.conf import settings
 def generate_access_token(user, user_type="user"):
 
     access_token_payload = {
+        'token_type': 'access',
         'user_id': user.id,
-        'type': user_type,
+        'user_type': user_type,
         'exp': datetime.datetime.utcnow() + datetime.timedelta(days=0, minutes=30),
         'iat': datetime.datetime.utcnow(),
     }
@@ -18,8 +19,9 @@ def generate_access_token(user, user_type="user"):
 
 def generate_refresh_token(user, user_type="user"):
     refresh_token_payload = {
+        'token_type': 'refresh',
         'user_id': user.id,
-        'type': user_type,
+        'user_type': user_type,
         'exp': datetime.datetime.utcnow() + datetime.timedelta(days=7),
         'iat': datetime.datetime.utcnow()
     }
