@@ -71,18 +71,15 @@ def login_company(request, *args, **kwarg):
         status_code = status.HTTP_401_UNAUTHORIZED
     return Response(data, status=status_code)
 
+
 @api_view(['POST', 'GET'])
 def company(request, pk=None, *args, **kwargs):
     method = request.method
 
-    if method == "GET":
-        if pk is not None:
-            obj = get_object_or_404(CategoriesOfCompanies, category_id=pk_categ, company_id=pk_comp)
-            data = CompanySerializer(obj, many=False, context={'many': False}).data
-            return Response(data)
-        #qs = Companies.objects.filter(status="accepted")
-        #data = CompanySerializer(qs, many=True, context={'many': True}).data
-        #return Response(data)
+    if method == "GET" and pk is not None:
+        obj = get_object_or_404(Companies, pk=pk, status="accepted")
+        data = CompanySerializer(obj, many=False, context={'request': request}).data
+        return Response(data)
 
     elif method == "POST":
         serializer = RegisterCompanySerializer(data=request.data)
@@ -143,17 +140,25 @@ def categories(request, pk=None, *arg, **kwargs):
         if not categories_of_companies.exists():
             raise Http404
         company_ids = [category_of_company.company.id for category_of_company in categories_of_companies]
-        paginated_companies = paginator.paginate_queryset(company_ids, request)
-        companies = Companies.objects.filter(pk__in=paginated_companies)
-        paginated_data = CompanySerializer(companies, many=True)
+        companies = Companies.objects.filter(pk__in=company_ids, status="accepted")
+        paginated_companies = paginator.paginate_queryset(companies, request)
+        paginated_data = CompanySerializer(paginated_companies, many=True)
     return paginator.get_paginated_response(paginated_data.data)
 
 
 @api_view(['GET'])
-def category_pagable(request, amount=6, *arg, **kwargs):
+def category_pageable(request, amount=6, *arg, **kwargs):
     data = {'countAll': Categories.objects.count(),
             'countAllPages': (-(-Categories.objects.count() // amount))}
     return Response(data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def company_pageable(request, amount=6, *arg, **kwargs):
+    data = {'countAll': Companies.objects.count(),
+            'countAllPages': (-(-Companies.objects.count() // amount))}
+    return Response(data, status=status.HTTP_200_OK)
+
 
 @api_view(['POST'])
 def refresh_token(request, *arg, **kwargs):
@@ -166,4 +171,17 @@ def refresh_token(request, *arg, **kwargs):
         data = serializer.errors
         status_code = status.HTTP_401_UNAUTHORIZED
     return Response(data, status=status_code)
+
+
+@api_view(['GET'])
+def search_companies(request, *arg, **kwargs):
+    query = request.GET.get("query")
+    paginator = LimitOffsetPagination()
+    if query is not None:
+        results = Companies.objects.filter(name__icontains=query, status="accepted")
+    else:
+        results = Companies.objects.filter(status="accepted")
+    paginated_companies = paginator.paginate_queryset(results, request)
+    response_results = CompanySerializer(paginated_companies, many=True)
+    return paginator.get_paginated_response(response_results.data)
 
