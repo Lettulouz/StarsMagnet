@@ -139,6 +139,13 @@ def category_pageable(request, amount=6, *arg, **kwargs):
     return Response(data, status=status.HTTP_200_OK)
 
 
+@api_view(['GET'])
+def company_pageable(request, amount=6, *arg, **kwargs):
+    data = {'countAll': Companies.objects.count(),
+            'countAllPages': (-(-Companies.objects.count() // amount))}
+    return Response(data, status=status.HTTP_200_OK)
+
+
 @api_view(['POST'])
 def refresh_token(request, *arg, **kwargs):
     serializer = RefreshSerializer(data=request.data)
@@ -151,3 +158,11 @@ def refresh_token(request, *arg, **kwargs):
         status_code = status.HTTP_401_UNAUTHORIZED
     return Response(data, status=status_code)
 
+"""
+@api_view(['POST', 'GET'])
+def search_companies(request, *arg, **kwargs):
+    if method == "GET":
+
+    elif method == "POSt":
+        return Response(data)
+"""

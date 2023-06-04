@@ -12,7 +12,9 @@ urlpatterns = [
     path('category', views.categories),
     path('category/<int:pk>', views.categories),
     path('category/pageable', views.category_pageable),
+    path('company/pageable', views.company_pageable),
     path('category/pageable/<int:amount>', views.category_pageable),
+    path('company/pageable/<int:amount>', views.company_pageable),
 
     path('login', views.login),
     path('token/refresh', views.refresh_token),
