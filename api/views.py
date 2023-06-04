@@ -135,15 +135,20 @@ def categories(request, pk=None, *arg, **kwargs):
         category = Categories.objects.all()
         paginated_category = paginator.paginate_queryset(category, request)
         paginated_data = CategoriesSerializer(paginated_category, many=True)
-    else:
-        categories_of_companies = CategoriesOfCompanies.objects.select_related('company').filter(category_id=pk)
-        if not categories_of_companies.exists():
-            raise Http404
-        company_ids = [category_of_company.company.id for category_of_company in categories_of_companies]
-        companies = Companies.objects.filter(pk__in=company_ids, status="accepted")
-        paginated_companies = paginator.paginate_queryset(companies, request)
-        paginated_data = CompanySerializer(paginated_companies, many=True, context={'category': pk})
-    return paginator.get_paginated_response(paginated_data.data)
+        return paginator.get_paginated_response(paginated_data.data)
+
+    categories_of_companies = CategoriesOfCompanies.objects.select_related('company').filter(category_id=pk)
+    if not categories_of_companies.exists():
+        raise Http404
+    company_ids = [category_of_company.company.id for category_of_company in categories_of_companies]
+    companies = Companies.objects.filter(pk__in=company_ids, status="accepted")
+    paginated_companies = paginator.paginate_queryset(companies, request)
+    paginated_data = CompanySerializer(paginated_companies, many=True)
+    data = {
+        'results': paginated_data.data,
+        'categoryName': Categories.objects.filter(pk=pk).first().name
+    }
+    return Response(data)
 
 
 @api_view(['GET'])
