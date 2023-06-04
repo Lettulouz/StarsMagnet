@@ -128,7 +128,7 @@ def categories(request, pk=None, *arg, **kwargs):
         company_ids = [category_of_company.company.id for category_of_company in categories_of_companies]
         companies = Companies.objects.filter(pk__in=company_ids, status="accepted")
         paginated_companies = paginator.paginate_queryset(companies, request)
-        paginated_data = CompanySerializer(paginated_companies, many=True)
+        paginated_data = CompanySerializer(paginated_companies, many=True, context={'category': pk})
     return paginator.get_paginated_response(paginated_data.data)
 
 

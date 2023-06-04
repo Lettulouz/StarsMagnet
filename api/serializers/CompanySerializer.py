@@ -1,8 +1,8 @@
-from django.core import paginator
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import serializers
 from api.models import Companies
 from api.models import Opinions
+from api.models import Categories
 from api.models import CategoriesOfCompanies
 from api.serializers.OpinionSerializer import OpinionSerializer
 from django.db.models import Avg
@@ -40,6 +40,9 @@ class CompanySerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
+        if 'category' in self.context:
+            category = Categories.objects.filter(pk=self.context['category']).first()
+            representation["category_name"] = category.name
         if 'request' in self.context:
             representation['opinions'] = self.get_opinions(instance)
         return representation
