@@ -1,3 +1,4 @@
+import jwt
 from django.shortcuts import render
 import json
 import requests
@@ -5,6 +6,7 @@ import requests
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
+from rest_framework import exceptions
 from django.shortcuts import get_object_or_404
 
 from .serializers.RegisterSerializer import RegisterSerializer
@@ -13,6 +15,8 @@ from .serializers.CompanySerializer import CompanySerializer
 from .serializers.MakeOpinionSerializer import MakeOpinionSerializer
 from .serializers.SafeWordsSerializer import SafeWordsSerializer
 from .serializers.CategoriesSerializer import CategoriesSerializer
+from .serializers.LoginSerializer import LoginSerializer
+from .serializers.RefreshSerializer import RefreshSerializer
 from .models import Companies
 from .models import Categories
 from .models import CategoriesOfCompanies
@@ -37,6 +41,19 @@ def register(request, *args, **kwargs):
         status_code = status.HTTP_400_BAD_REQUEST
     return Response(data, status=status_code)
 
+
+@api_view(['POST'])
+def login(request, *args, **kwargs):
+    serializer = LoginSerializer(data=request.data)
+    data={}
+    if serializer.is_valid():
+        data['refresh'] = serializer.data['refresh']
+        data['access'] = serializer.data['access']
+        status_code = status.HTTP_200_OK
+    else:
+        data = serializer.errors
+        status_code = status.HTTP_401_UNAUTHORIZED
+    return Response(data, status=status_code)
 
 @api_view(['POST', 'GET'])
 def company(request, pk=None, *args, **kwargs):
@@ -103,3 +120,16 @@ def categories(request, *arg, **kwargs):
     category = Categories.objects.all()
     data = CategoriesSerializer(category, many=True, context={'many': True}).data
     return Response(data)
+
+@api_view(['POST'])
+def refresh_token(request, *arg, **kwargs):
+    serializer = RefreshSerializer(data=request.data)
+    data={}
+    if serializer.is_valid():
+        data['access'] = serializer.data['access']
+        status_code = status.HTTP_200_OK
+    else:
+        data = serializer.errors
+        status_code = status.HTTP_401_UNAUTHORIZED
+    return Response(data, status=status_code)
+
