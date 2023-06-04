@@ -137,18 +137,17 @@ def categories(request, pk=None, *arg, **kwargs):
         paginated_data = CategoriesSerializer(paginated_category, many=True)
         return paginator.get_paginated_response(paginated_data.data)
 
-    categories_of_companies = CategoriesOfCompanies.objects.select_related('company').filter(category_id=pk)
-    if not categories_of_companies.exists():
+    if not Categories.objects.filter(pk=pk).exists():
         raise Http404
+    categories_of_companies = CategoriesOfCompanies.objects.select_related('company').filter(category_id=pk)
     company_ids = [category_of_company.company.id for category_of_company in categories_of_companies]
     companies = Companies.objects.filter(pk__in=company_ids, status="accepted")
     paginated_companies = paginator.paginate_queryset(companies, request)
     paginated_data = CompanySerializer(paginated_companies, many=True)
-    data = {
-        'results': paginated_data.data,
-        'categoryName': Categories.objects.filter(pk=pk).first().name
-    }
-    return Response(data)
+    response = paginator.get_paginated_response(paginated_data.data)
+    response.data['category'] = Categories.objects.filter(pk=pk).first().name
+
+    return Response(data=response.data)
 
 
 @api_view(['GET'])
