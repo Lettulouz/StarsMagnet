@@ -44,7 +44,7 @@ class RegisterCompanySerializer(serializers.ModelSerializer):
 
     def save(self):
         while True:
-            new_token = ''.join(random.choices(string.ascii_letters + string.digits + string.punctuation, k=32))
+            new_token = ''.join(random.choices(string.ascii_letters + string.digits + string.punctuation.replace(" ", ""), k=32))
             if not Companies.objects.filter(token=new_token).exists():
                 break
 

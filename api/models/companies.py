@@ -27,3 +27,9 @@ class Companies(models.Model):
     def check_password(self, passwd):
         return make_password(passwd)==self.password
 
+    def get_companies(self):
+        return{
+            'id': self.id,
+            'name': self.name,
+            'site': self.site
+        }
