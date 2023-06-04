@@ -37,6 +37,19 @@ class CustomUserAdmin(UserAdmin):
     list_filter = ('is_staff', 'is_superuser', 'is_active')
 
 
+@admin.action(description="Accept selected Companies")
+def accept_companies(modeladmin, request, queryset):
+    queryset.update(status="accepted")
+
+@admin.action(description="Reject selected Companies")
+def reject_companies(modeladmin, request, queryset):
+    queryset.update(status="rejected")
+
+@admin.action(description="Ban selected Companies")
+def ban_companies(modeladmin, request, queryset):
+    queryset.update(status="banned")
+
+
 class CompaniesAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {"fields": ["name", "site", "status"]}),
@@ -54,6 +67,7 @@ class CompaniesAdmin(admin.ModelAdmin):
     list_display = ('name', 'username', 'email', 'status')
     list_filter = [CompanyStatusListFilter]
     search_fields = ['name', 'username', 'email']
+    actions = [accept_companies, reject_companies, ban_companies]
 
     def get_fieldsets(self, request, obj=None):
         if not obj:
