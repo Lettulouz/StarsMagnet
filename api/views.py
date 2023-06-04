@@ -18,6 +18,7 @@ from .serializers.MakeOpinionSerializer import MakeOpinionSerializer
 from .serializers.SafeWordsSerializer import SafeWordsSerializer
 from .serializers.CategoriesSerializer import CategoriesSerializer
 from .serializers.LoginSerializer import LoginSerializer
+from .serializers.LoginCompanySerializer import LoginCompanySerializer
 from .serializers.RefreshSerializer import RefreshSerializer
 from .models import Companies
 from .models import Categories
@@ -47,6 +48,19 @@ def register(request, *args, **kwargs):
 @api_view(['POST'])
 def login(request, *args, **kwargs):
     serializer = LoginSerializer(data=request.data)
+    data={}
+    if serializer.is_valid():
+        data['refresh'] = serializer.data['refresh']
+        data['access'] = serializer.data['access']
+        status_code = status.HTTP_200_OK
+    else:
+        data = serializer.errors
+        status_code = status.HTTP_401_UNAUTHORIZED
+    return Response(data, status=status_code)
+
+@api_view(['POST'])
+def login_company(request, *args, **kwarg):
+    serializer = LoginCompanySerializer(data=request.data)
     data={}
     if serializer.is_valid():
         data['refresh'] = serializer.data['refresh']

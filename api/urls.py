@@ -19,5 +19,6 @@ urlpatterns = [
     path('search/', views.search_companies, name="query"),
 
     path('login', views.login),
+    path('company/login', views.login_company),
     path('token/refresh', views.refresh_token),
 ]
