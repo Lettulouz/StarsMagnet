@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from api.forms.add_user_form import CustomUserForm
-from api.forms.add_company_form import CompanyForm
+from api.forms.company_forms import CompanyForm, AddCompanyForm
 from django.contrib.auth import get_user_model
 from api.models import Companies, Opinions, Categories
 
@@ -50,6 +50,7 @@ class CompaniesAdmin(admin.ModelAdmin):
     )
 
     form = CompanyForm
+    add_form = AddCompanyForm
     list_display = ('name', 'username', 'email', 'status')
     list_filter = [CompanyStatusListFilter]
     search_fields = ['name', 'username', 'email']
@@ -58,6 +59,13 @@ class CompaniesAdmin(admin.ModelAdmin):
         if not obj:
             return self.add_fieldsets
         return super().get_fieldsets(request, obj)
+
+    def get_form(self, request, obj=None, **kwargs):
+        defaults = {}
+        if obj is None:
+            defaults["form"] = self.add_form
+        defaults.update(kwargs)
+        return super().get_form(request, obj, **defaults)
 
 
 class OpinionsAdmin(admin.ModelAdmin):
