@@ -24,8 +24,9 @@ class Companies(models.Model):
     def __str__(self):
         return self.name
 
-    def check_password(self, passwd):
-        return make_password(passwd)==self.password
+    @property
+    def is_authenticated(self):
+        return True
 
     def get_companies(self):
         return{

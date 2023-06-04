@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 from api.forms.add_user_form import CustomUserForm
 from api.forms.add_company_form import CompanyForm
 from django.contrib.auth import get_user_model
-from api.models import Companies, Opinions
+from api.models import Companies, Opinions, Categories
 
 # Register your models here.
 
@@ -64,9 +64,14 @@ class OpinionsAdmin(admin.ModelAdmin):
     list_display = ('user', 'rating', 'company', 'rating_date')
     search_fields = ['company']
 
+class CategoriesAdmin(admin.ModelAdmin):
+    list_display = ('name', 'icon')
+    search_fields = ['name']
 
 admin.site.register(User, CustomUserAdmin)
 
 admin.site.register(Companies, CompaniesAdmin)
 
 admin.site.register(Opinions, OpinionsAdmin)
+
+admin.site.register(Categories, CategoriesAdmin)
