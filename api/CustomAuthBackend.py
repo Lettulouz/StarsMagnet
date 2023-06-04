@@ -46,7 +46,10 @@ class JWTAuth(BaseAuthentication):
                 {'detail': 'invalid token'})
         except IndexError:
             raise exceptions.AuthenticationFailed('Token prefix missing')
-        if payload['type'] == 'company':
+        if payload['token_type'] != 'access':
+            raise exceptions.AuthenticationFailed(
+                {'detail': 'invalid token'})
+        if payload['user_type'] == 'company':
             user = Companies.objects.filter(id=payload.get('user_id')).first()
         else:
             users = get_user_model()
