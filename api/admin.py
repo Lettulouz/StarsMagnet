@@ -50,20 +50,20 @@ class CompaniesInlineFormSet(BaseInlineFormSet):
         super().clean()
         existing_relations = set()
         for form in self.forms:
-            try:
-                if not form.cleaned_data.get('company') or not form.cleaned_data.get('category'):
-                    form.add_error('company', 'This field is required')
-                    form.add_error('category', 'This field is required')
-                if form.cleaned_data and not form.cleaned_data.get('DELETE'):
-                    company = form.cleaned_data['company']
-                    category = form.cleaned_data['category']
-                    relation = (company, category)
-                    if relation in existing_relations:
-                        form.add_error('company', 'Duplicated relation')
-                        form.add_error('category', 'Duplicated relation')
-                    existing_relations.add(relation)
-            except KeyError:
-                pass
+
+            if not form.cleaned_data.get('company') or not form.cleaned_data.get('category'):
+                form.add_error('company', 'This field is required')
+                form.add_error('category', 'This field is required')
+                continue
+            if form.cleaned_data and not form.cleaned_data.get('DELETE'):
+                company = form.cleaned_data['company']
+                category = form.cleaned_data['category']
+                relation = (company, category)
+                if relation in existing_relations:
+                    form.add_error('company', 'Duplicated relation')
+                    form.add_error('category', 'Duplicated relation')
+                existing_relations.add(relation)
+
 class JunctionTableInline(admin.TabularInline):
     model = CategoriesOfCompanies
     extra = 0
