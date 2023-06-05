@@ -9,15 +9,17 @@ from django.db.models import Avg
 
 
 class CompanySerializer(serializers.ModelSerializer):
-    avg_ratings = serializers.SerializerMethodField()
+    avgRatings = serializers.SerializerMethodField()
     categories = serializers.SerializerMethodField()
+    opinionsCount = serializers.SerializerMethodField()
 
     class Meta:
         model = Companies
         fields = ("id",
                   'name',
                   'site',
-                  "avg_ratings",
+                  "avgRatings",
+                  "opinionsCount",
                   "categories")
 
     def get_opinions(self, obj):
@@ -30,9 +32,12 @@ class CompanySerializer(serializers.ModelSerializer):
             return paginator.get_paginated_response(opinion_serializer).data
         return None
 
-    def get_avg_ratings(self, obj):
+    def get_avgRatings(self, obj):
         avg_ratings = Opinions.objects.filter(company=obj).aggregate(rating=Avg('rating'))
         return avg_ratings['rating']
+
+    def get_opinionsCount(self, obj):
+        return Opinions.objects.filter(company=obj).count()
 
     def get_categories(self, obj):
         categories = CategoriesOfCompanies.objects.filter(company_id=obj.id)
