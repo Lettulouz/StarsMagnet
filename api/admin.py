@@ -50,6 +50,8 @@ class CompaniesInlineFormSet(BaseInlineFormSet):
                 category = form.cleaned_data['category']
                 relation = (company, category)
                 if relation in existing_relations:
+                    form.add_error('company', 'Duplicated relation')
+                    form.add_error('category', 'Duplicated relation')
                     raise ValidationError('Duplicated relations')
                 existing_relations.add(relation)
 class JunctionTableInline(admin.TabularInline):
