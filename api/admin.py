@@ -1,9 +1,11 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from django.core.exceptions import ValidationError
+from django.forms.models import BaseInlineFormSet
 from api.forms.add_user_form import CustomUserForm
 from api.forms.company_forms import CompanyForm, AddCompanyForm
 from django.contrib.auth import get_user_model
-from api.models import Companies, Opinions, Categories
+from api.models import Companies, Opinions, Categories, CategoriesOfCompanies
 
 # Register your models here.
 
@@ -35,6 +37,28 @@ class CustomUserAdmin(UserAdmin):
     form = CustomUserForm
     list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff', 'is_superuser')
     list_filter = ('is_staff', 'is_superuser', 'is_active')
+
+class CompaniesInlineFormSet(BaseInlineFormSet):
+    def clean(self):
+        super().clean()
+        existing_relations = set()
+        for form in self.forms:
+            if not form.cleaned_data.get('company') or not form.cleaned_data.get('category'):
+                raise ValidationError('All field required')
+            if form.cleaned_data and not form.cleaned_data.get('DELETE'):
+                company = form.cleaned_data['company']
+                category = form.cleaned_data['category']
+                relation = (company, category)
+                if relation in existing_relations:
+                    form.add_error('company', 'Duplicated relation')
+                    form.add_error('category', 'Duplicated relation')
+                    raise ValidationError('Duplicated relations')
+                existing_relations.add(relation)
+class JunctionTableInline(admin.TabularInline):
+    model = CategoriesOfCompanies
+    extra = 0
+    formset = CompaniesInlineFormSet
+
 
 
 @admin.action(description="Accept selected Companies")
@@ -68,6 +92,7 @@ class CompaniesAdmin(admin.ModelAdmin):
     list_filter = [CompanyStatusListFilter]
     search_fields = ['name', 'username', 'email']
     actions = [accept_companies, reject_companies, ban_companies]
+    inlines = [JunctionTableInline]
 
     def get_fieldsets(self, request, obj=None):
         if not obj:
@@ -89,6 +114,7 @@ class OpinionsAdmin(admin.ModelAdmin):
 class CategoriesAdmin(admin.ModelAdmin):
     list_display = ('name', 'icon')
     search_fields = ['name']
+    inlines = [JunctionTableInline]
 
 admin.site.register(User, CustomUserAdmin)
 
