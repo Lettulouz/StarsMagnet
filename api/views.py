@@ -158,9 +158,16 @@ def category_pageable(request, amount=6, *arg, **kwargs):
 
 
 @api_view(['GET'])
-def company_pageable(request, amount=6, *arg, **kwargs):
-    data = {'countAll': Companies.objects.count(),
-            'countAllPages': (-(-Companies.objects.count() // amount))}
+def company_pageable(request, pk=None, amount=6, *arg, **kwargs):
+    if pk is None:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    categories_of_companies = CategoriesOfCompanies.objects.select_related('company').filter(category_id=pk)
+    company_ids = [category_of_company.company.id for category_of_company in categories_of_companies]
+    companies = Companies.objects.filter(pk__in=company_ids)
+
+    data = {'countAll': companies.count(),
+            'countAllPages': (-(-companies.count() // amount))}
     return Response(data, status=status.HTTP_200_OK)
 
 
