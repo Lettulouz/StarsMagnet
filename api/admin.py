@@ -1,8 +1,9 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, FieldError
+from django.db.models import Avg
 from django.forms.models import BaseInlineFormSet
-from api.forms.add_user_form import CustomUserForm
+from api.forms.add_user_form import CustomUserForm, CustomUserChanger
 from api.forms.company_forms import CompanyForm, AddCompanyForm
 from django.contrib.auth import get_user_model
 from api.models import Companies, Opinions, Categories, CategoriesOfCompanies
@@ -11,7 +12,6 @@ from api.models import Companies, Opinions, Categories, CategoriesOfCompanies
 
 User = get_user_model()
 
-# TODO: adding forms/ update form for company
 
 class CompanyStatusListFilter(admin.SimpleListFilter):
     title = "company status"
@@ -34,26 +34,36 @@ class CompanyStatusListFilter(admin.SimpleListFilter):
 # Registered models
 
 class CustomUserAdmin(UserAdmin):
-    form = CustomUserForm
+    form = CustomUserChanger
+    add_form = CustomUserForm
     list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff', 'is_superuser')
     list_filter = ('is_staff', 'is_superuser', 'is_active')
 
 class CompaniesInlineFormSet(BaseInlineFormSet):
+
+    def add_fields(self, form, index):
+        super().add_fields(form, index)
+        form.fields['company'].required = False
+        form.fields['category'].required = False
+
     def clean(self):
         super().clean()
         existing_relations = set()
         for form in self.forms:
-            if not form.cleaned_data.get('company') or not form.cleaned_data.get('category'):
-                raise ValidationError('All field required')
-            if form.cleaned_data and not form.cleaned_data.get('DELETE'):
-                company = form.cleaned_data['company']
-                category = form.cleaned_data['category']
-                relation = (company, category)
-                if relation in existing_relations:
-                    form.add_error('company', 'Duplicated relation')
-                    form.add_error('category', 'Duplicated relation')
-                    raise ValidationError('Duplicated relations')
-                existing_relations.add(relation)
+            try:
+                if not form.cleaned_data.get('company') or not form.cleaned_data.get('category'):
+                    form.add_error('company', 'This field is required')
+                    form.add_error('category', 'This field is required')
+                if form.cleaned_data and not form.cleaned_data.get('DELETE'):
+                    company = form.cleaned_data['company']
+                    category = form.cleaned_data['category']
+                    relation = (company, category)
+                    if relation in existing_relations:
+                        form.add_error('company', 'Duplicated relation')
+                        form.add_error('category', 'Duplicated relation')
+                    existing_relations.add(relation)
+            except KeyError:
+                pass
 class JunctionTableInline(admin.TabularInline):
     model = CategoriesOfCompanies
     extra = 0
@@ -75,6 +85,7 @@ def ban_companies(modeladmin, request, queryset):
 
 
 class CompaniesAdmin(admin.ModelAdmin):
+
     fieldsets = (
         (None, {"fields": ["name", "site", "status"]}),
         ("Auth", {"fields": ["username", "email", "token"]}),
@@ -88,12 +99,20 @@ class CompaniesAdmin(admin.ModelAdmin):
 
     form = CompanyForm
     add_form = AddCompanyForm
-    list_display = ('name', 'username', 'email', 'status')
+    list_display = ('name', 'username', 'email', 'status', 'rating')
     list_filter = [CompanyStatusListFilter]
     search_fields = ['name', 'username', 'email']
     actions = [accept_companies, reject_companies, ban_companies]
     inlines = [JunctionTableInline]
 
+    def rating(self, obj):
+        average = Opinions.objects.filter(company=obj).aggregate(average=Avg('rating'))['average']
+        return average
+    rating.admin_order_field = 'opinions__rating'
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        queryset = queryset.annotate(srednia=Avg('opinions__rating'))
+        return queryset
     def get_fieldsets(self, request, obj=None):
         if not obj:
             return self.add_fieldsets
@@ -109,7 +128,7 @@ class CompaniesAdmin(admin.ModelAdmin):
 
 class OpinionsAdmin(admin.ModelAdmin):
     list_display = ('user', 'rating', 'company', 'rating_date')
-    search_fields = ['company']
+    search_fields = ['company__name', 'user__username']
 
 class CategoriesAdmin(admin.ModelAdmin):
     list_display = ('name', 'icon')

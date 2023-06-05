@@ -11,3 +11,6 @@ class CategoriesOfCompanies(models.Model):
     class Meta:
         verbose_name_plural = "CategoriesOfCompanies"
 
+    def __str__(self):
+        return self.category.name +"-"+ self.company.name
+
