@@ -50,8 +50,7 @@ def login(request, *args, **kwargs):
     serializer = LoginSerializer(data=request.data)
     data={}
     if serializer.is_valid():
-        data['refresh'] = serializer.data['refresh']
-        data['access'] = serializer.data['access']
+        data = serializer.data
         status_code = status.HTTP_200_OK
     else:
         data = serializer.errors
@@ -63,8 +62,7 @@ def login_company(request, *args, **kwarg):
     serializer = LoginCompanySerializer(data=request.data)
     data={}
     if serializer.is_valid():
-        data['refresh'] = serializer.data['refresh']
-        data['access'] = serializer.data['access']
+        data = serializer.data
         status_code = status.HTTP_200_OK
     else:
         data = serializer.errors

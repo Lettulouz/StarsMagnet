@@ -6,8 +6,10 @@ User = get_user_model()
 
 class LoginSerializer(serializers.Serializer):
 
-    username = serializers.CharField(max_length=150)
     password = serializers.CharField(max_length=128, write_only=True)
+    id = serializers.IntegerField(read_only=True)
+    username = serializers.CharField(max_length=150)
+    name = serializers.CharField(default=None, read_only=True)
     access = serializers.CharField(max_length=255, read_only=True)
     refresh = serializers.CharField(max_length=255, read_only=True)
 
@@ -23,9 +25,11 @@ class LoginSerializer(serializers.Serializer):
             raise serializers.ValidationError({"detail": "No active account found with the given credentials"})
         if user.check_password(password) and user.is_active:
             return {
-                'username':'ok',
-                'access':generate_access_token(user),
-                'refresh':generate_refresh_token(user)
+                'id': user.id,
+                'name': user.first_name +" "+ user.last_name,
+                'username': user.username,
+                'access': generate_access_token(user),
+                'refresh': generate_refresh_token(user)
             }
         else:
             raise serializers.ValidationError("No active account found with the given credentials")
