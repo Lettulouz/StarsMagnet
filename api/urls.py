@@ -12,7 +12,7 @@ urlpatterns = [
     path('category', views.categories),
     path('category/<int:pk>', views.categories),
     path('category/pageable', views.category_pageable),
-    path('company/pageable', views.company_pageable),
+    path('company/pageable/<int:amount>', views.company_pageable, name="query"),
     path('category/pageable/<int:amount>', views.category_pageable),
     path('company/<int:pk>/pageable/<int:amount>', views.company_pageable),
     path('search', views.search_companies),
