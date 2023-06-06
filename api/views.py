@@ -1,5 +1,4 @@
 from django.http import Http404
-from django.shortcuts import render
 import json
 import requests
 
@@ -7,8 +6,8 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.pagination import LimitOffsetPagination
-from rest_framework import exceptions
 from django.shortcuts import get_object_or_404
+from django.db.models import Q
 
 
 from .serializers.RegisterSerializer import RegisterSerializer
@@ -52,8 +51,7 @@ def login(request, *args, **kwargs):
     serializer = LoginSerializer(data=request.data)
     data={}
     if serializer.is_valid():
-        data['refresh'] = serializer.data['refresh']
-        data['access'] = serializer.data['access']
+        data = serializer.data
         status_code = status.HTTP_200_OK
     else:
         data = serializer.errors
@@ -65,8 +63,7 @@ def login_company(request, *args, **kwarg):
     serializer = LoginCompanySerializer(data=request.data)
     data={}
     if serializer.is_valid():
-        data['refresh'] = serializer.data['refresh']
-        data['access'] = serializer.data['access']
+        data = serializer.data
         status_code = status.HTTP_200_OK
     else:
         data = serializer.errors
@@ -154,7 +151,20 @@ def category_pageable(request, amount=6, *arg, **kwargs):
 
 
 @api_view(['GET'])
-def company_pageable(request, pk=None, amount=6, *arg, **kwargs):
+def company_pageable(request, amount=6, *arg, **kwargs):
+    query = request.GET.get("query")
+    if query is not None or query != "":
+        companies = Companies.objects.filter(Q(name__icontains=query) & Q(status="accepted"))
+    else:
+        companies = Companies.objects.filter(status="accepted")
+
+    data = {'countAll': companies.count(),
+            'countAllPages': (-(-companies.count() // amount))}
+    return Response(data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def company_category_pageable(request, pk=None, amount=6, *arg, **kwargs):
     if pk is None:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
@@ -184,8 +194,8 @@ def refresh_token(request, *arg, **kwargs):
 def search_companies(request, *arg, **kwargs):
     query = request.GET.get("query")
     paginator = LimitOffsetPagination()
-    if query is not None:
-        results = Companies.objects.filter(name__icontains=query, status="accepted")
+    if query is not None or query != "":
+        results = Companies.objects.filter(Q(name__icontains=query) & Q(status="accepted"))
     else:
         results = Companies.objects.filter(status="accepted")
     paginated_companies = paginator.paginate_queryset(results, request)

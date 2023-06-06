@@ -7,7 +7,9 @@ from ..utils.jwt_gen import generate_access_token, generate_refresh_token
 
 class LoginCompanySerializer(serializers.Serializer):
 
-    username = serializers.CharField(max_length=150, write_only=True)
+    id = serializers.IntegerField(read_only=True)
+    username = serializers.CharField(max_length=150)
+    name = serializers.CharField(read_only=True)
     password = serializers.CharField(max_length=128, write_only=True)
     token = serializers.CharField(max_length=32, write_only=True)
     access = serializers.CharField(max_length=255, read_only=True)
@@ -23,6 +25,9 @@ class LoginCompanySerializer(serializers.Serializer):
             raise serializers.ValidationError({"detail": "No active account found with the given credentials"})
         if check_password(password, company.password):
             return {
+                'id': company.id,
+                'username': company.username,
+                'name': company.name,
                 'access': generate_access_token(company, 'company'),
                 'refresh': generate_refresh_token(company, 'company')
             }
