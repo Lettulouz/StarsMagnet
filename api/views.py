@@ -82,7 +82,7 @@ def company(request, pk=None, *args, **kwargs):
         serializer = RegisterCompanySerializer(data=request.data)
         data = {}
         if serializer.is_valid():
-            api_url = "https://random-word-api.vercel.app/api?words=10&length=7";
+            api_url = "https://random-word-api.vercel.app/api?words=10&length=7"
             response = requests.get(api_url)
             if response.status_code != requests.codes.ok:
                 status_code = status.HTTP_400_BAD_REQUEST
@@ -161,6 +161,20 @@ def company_pageable(request, amount=6, *arg, **kwargs):
         companies = Companies.objects.filter(Q(name__icontains=query) & Q(status="accepted"))
     else:
         companies = Companies.objects.filter(status="accepted")
+
+    data = {'countAll': companies.count(),
+            'countAllPages': (-(-companies.count() // amount))}
+    return Response(data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def company_category_pageable(request, pk=None, amount=6, *arg, **kwargs):
+    if pk is None:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    categories_of_companies = CategoriesOfCompanies.objects.select_related('company').filter(category_id=pk)
+    company_ids = [category_of_company.company.id for category_of_company in categories_of_companies]
+    companies = Companies.objects.filter(pk__in=company_ids)
 
     data = {'countAll': companies.count(),
             'countAllPages': (-(-companies.count() // amount))}
