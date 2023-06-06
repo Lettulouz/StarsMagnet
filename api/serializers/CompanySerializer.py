@@ -41,7 +41,7 @@ class CompanySerializer(serializers.ModelSerializer):
 
     def get_categories(self, obj):
         categories = CategoriesOfCompanies.objects.filter(company_id=obj.id)
-        return [{'name': category.category.name, 'icon': category.category.icon} for category in categories]
+        return [{'name': category.category.name, 'icon': category.category.icon, 'id': category.category.id } for category in categories]
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
