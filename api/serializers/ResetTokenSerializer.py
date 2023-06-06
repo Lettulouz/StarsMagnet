@@ -10,16 +10,17 @@ from ..utils.generate_safe_words import make_dictio
 from .SafeWordsSerializer import SafeWordsSerializer
 
 
-class ResetTokenSerializer(serializers.ModelSerializer):
+class ResetTokenSerializer(serializers.Serializer):
+
+    class Meta:
+        fields = ('words', 'user')
 
     def check_words(self, data):
         user = data.get("user", None)
-        words = data.get("words", None)
-
-        data_json = json.loads(words)
+        words_input = data.get("words", None)
 
         queries = Q()
-        for i, value in enumerate(data_json, start=1):
+        for i, value in enumerate(words_input, start=1):
             query = "word" + str(i)
             queries &= Q(**{query: value})
             if i == 10:
@@ -30,7 +31,7 @@ class ResetTokenSerializer(serializers.ModelSerializer):
             return "duży błąd"
 
         if matched_object.user.email != user and matched_object.user.username != user:
-            pass # tu błąd
+            return "mniejszy błąd"
 
         token = generate_token()
 
@@ -49,3 +50,9 @@ class ResetTokenSerializer(serializers.ModelSerializer):
             return {'words': json_response, 'token': token}
 
         return "No matching object found"
+
+    def create(self, validated_data):
+        pass
+
+    def update(self, instance, validated_data):
+        pass
