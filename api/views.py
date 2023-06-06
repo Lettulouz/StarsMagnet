@@ -9,6 +9,7 @@ from rest_framework import status
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework import exceptions
 from django.shortcuts import get_object_or_404
+from django.db.models import Q
 
 
 from .serializers.RegisterSerializer import RegisterSerializer
@@ -156,13 +157,12 @@ def category_pageable(request, amount=6, *arg, **kwargs):
 
 
 @api_view(['GET'])
-def company_pageable(request, pk=None, amount=6, *arg, **kwargs):
-    if pk is None:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
-
-    categories_of_companies = CategoriesOfCompanies.objects.select_related('company').filter(category_id=pk)
-    company_ids = [category_of_company.company.id for category_of_company in categories_of_companies]
-    companies = Companies.objects.filter(pk__in=company_ids)
+def company_pageable(request, amount=6, *arg, **kwargs):
+    query = request.GET.get("query")
+    if query is not None or query != "":
+        companies = Companies.objects.filter(Q(name__icontains=query) & Q(status="accepted"))
+    else:
+        companies = Companies.objects.filter(status="accepted")
 
     data = {'countAll': companies.count(),
             'countAllPages': (-(-companies.count() // amount))}
@@ -186,8 +186,8 @@ def refresh_token(request, *arg, **kwargs):
 def search_companies(request, *arg, **kwargs):
     query = request.GET.get("query")
     paginator = LimitOffsetPagination()
-    if query is not None:
-        results = Companies.objects.filter(name__icontains=query, status="accepted")
+    if query is not None or query != "":
+        results = Companies.objects.filter(Q(name__icontains=query) & Q(status="accepted"))
     else:
         results = Companies.objects.filter(status="accepted")
     paginated_companies = paginator.paginate_queryset(results, request)
