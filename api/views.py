@@ -20,10 +20,12 @@ from .serializers.CategoriesSerializer import CategoriesSerializer
 from .serializers.LoginSerializer import LoginSerializer
 from .serializers.LoginCompanySerializer import LoginCompanySerializer
 from .serializers.RefreshSerializer import RefreshSerializer
+from .serializers.ResetTokenSerializer import ResetTokenSerializer
 from .models import Companies
 from .models import Categories
 from .models import CategoriesOfCompanies
-
+from .utils.generate_safe_words import generate_safe_words
+from .utils.generate_safe_words import make_dictio
 
 # Create your views here.
 @api_view(["GET", "POST"])
@@ -85,19 +87,13 @@ def company(request, pk=None, *args, **kwargs):
         serializer = RegisterCompanySerializer(data=request.data)
         data = {}
         if serializer.is_valid():
-            api_url = "https://random-word-api.vercel.app/api?words=10&length=7";
-            response = requests.get(api_url)
-            if response.status_code != requests.codes.ok:
+            json_response = generate_safe_words()
+            if json_response is None:
                 status_code = status.HTTP_400_BAD_REQUEST
                 return Response(data, status=status_code)
-            json_response = json.loads(response.text)
-            dictio = {}
-            for index, word in enumerate(json_response, start=1):
-                key = "word" + str(index)
-                dictio[key] = word
 
             created_id = serializer.save()
-            serializer2 = SafeWordsSerializer(data=dictio, context={'id': created_id.id})
+            serializer2 = SafeWordsSerializer(data=make_dictio(json_response), context={'id': created_id.id})
             if serializer2.is_valid():
                 serializer2.save()
                 data['token'] = Companies.objects.filter(pk=created_id.id).values('token').first()['token']
@@ -195,4 +191,13 @@ def search_companies(request, *arg, **kwargs):
     paginated_companies = paginator.paginate_queryset(results, request)
     response_results = CompanySerializer(paginated_companies, many=True)
     return paginator.get_paginated_response(response_results.data)
+
+@api_view(['POST'])
+def reset_token(request, *arg, **kwargs):
+    serializer = ResetTokenSerializer()
+    test = serializer.check_words(data=request.data)
+    message = test
+    status_code = status.HTTP_200_OK
+
+    return Response(message, status=status_code)
 

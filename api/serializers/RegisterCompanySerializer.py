@@ -3,8 +3,8 @@ from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth import get_user_model
 from api.models import Companies
 from django.contrib.auth.hashers import make_password
-import string
-import random
+from ..utils.generate_token import generate_token
+
 
 User = get_user_model()
 
@@ -43,17 +43,13 @@ class RegisterCompanySerializer(serializers.ModelSerializer):
         return attr
 
     def save(self):
-        while True:
-            new_token = ''.join(random.choices(string.ascii_letters + string.digits + string.punctuation.replace(" ", ""), k=32))
-            if not Companies.objects.filter(token=new_token).exists():
-                break
 
         company = Companies.objects.create(
             name=self.validated_data['name'],
             site=self.validated_data['site'],
             username=self.validated_data['username'],
             password=make_password(self.validated_data['password']),
-            token=new_token,
+            token=generate_token(),
             email=self.validated_data['email']
         )
 
