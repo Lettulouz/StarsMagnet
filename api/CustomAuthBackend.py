@@ -50,11 +50,11 @@ class JWTAuth(BaseAuthentication):
             raise exceptions.AuthenticationFailed(
                 {'detail': 'invalid token'})
         if payload['user_type'] == 'company':
-            user = Companies.objects.filter(id=payload.get('user_id')).first()
+            user = Companies.objects.filter(id=payload.get('user_id'), status='accepted').first()
         else:
             users = get_user_model()
-            user = users.objects.filter(id=payload.get('user_id')).first()
+            user = users.objects.filter(id=payload.get('user_id'), is_active=True).first()
         if user is None:
-            raise exceptions.AuthenticationFailed("No active account found with the given credentials")
+            raise exceptions.AuthenticationFailed({"detail": "No active account found with the given credentials"})
 
         return (user, None)

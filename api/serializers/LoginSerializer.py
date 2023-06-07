@@ -20,7 +20,7 @@ class LoginSerializer(serializers.Serializer):
 
         case_insensitive_username_field = '{}__iexact'.format(User.USERNAME_FIELD)
         user = User._default_manager.filter(
-            Q(**{case_insensitive_username_field: username}) | Q(email__iexact=username)).first()
+            (Q(**{case_insensitive_username_field: username}) | Q(email__iexact=username)), is_active=True).first()
         if not user:
             raise serializers.ValidationError({"detail": "No active account found with the given credentials"})
         if user.check_password(password) and user.is_active:
@@ -32,5 +32,5 @@ class LoginSerializer(serializers.Serializer):
                 'refresh': generate_refresh_token(user)
             }
         else:
-            raise serializers.ValidationError("No active account found with the given credentials")
+            raise serializers.ValidationError({"detail": "No active account found with the given credentials"})
         return data

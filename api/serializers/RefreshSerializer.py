@@ -35,12 +35,12 @@ class RefreshSerializer(serializers.Serializer):
             raise serializers.ValidationError(
                 {'detail': 'invalid token'})
         if payload['user_type'] == 'company':
-            user = Companies.objects.filter(id=payload.get('user_id')).first()
+            user = Companies.objects.filter(id=payload.get('user_id'), status='accepted').first()
         else:
             users = get_user_model()
-            user = users.objects.filter(id=payload.get('user_id')).first()
+            user = users.objects.filter(id=payload.get('user_id'), is_active=True).first()
         if user is None:
-            raise serializers.ValidationError("No active account found with the given credentials")
+            raise serializers.ValidationError({"detail": "No active account found with the given credentials"})
         access = generate_access_token(user,payload['user_type'])
         refresh = generate_refresh_token(user, payload['user_type'])
         if payload['user_type'] == 'company':

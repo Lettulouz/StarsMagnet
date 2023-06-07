@@ -20,9 +20,9 @@ class LoginCompanySerializer(serializers.Serializer):
         password = data.get("password", None)
         token = data.get("token", None)
 
-        company = Companies.objects.filter((Q(username=username) | Q(email=username)), token=token).first()
+        company = Companies.objects.filter((Q(username=username) | Q(email=username)), token=token, status='accepted').first()
         if not company:
-            raise serializers.ValidationError({"detail": "No active account found with the given credentials"})
+            raise serializers.ValidationError({"detail": "No active company found with the given credentials"})
         if check_password(password, company.password):
             return {
                 'id': company.id,
@@ -32,5 +32,5 @@ class LoginCompanySerializer(serializers.Serializer):
                 'refresh': generate_refresh_token(company, 'company')
             }
         else:
-            raise serializers.ValidationError({"detail": "No active account found with the given credentials"})
+            raise serializers.ValidationError({"detail": "No active company found with the given credentials"})
 
