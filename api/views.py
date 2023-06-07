@@ -1,6 +1,4 @@
 from django.http import Http404
-import json
-import requests
 
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -8,6 +6,7 @@ from rest_framework import status
 from rest_framework.pagination import LimitOffsetPagination
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
+from rest_framework import serializers
 
 from .serializers.RegisterSerializer import RegisterSerializer
 from .serializers.RegisterCompanySerializer import RegisterCompanySerializer
@@ -52,7 +51,6 @@ def register(request, *args, **kwargs):
 @api_view(['POST'])
 def login(request, *args, **kwargs):
     serializer = LoginSerializer(data=request.data)
-    data={}
     if serializer.is_valid():
         data = serializer.data
         status_code = status.HTTP_200_OK
@@ -65,7 +63,6 @@ def login(request, *args, **kwargs):
 @api_view(['POST'])
 def login_company(request, *args, **kwarg):
     serializer = LoginCompanySerializer(data=request.data)
-    data={}
     if serializer.is_valid():
         data = serializer.data
         status_code = status.HTTP_200_OK
@@ -263,7 +260,7 @@ def company_category_pageable(request, *arg, **kwargs):
 @api_view(['POST'])
 def refresh_token(request, *arg, **kwargs):
     serializer = RefreshSerializer(data=request.data)
-    data={}
+    data = {}
     if serializer.is_valid():
         data['access'] = serializer.data['access']
         status_code = status.HTTP_200_OK
@@ -293,9 +290,9 @@ def search_companies(request, *arg, **kwargs):
 @api_view(['POST'])
 def reset_token(request, *arg, **kwargs):
     serializer = ResetTokenSerializer()
-    test = serializer.check_words(data=request.data)
-    message = test
-    status_code = status.HTTP_200_OK
-
-    return Response(message, status=status_code)
-
+    try:
+        data = serializer.check_words(data=request.data)
+        status_code = status.HTTP_200_OK
+        return Response(data, status=status_code)
+    except serializers.ValidationError as e:
+        return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
