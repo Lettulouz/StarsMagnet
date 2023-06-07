@@ -3,15 +3,22 @@ from api.models import Opinions
 
 
 class OpinionSerializer(serializers.ModelSerializer):
+    ratingDate = serializers.DateTimeField(source='rating_date')
+    commentDate = serializers.DateTimeField(source='comment_date')
+    responseDate = serializers.DateTimeField(source='response_date')
+    companyResponse = serializers.CharField(source='company_response')
+    userId = serializers.CharField(source='user_id')
+    companyId = serializers.CharField(source='company_id')
 
     class Meta:
         model = Opinions
-        fields = ("user_id",
-                  'company_id',
+        fields = ("userId",
+                  'companyId',
                   'rating',
-                  "rating_date",
+                  "ratingDate",
                   'comment',
-                  'comment_date',
-                  'company_response',
-                  "response_date")
+                  'commentDate',
+                  'companyResponse',
+                  "responseDate")
+
 

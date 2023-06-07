@@ -26,7 +26,6 @@ class CompanySerializer(serializers.ModelSerializer):
         if 'request' in self.context:
             opinions = Opinions.objects.filter(company=obj).order_by('-id')
             paginator = PageNumberPagination()
-            paginator.page_size = 6
             paginated_opinions = paginator.paginate_queryset(opinions, self.context['request'])
             opinion_serializer = OpinionSerializer(paginated_opinions, many=True, context=self.context).data
             return paginator.get_paginated_response(opinion_serializer).data

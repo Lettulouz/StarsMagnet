@@ -20,8 +20,9 @@ from .serializers.LoginCompanySerializer import LoginCompanySerializer
 from .serializers.RefreshSerializer import RefreshSerializer
 from .serializers.ResetTokenSerializer import ResetTokenSerializer
 from .serializers.CompanyOpinionSerializer import CompanyOpinionSerializer
+from .serializers.OpinionSerializer import OpinionSerializer
 from .models import Companies
-from .models import Categories
+from .models import Categories, Opinions
 from .models import CategoriesOfCompanies
 from .utils.generate_safe_words import generate_safe_words
 from .utils.generate_safe_words import make_dictio
@@ -115,13 +116,35 @@ def opinion(request, *arg, **kwargs):
         return Response(data, status=status.HTTP_400_BAD_REQUEST)
     serializer = MakeOpinionSerializer(data=request.data, context={'request': request})
     if serializer.is_valid():
-        serializer.save()
+        new_opinion = serializer.save()
+        opinion_serializer = OpinionSerializer(instance=new_opinion)
         data['response'] = "successfully added a new opinion"
+        data['new_opinion'] = opinion_serializer.data
         status_code = status.HTTP_200_OK
     else:
         data = serializer.errors
         status_code = status.HTTP_400_BAD_REQUEST
     return Response(data, status=status_code)
+
+
+@api_view(['GET'])
+def list_company_opinions(request, company_id,  *arg, **kwargs):
+    data = {}
+    opinions = Opinions.objects.filter(company_id=company_id)
+    if opinions is None:
+        status_code = status.HTTP_400_BAD_REQUEST
+    else:
+        data = OpinionSerializer(instance=opinions, many=True).data
+        status_code = status.HTTP_200_OK
+    return Response(data, status=status_code)
+
+
+@api_view(['GET'])
+def company_opinions_pageable(request, amount, company_id,  *arg, **kwargs):
+    opinions = Opinions.objects.filter(company_id=company_id).count()
+    data = {'countAll': opinions,
+            'countAllPages': (-(-opinions // amount))}
+    return Response(data, status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])
@@ -131,8 +154,10 @@ def company_opinion(request, *arg, **kwargs):
         return Response(data, status=status.HTTP_400_BAD_REQUEST)
     serializer = CompanyOpinionSerializer(data=request.data, context={'request': request})
     if serializer.is_valid():
-        serializer.save()
+        new_opinion = serializer.save()
+        opinion_serializer = OpinionSerializer(instance=new_opinion)
         data['response'] = "successfully replay to opinion"
+        data['new_opinion'] = opinion_serializer.data
         status_code = status.HTTP_200_OK
     else:
         data = serializer.errors
@@ -172,6 +197,7 @@ def companies_of_category(request, *arg, **kwargs):
     response.data['category'] = Categories.objects.filter(pk=pk).first().name
 
     return Response(data=response.data)
+
 
 @api_view(['GET'])
 def category_pageable(request, amount=6, *arg, **kwargs):

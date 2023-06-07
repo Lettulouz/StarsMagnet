@@ -17,6 +17,8 @@ urlpatterns = [
     path('category/pageable/<int:amount>', views.category_pageable),
     path('category/company/pageable', views.company_category_pageable, name="category"),
     path('search/', views.search_companies, name="query"),
+    path('opinionList/company/<int:company_id>', views.list_company_opinions),
+    path('opinionList/company/<int:company_id>/pageable/<int:amount>', views.company_opinions_pageable),
     path('reset/token', views.reset_token),
 
     path('login', views.login),
