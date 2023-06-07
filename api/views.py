@@ -184,35 +184,7 @@ def category_pageable(request, amount=6, *arg, **kwargs):
 def company_pageable(request, *arg, **kwargs):
     query = request.GET.get("query")
     amount = request.query_params["fixedLimit"]
-
-    try:
-        amount = int(amount)
-    except ValueError:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
-
-    if query is not None or query != "":
-        avg_grade = request.data.get('avgGrade')
-        sort_by = request.data.get('sortBy')
-        sort_dir = request.data.get('sortDir')
-        has_grades = request.data.get('hasGrades')
-
-        results = companies_sorting_filtring(avg_grade, sort_by, sort_dir, has_grades)
-        companies = results.filter(Q(name__icontains=query))
-    else:
-        companies = Companies.objects.filter(status="accepted")
-
-    data = {'countAll': companies.count(),
-            'countAllPages': (-(-companies.count() // amount))}
-    return Response(data, status=status.HTTP_200_OK)
-
-
-@api_view(['POST'])
-def company_category_pageable(request, *arg, **kwargs):
-    category = request.query_params["category"]
-    amount = request.query_params["fixedLimit"]
-
-    if not (category and amount):
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+    category = request.GET.get("category")
     try:
         amount = int(amount)
     except ValueError:
@@ -223,10 +195,20 @@ def company_category_pageable(request, *arg, **kwargs):
     sort_dir = request.data.get('sortDir')
     has_grades = request.data.get('hasGrades')
 
-    categories_of_companies = CategoriesOfCompanies.objects.select_related('company').filter(category_id=category)
-    company_ids = [category_of_company.company.id for category_of_company in categories_of_companies]
-    results = companies_sorting_filtring(avg_grade, sort_by, sort_dir, has_grades)
-    companies = results.filter(pk__in=company_ids)
+    if query is not None or bool(query):
+        results = companies_sorting_filtring(avg_grade, sort_by, sort_dir, has_grades)
+        companies = results.filter(Q(name__icontains=query))
+    elif category is not None:
+        try:
+            category = int(category)
+        except ValueError:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        categories_of_companies = CategoriesOfCompanies.objects.select_related('company').filter(category_id=category)
+        company_ids = [category_of_company.company.id for category_of_company in categories_of_companies]
+        results = companies_sorting_filtring(avg_grade, sort_by, sort_dir, has_grades)
+        companies = results.filter(pk__in=company_ids)
+    else:
+        companies = Companies.objects.filter(status="accepted")
 
     data = {'countAll': companies.count(),
             'countAllPages': (-(-companies.count() // amount))}

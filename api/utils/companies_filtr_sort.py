@@ -12,10 +12,13 @@ def companies_sorting_filtring(avg_grade, sort_by, sort_dir, has_grades, query="
     results = Companies.objects.filter(Q(name__icontains=query) & Q(status="accepted"))
 
     if query is not None or query != "":
-        if sort_by == 'alphabetically' and sort_dir == 'ASC':
-            results = results.filter(Q(pk__in=avg_ratings)).order_by('name')
-        elif sort_by == 'alphabetically' and sort_dir == 'DESC':
-            results = Companies.objects.filter(Q(pk__in=avg_ratings)).order_by('-name')
+        if sort_by == 'alphabetically':
+            if has_grades:
+                results = results.filter(Q(pk__in=avg_ratings))
+            if sort_by == 'ASC':
+                results = results.order_by('name')
+            elif sort_by == 'DESC':
+                results = results.order_by('-name')
         elif sort_by == 'gradesCount' and sort_dir == 'ASC':
             results = Companies.objects.filter(Q(pk__in=avg_ratings)) \
                 .order_by(-Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(opinions_counted)], default=99999))
