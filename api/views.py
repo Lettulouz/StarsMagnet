@@ -1,3 +1,6 @@
+from collections import Counter
+
+from django.forms import FloatField
 from django.http import Http404
 import json
 import requests
@@ -7,8 +10,7 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.pagination import LimitOffsetPagination
 from django.shortcuts import get_object_or_404
-from django.db.models import Q
-
+from django.db.models import Q, Avg, Count, Case, When, Subquery, F
 
 from .serializers.RegisterSerializer import RegisterSerializer
 from .serializers.RegisterCompanySerializer import RegisterCompanySerializer
@@ -19,9 +21,8 @@ from .serializers.CategoriesSerializer import CategoriesSerializer
 from .serializers.LoginSerializer import LoginSerializer
 from .serializers.LoginCompanySerializer import LoginCompanySerializer
 from .serializers.RefreshSerializer import RefreshSerializer
-from .models import Companies
-from .models import Categories
-from .models import CategoriesOfCompanies
+from .models import Companies, Categories, CategoriesOfCompanies
+from api.utils.companies_filtr_sort import companies_sorting_filtring
 
 
 # Create your views here.
@@ -125,10 +126,12 @@ def opinion(request, *arg, **kwargs):
     return Response(data, status=status_code)
 
 
-@api_view(['GET'])
-def categories(request, pk=None, *arg, **kwargs):
+@api_view(['POST'])
+def categories(request, *arg, **kwargs):
+    pk = request.query_params["category"]
     paginator = LimitOffsetPagination()
-    if pk is None:
+
+    if pk is None or pk == "":
         category = Categories.objects.all()
         paginated_category = paginator.paginate_queryset(category, request)
         paginated_data = CategoriesSerializer(paginated_category, many=True)
@@ -138,8 +141,15 @@ def categories(request, pk=None, *arg, **kwargs):
         raise Http404
     categories_of_companies = CategoriesOfCompanies.objects.select_related('company').filter(category_id=pk)
     company_ids = [category_of_company.company.id for category_of_company in categories_of_companies]
-    companies = Companies.objects.filter(pk__in=company_ids, status="accepted")
-    paginated_companies = paginator.paginate_queryset(companies, request)
+
+    avg_grade = request.data.get('avgGrade')
+    sort_by = request.data.get('sortBy')
+    sort_dir = request.data.get('sortDir')
+    has_grades = request.data.get('hasGrades')
+
+    results = companies_sorting_filtring(avg_grade, sort_by, sort_dir, has_grades)
+    results = results.filter(pk__in=company_ids)
+    paginated_companies = paginator.paginate_queryset(results, request)
     paginated_data = CompanySerializer(paginated_companies, many=True)
     response = paginator.get_paginated_response(paginated_data.data)
     response.data['category'] = Categories.objects.filter(pk=pk).first().name
@@ -194,14 +204,18 @@ def refresh_token(request, *arg, **kwargs):
     return Response(data, status=status_code)
 
 
-@api_view(['GET'])
+@api_view(['POST'])
 def search_companies(request, *arg, **kwargs):
-    query = request.GET.get("query")
+    query = request.query_params["query"]
     paginator = LimitOffsetPagination()
-    if query is not None or query != "":
-        results = Companies.objects.filter(Q(name__icontains=query) & Q(status="accepted"))
-    else:
-        results = Companies.objects.filter(status="accepted")
+
+    avg_grade = request.data.get('avgGrade')
+    sort_by = request.data.get('sortBy')
+    sort_dir = request.data.get('sortDir')
+    has_grades = request.data.get('hasGrades')
+
+    results = companies_sorting_filtring(avg_grade, sort_by, sort_dir, has_grades, query)
+
     paginated_companies = paginator.paginate_queryset(results, request)
     response_results = CompanySerializer(paginated_companies, many=True)
     return paginator.get_paginated_response(response_results.data)
