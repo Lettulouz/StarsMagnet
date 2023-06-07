@@ -180,11 +180,24 @@ def category_pageable(request, amount=6, *arg, **kwargs):
     return Response(data, status=status.HTTP_200_OK)
 
 
-@api_view(['GET'])
-def company_pageable(request, amount=6, *arg, **kwargs):
+@api_view(['POST'])
+def company_pageable(request, *arg, **kwargs):
     query = request.GET.get("query")
+    amount = request.query_params["fixedLimit"]
+
+    try:
+        amount = int(amount)
+    except ValueError:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
     if query is not None or query != "":
-        companies = Companies.objects.filter(Q(name__icontains=query) & Q(status="accepted"))
+        avg_grade = request.data.get('avgGrade')
+        sort_by = request.data.get('sortBy')
+        sort_dir = request.data.get('sortDir')
+        has_grades = request.data.get('hasGrades')
+
+        results = companies_sorting_filtring(avg_grade, sort_by, sort_dir, has_grades)
+        companies = results.filter(Q(name__icontains=query))
     else:
         companies = Companies.objects.filter(status="accepted")
 
@@ -193,14 +206,27 @@ def company_pageable(request, amount=6, *arg, **kwargs):
     return Response(data, status=status.HTTP_200_OK)
 
 
-@api_view(['GET'])
-def company_category_pageable(request, pk=None, amount=6, *arg, **kwargs):
-    if pk is None:
+@api_view(['POST'])
+def company_category_pageable(request, *arg, **kwargs):
+    category = request.query_params["category"]
+    amount = request.query_params["fixedLimit"]
+
+    if not (category and amount):
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    try:
+        amount = int(amount)
+    except ValueError:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-    categories_of_companies = CategoriesOfCompanies.objects.select_related('company').filter(category_id=pk)
+    avg_grade = request.data.get('avgGrade')
+    sort_by = request.data.get('sortBy')
+    sort_dir = request.data.get('sortDir')
+    has_grades = request.data.get('hasGrades')
+
+    categories_of_companies = CategoriesOfCompanies.objects.select_related('company').filter(category_id=category)
     company_ids = [category_of_company.company.id for category_of_company in categories_of_companies]
-    companies = Companies.objects.filter(pk__in=company_ids)
+    results = companies_sorting_filtring(avg_grade, sort_by, sort_dir, has_grades)
+    companies = results.filter(pk__in=company_ids)
 
     data = {'countAll': companies.count(),
             'countAllPages': (-(-companies.count() // amount))}
