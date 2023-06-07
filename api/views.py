@@ -60,6 +60,7 @@ def login(request, *args, **kwargs):
         status_code = status.HTTP_401_UNAUTHORIZED
     return Response(data, status=status_code)
 
+
 @api_view(['POST'])
 def login_company(request, *args, **kwarg):
     serializer = LoginCompanySerializer(data=request.data)
@@ -139,16 +140,19 @@ def company_opinion(request, *arg, **kwargs):
     return Response(data, status=status_code)
 
 
-@api_view(['POST'])
+@api_view(['GET'])
 def categories(request, *arg, **kwargs):
+    paginator = LimitOffsetPagination()
+    category = Categories.objects.all()
+    paginated_category = paginator.paginate_queryset(category, request)
+    paginated_data = CategoriesSerializer(paginated_category, many=True)
+    return paginator.get_paginated_response(paginated_data.data)
+
+
+@api_view(['POST'])
+def companies_of_category(request, *arg, **kwargs):
     pk = request.query_params["category"]
     paginator = LimitOffsetPagination()
-
-    if pk is None or pk == "":
-        category = Categories.objects.all()
-        paginated_category = paginator.paginate_queryset(category, request)
-        paginated_data = CategoriesSerializer(paginated_category, many=True)
-        return paginator.get_paginated_response(paginated_data.data)
 
     if not Categories.objects.filter(pk=pk).exists():
         raise Http404
@@ -168,7 +172,6 @@ def categories(request, *arg, **kwargs):
     response.data['category'] = Categories.objects.filter(pk=pk).first().name
 
     return Response(data=response.data)
-
 
 @api_view(['GET'])
 def category_pageable(request, amount=6, *arg, **kwargs):

@@ -11,7 +11,7 @@ urlpatterns = [
     path('opinion', views.opinion),
     path('companyOpinion', views.company_opinion),
     path('category', views.categories),
-    path('category/', views.categories, name="category"),
+    path('category/', views.companies_of_category, name="category"),
     path('category/pageable', views.category_pageable),
     path('company/pageable/<int:amount>', views.company_pageable, name="query"),
     path('category/pageable/<int:amount>', views.category_pageable),
