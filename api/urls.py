@@ -22,6 +22,7 @@ urlpatterns = [
     path('reset/token', views.reset_token),
 
     path('login', views.login),
+    path('login/auto', views.auto_login),
     path('company/login', views.login_company),
     path('token/refresh', views.refresh_token),
 ]
