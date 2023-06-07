@@ -7,7 +7,7 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.pagination import LimitOffsetPagination
 from django.shortcuts import get_object_or_404
-from django.db.models import Q, Avg, Count, Case, When, Subquery, F
+from django.db.models import Q
 
 from .serializers.RegisterSerializer import RegisterSerializer
 from .serializers.RegisterCompanySerializer import RegisterCompanySerializer
@@ -19,6 +19,7 @@ from .serializers.LoginSerializer import LoginSerializer
 from .serializers.LoginCompanySerializer import LoginCompanySerializer
 from .serializers.RefreshSerializer import RefreshSerializer
 from .serializers.ResetTokenSerializer import ResetTokenSerializer
+from .serializers.CompanyOpinionSerializer import CompanyOpinionSerializer
 from .models import Companies
 from .models import Categories
 from .models import CategoriesOfCompanies
@@ -115,6 +116,22 @@ def opinion(request, *arg, **kwargs):
     if serializer.is_valid():
         serializer.save()
         data['response'] = "successfully added a new opinion"
+        status_code = status.HTTP_200_OK
+    else:
+        data = serializer.errors
+        status_code = status.HTTP_400_BAD_REQUEST
+    return Response(data, status=status_code)
+
+
+@api_view(['POST'])
+def company_opinion(request, *arg, **kwargs):
+    data = {}
+    if not request.user.is_authenticated:
+        return Response(data, status=status.HTTP_400_BAD_REQUEST)
+    serializer = CompanyOpinionSerializer(data=request.data, context={'request': request})
+    if serializer.is_valid():
+        serializer.save()
+        data['response'] = "successfully replay to opinion"
         status_code = status.HTTP_200_OK
     else:
         data = serializer.errors

@@ -6,7 +6,9 @@ class OpinionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Opinions
-        fields = ("rating",
+        fields = ("user_id",
+                  'company_id',
+                  'rating',
                   "rating_date",
                   'comment',
                   'comment_date',

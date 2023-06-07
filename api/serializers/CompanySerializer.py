@@ -48,5 +48,7 @@ class CompanySerializer(serializers.ModelSerializer):
         if 'category' in self.context:
             category = Categories.objects.filter(pk=self.context['category']).first()
             representation["category_name"] = category.name
+        if 'request' in self.context:
+            representation["opinions"] = self.get_opinions(instance)
         return representation
 

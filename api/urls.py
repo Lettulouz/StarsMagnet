@@ -9,6 +9,7 @@ urlpatterns = [
     path('company', views.company),
     path('company/<int:pk>', views.company),
     path('opinion', views.opinion),
+    path('companyOpinion', views.company_opinion),
     path('category', views.categories),
     path('category/', views.categories, name="category"),
     path('category/pageable', views.category_pageable),
