@@ -72,6 +72,8 @@ def login_company(request, *args, **kwarg):
     return Response(data, status=status_code)
 
 
+
+
 @api_view(['POST', 'GET'])
 def company(request, pk=None, *args, **kwargs):
     method = request.method
@@ -263,6 +265,18 @@ def refresh_token(request, *arg, **kwargs):
     data = {}
     if serializer.is_valid():
         data['access'] = serializer.data['access']
+        status_code = status.HTTP_200_OK
+    else:
+        data = serializer.errors
+        status_code = status.HTTP_401_UNAUTHORIZED
+    return Response(data, status=status_code)
+
+@api_view(['POST'])
+def auto_login(request, *args, **kwarg):
+    serializer = RefreshSerializer(data=request.data)
+    data={}
+    if serializer.is_valid():
+        data = serializer.data
         status_code = status.HTTP_200_OK
     else:
         data = serializer.errors
