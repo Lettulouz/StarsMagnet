@@ -28,10 +28,10 @@ class ResetTokenSerializer(serializers.Serializer):
 
         matched_object = Safety_Words.objects.filter(queries).first()
         if not matched_object:
-            return "duży błąd"
+            raise serializers.ValidationError({"data": "Invalid data. Error code A01."})
 
         if matched_object.user.email != user and matched_object.user.username != user:
-            return "mniejszy błąd"
+            raise serializers.ValidationError({"data": "Invalid data. Error code A02."})
 
         token = generate_token()
 
@@ -44,12 +44,12 @@ class ResetTokenSerializer(serializers.Serializer):
         if serializer.is_valid():
             serializer.save()
         else:
-            return "Wielbłąd"
+            raise serializers.ValidationError({"data": "An error has occurred, no data has been changed"})
 
         if matched_object:
             return {'words': json_response, 'token': token}
 
-        return "No matching object found"
+        raise serializers.ValidationError({"data": "Invalid data. Error code A03."})
 
     def create(self, validated_data):
         pass
