@@ -173,6 +173,12 @@ def categories(request, *arg, **kwargs):
     return paginator.get_paginated_response(paginated_data.data)
 
 
+@api_view(['GET'])
+def categories_list(request, *arg, **kwargs):
+    category = Categories.objects.all().values('id', 'name')
+    return Response(category)
+
+
 @api_view(['POST'])
 def companies_of_category(request, *arg, **kwargs):
     pk = request.query_params["category"]
