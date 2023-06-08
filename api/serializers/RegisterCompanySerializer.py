@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth import get_user_model
-from api.models import Companies
+from api.models import Companies, CategoriesOfCompanies, Categories
 from django.contrib.auth.hashers import make_password
 from ..utils.generate_token import generate_token
 
@@ -19,9 +19,14 @@ def unique_email(value):
         raise serializers.ValidationError('This field must be unique.')
 
 
+def category_exists(category_id):
+    return Categories.objects.filter(id=category_id).exists()
+
+
 class RegisterCompanySerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
     confirm_password = serializers.CharField(write_only=True, required=True)
+    categories = serializers.ListField(child=serializers.IntegerField(), required=True)
 
     email = serializers.EmailField(
         required=True,
@@ -35,7 +40,7 @@ class RegisterCompanySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Companies
-        fields = ('name', 'site', 'username', 'password', "confirm_password", "email")
+        fields = ('name', 'site', 'username', 'password', "confirm_password", "email", "categories")
 
     def validate(self, attr):
         if attr['password'] != attr['confirm_password']:
@@ -54,4 +59,14 @@ class RegisterCompanySerializer(serializers.ModelSerializer):
         )
 
         company.save()
+        categories = self.validated_data.get('categories')
+
+        for category in categories:
+            if category_exists(category):
+                new_category = CategoriesOfCompanies.objects.create(
+                    company_id=company.id,
+                    category_id=category
+                )
+                new_category.save()
+
         return company
