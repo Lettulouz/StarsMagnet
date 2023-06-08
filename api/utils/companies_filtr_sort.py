@@ -15,9 +15,9 @@ def companies_sorting_filtring(avg_grade, sort_by, sort_dir, has_grades, query="
         if sort_by == 'alphabetically':
             if has_grades:
                 results = results.filter(Q(pk__in=avg_ratings))
-            if sort_by == 'ASC':
+            if sort_dir == 'ASC':
                 results = results.order_by('name')
-            elif sort_by == 'DESC':
+            elif sort_dir == 'DESC':
                 results = results.order_by('-name')
         elif sort_by == 'gradesCount' and sort_dir == 'ASC':
             results = Companies.objects.filter(Q(pk__in=avg_ratings)) \
