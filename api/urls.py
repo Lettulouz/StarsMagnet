@@ -33,7 +33,7 @@ urlpatterns = [
     # get all categories
     path('category/pageable/<int:amount>', views.category_pageable),
     path('category', views.categories),
-    path('category-list', views.categories_list),
+    path('category/all', views.categories_list),
 
     # get all company's by selected category
     path('category/company', views.companies_of_category, name="category"),
