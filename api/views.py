@@ -132,10 +132,16 @@ def list_company_opinions(request, company_id,  *arg, **kwargs):
     opinions = Opinions.objects.filter(company_id=company_id)
     if opinions is None:
         status_code = status.HTTP_400_BAD_REQUEST
+        return Response(status=status_code)
     else:
+        paginator = LimitOffsetPagination()
         data = OpinionSerializer(instance=opinions, many=True).data
         status_code = status.HTTP_200_OK
-    return Response(data, status=status_code)
+
+        paginated_opinions = paginator.paginate_queryset(data, request)
+        response = paginator.get_paginated_response(paginated_opinions)
+
+        return Response(data=response.data, status=status_code)
 
 
 @api_view(['GET'])
