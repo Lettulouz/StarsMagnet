@@ -27,8 +27,8 @@ urlpatterns = [
     path('opinion/company', views.company_opinion),
 
     # get all opinions with pageable
-    path('opinion-list/company/<int:company_id>', views.list_company_opinions),
-    path('opinion-list/company/<int:company_id>/pageable/<int:amount>', views.company_opinions_pageable),
+    path('opinion/list/company/<int:company_id>', views.list_company_opinions),
+    path('opinion/list/company/<int:company_id>/pageable/<int:amount>', views.company_opinions_pageable),
 
     # get all categories
     path('category/pageable/<int:amount>', views.category_pageable),
