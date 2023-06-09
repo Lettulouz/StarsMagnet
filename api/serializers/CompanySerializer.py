@@ -22,15 +22,6 @@ class CompanySerializer(serializers.ModelSerializer):
                   "opinionsCount",
                   "categories")
 
-    def get_opinions(self, obj):
-        if 'request' in self.context:
-            opinions = Opinions.objects.filter(company=obj).order_by('-id')
-            paginator = PageNumberPagination()
-            paginated_opinions = paginator.paginate_queryset(opinions, self.context['request'])
-            opinion_serializer = OpinionSerializer(paginated_opinions, many=True, context=self.context).data
-            return paginator.get_paginated_response(opinion_serializer).data
-        return None
-
     def get_avgRatings(self, obj):
         avg_ratings = Opinions.objects.filter(company=obj).aggregate(rating=Avg('rating'))
         return avg_ratings['rating']
@@ -47,7 +38,5 @@ class CompanySerializer(serializers.ModelSerializer):
         if 'category' in self.context:
             category = Categories.objects.filter(pk=self.context['category']).first()
             representation["category_name"] = category.name
-        if 'request' in self.context:
-            representation["opinions"] = self.get_opinions(instance)
         return representation
 

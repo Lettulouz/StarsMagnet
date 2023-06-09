@@ -80,7 +80,7 @@ def company(request, pk=None, *args, **kwargs):
 
     if method == "GET" and pk is not None:
         obj = get_object_or_404(Companies, pk=pk, status="accepted")
-        data = CompanySerializer(obj, many=False, context={'request': request}).data
+        data = CompanySerializer(obj, many=False).data
         return Response(data)
 
     elif method == "POST":
