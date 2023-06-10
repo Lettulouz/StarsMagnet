@@ -143,7 +143,13 @@ def list_company_opinions(request, company_id,  *arg, **kwargs):
 
 
 @api_view(['GET'])
-def company_opinions_pageable(request, amount, company_id,  *arg, **kwargs):
+def company_opinions_pageable(request, company_id,  *arg, **kwargs):
+    amount = request.query_params["fixedLimit"]
+    try:
+        amount = int(amount)
+    except ValueError:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
     opinions = Opinions.objects.filter(company_id=company_id).count()
     data = {'countAll': opinions,
             'countAllPages': (-(-opinions // amount))}
