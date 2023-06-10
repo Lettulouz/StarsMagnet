@@ -74,6 +74,16 @@ def login_company(request, *args, **kwarg):
 
 @api_view(['POST', 'GET'])
 def company(request, pk=None, *args, **kwargs):
+    """
+    View function to handle GET and POST requests related to creating companies and displaying a specific company.
+    :param request: HttpRequest object.
+    :param pk: Primary key of the company (optional).
+    :param args: Additional arguments passed to the view.
+    :param kwargs: Additional keyword arguments passed to the view.
+    :return: For the GET method, the function returns the data of the company with the specified primary key or an error
+     code. The POST method returns the company's token, a list of words used to reset the password,
+     a message that the user has successfully registered, and an HTTP code.
+    """
     method = request.method
 
     if method == "GET" and pk is not None:
@@ -126,6 +136,14 @@ def opinion(request, *arg, **kwargs):
 
 @api_view(['GET'])
 def list_company_opinions(request, company_id,  *arg, **kwargs):
+    """
+    List opinions associated with a specific company.
+    :param request: HttpRequest object.
+    :param company_id: Identifier of the company for which opinions should be returned.
+    :param arg: Additional arguments passed to the view.
+    :param kwargs: Additional keyword arguments passed to the view.
+    :return: Response with list of opinions with pagination and HTTP code
+    """
     data = {}
     opinions = Opinions.objects.filter(company_id=company_id)
     if opinions is None:
@@ -144,6 +162,15 @@ def list_company_opinions(request, company_id,  *arg, **kwargs):
 
 @api_view(['GET'])
 def company_opinions_pageable(request, company_id,  *arg, **kwargs):
+    """
+    Data used to set pagination values for the list of reviews of a specific company
+    :param request: HttpRequest object.
+    :param company_id: Identifier of the company for which results should be returned.
+    :param arg: Additional arguments passed to the view.
+    :param kwargs: Additional keyword arguments passed to the view.
+    :return:It returns for a given company the number of reviews and how many reviews will fit on a single page.
+    In addition, it returns the HTTP code
+    """
     amount = request.query_params["fixedLimit"]
     try:
         amount = int(amount)
@@ -176,6 +203,13 @@ def company_opinion(request, *arg, **kwargs):
 
 @api_view(['GET'])
 def categories(request, *arg, **kwargs):
+    """
+    List of all categories.
+    :param request: HttpRequest object.
+    :param arg: Additional arguments passed to the view.
+    :param kwargs: Additional keyword arguments passed to the view.
+    :return: Returns a list of all available categories with pagination.
+    """
     paginator = LimitOffsetPagination()
     category = Categories.objects.all()
     paginated_category = paginator.paginate_queryset(category, request)
@@ -185,12 +219,26 @@ def categories(request, *arg, **kwargs):
 
 @api_view(['GET'])
 def categories_list(request, *arg, **kwargs):
+    """
+    A list of categories consisting only of identifiers and names.
+    :param request: HttpRequest object.
+    :param arg: Additional arguments passed to the view.
+    :param kwargs: Additional keyword arguments passed to the view.
+    :return: Returns a list of identifiers and names of all available categories.
+    """
     category = Categories.objects.all().values('id', 'name')
     return Response(category)
 
 
 @api_view(['POST'])
 def companies_of_category(request, *arg, **kwargs):
+    """
+    List of companies of a given category with the possibility of sorting and filtering
+    :param request: HttpRequest object.
+    :param arg: Additional arguments passed to the view.
+    :param kwargs: Additional keyword arguments passed to the view.
+    :return: Returns a filtered and sorted list of companies with a given category and HTTP code
+    """
     pk = request.query_params["category"]
     paginator = LimitOffsetPagination()
 
@@ -216,6 +264,14 @@ def companies_of_category(request, *arg, **kwargs):
 
 @api_view(['GET'])
 def category_pageable(request, amount=6, *arg, **kwargs):
+    """
+    Data used to set pagination values for the list of categories
+    :param request: HttpRequest object.
+    :param arg: Additional arguments passed to the view.
+    :param kwargs: Additional keyword arguments passed to the view.
+    :return:It returns the number of categories and how many categories will fit on a single page.
+    In addition, it returns the HTTP code
+    """
     data = {'countAll': Categories.objects.count(),
             'countAllPages': (-(-Categories.objects.count() // amount))}
     return Response(data, status=status.HTTP_200_OK)
@@ -223,6 +279,14 @@ def category_pageable(request, amount=6, *arg, **kwargs):
 
 @api_view(['POST'])
 def company_pageable(request, *arg, **kwargs):
+    """
+    Data used to set pagination values for the list of companies
+    :param HttpRequest request: HttpRequest object.
+    :param arg: Additional arguments passed to the view.
+    :param kwargs: Additional keyword arguments passed to the view.
+    :return: Returns the number of companies and how many companies will fit on one page using the fixedLimit and
+    the search phrase passed by the query param. In addition, it returns the HTTP code.
+    """
     query = request.GET.get("query")
     amount = request.query_params["fixedLimit"]
 
@@ -249,6 +313,14 @@ def company_pageable(request, *arg, **kwargs):
 
 @api_view(['POST'])
 def company_category_pageable(request, *arg, **kwargs):
+    """
+    Data used to set pagination values for the list of companies of specific category
+    :param HttpRequest request: HttpRequest object.
+    :param arg: Additional arguments passed to the view.
+    :param kwargs: Additional keyword arguments passed to the view.
+    :return: Returns the number of companies of a given category and how many of them will fit on one page using
+    fixedLimit and amount passed by the query parameter. In addition, it returns the HTTP code.
+    """
     category = request.query_params["category"]
     amount = request.GET.get("fixedLimit")
 
@@ -287,6 +359,7 @@ def refresh_token(request, *arg, **kwargs):
         status_code = status.HTTP_401_UNAUTHORIZED
     return Response(data, status=status_code)
 
+
 @api_view(['POST'])
 def auto_login(request, *args, **kwarg):
     serializer = RefreshSerializer(data=request.data)
@@ -302,6 +375,13 @@ def auto_login(request, *args, **kwarg):
 
 @api_view(['POST'])
 def search_companies(request, *arg, **kwargs):
+    """
+    Sorted and filtered list of companies containing search phrases within them.
+    :param HttpRequest request: HttpRequest object.
+    :param arg: Additional arguments passed to the view.
+    :param kwargs: Additional keyword arguments passed to the view.
+    :return: Returns a sorted and filtered list of companies containing the search term and HTTP code
+    """
     query = request.query_params["query"]
     paginator = LimitOffsetPagination()
 
@@ -319,6 +399,13 @@ def search_companies(request, *arg, **kwargs):
 
 @api_view(['POST'])
 def reset_token(request, *arg, **kwargs):
+    """
+    The function is used to reset the company's token
+    :param HttpRequest request: HttpRequest object.
+    :param arg: Additional arguments passed to the view.
+    :param kwargs: Additional keyword arguments passed to the view.
+    :return: Returns information about token change, new token, new safe words and HTTP code
+    """
     serializer = ResetTokenSerializer()
     try:
         data = serializer.check_words(data=request.data)

@@ -49,8 +49,3 @@ class ResetTokenSerializer(serializers.Serializer):
 
         raise serializers.ValidationError({"data": "Invalid data. Error code A03"})
 
-    def create(self, validated_data):
-        pass
-
-    def update(self, instance, validated_data):
-        pass
