@@ -23,6 +23,8 @@ class CompanySerializer(serializers.ModelSerializer):
 
     def get_avgRatings(self, obj):
         avg_ratings = Opinions.objects.filter(company=obj).aggregate(rating=Avg('rating'))
+        if avg_ratings['rating'] is None:
+            return avg_ratings['rating']
         return math.ceil(avg_ratings['rating'] * 10) / 10
 
     def get_opinionsCount(self, obj):
