@@ -33,6 +33,7 @@ from rest_framework.decorators import authentication_classes, permission_classes
 
 
 @api_view(['POST'])
+@authentication_classes([])
 def register(request, *args, **kwargs):
     """
     View function to register new user.
@@ -55,6 +56,7 @@ def register(request, *args, **kwargs):
 
 
 @api_view(['POST'])
+@authentication_classes([])
 def login(request, *args, **kwargs):
     """
     View used to log in by users.
@@ -75,6 +77,7 @@ def login(request, *args, **kwargs):
 
 
 @api_view(['POST'])
+@authentication_classes([])
 def login_company(request, *args, **kwarg):
     """
     View used to log in by companies.
@@ -95,6 +98,7 @@ def login_company(request, *args, **kwarg):
 
 
 @api_view(['POST', 'GET'])
+@authentication_classes([])
 def company(request, pk=None, *args, **kwargs):
     """
     View function to handle GET and POST requests related to creating companies and displaying a specific company.
@@ -157,6 +161,7 @@ def opinion(request, *arg, **kwargs):
 
 
 @api_view(['GET'])
+@authentication_classes([])
 def list_company_opinions(request, company_id,  *arg, **kwargs):
     """
     List opinions associated with a specific company.
@@ -183,6 +188,7 @@ def list_company_opinions(request, company_id,  *arg, **kwargs):
 
 
 @api_view(['GET'])
+@authentication_classes([])
 def company_opinions_pageable(request, company_id,  *arg, **kwargs):
     """
     Data used to set pagination values for the list of reviews of a specific company
@@ -224,6 +230,7 @@ def company_opinion(request, *arg, **kwargs):
 
 
 @api_view(['GET'])
+@authentication_classes([])
 def categories(request, *arg, **kwargs):
     """
     List of all categories.
@@ -240,6 +247,7 @@ def categories(request, *arg, **kwargs):
 
 
 @api_view(['GET'])
+@authentication_classes([])
 def categories_list(request, *arg, **kwargs):
     """
     A list of categories consisting only of identifiers and names.
@@ -253,6 +261,7 @@ def categories_list(request, *arg, **kwargs):
 
 
 @api_view(['POST'])
+@authentication_classes([])
 def companies_of_category(request, *arg, **kwargs):
     """
     List of companies of a given category with the possibility of sorting and filtering
@@ -285,6 +294,7 @@ def companies_of_category(request, *arg, **kwargs):
 
 
 @api_view(['GET'])
+@authentication_classes([])
 def category_pageable(request, amount=6, *arg, **kwargs):
     """
     Data used to set pagination values for the list of categories
@@ -300,6 +310,7 @@ def category_pageable(request, amount=6, *arg, **kwargs):
 
 
 @api_view(['POST'])
+@authentication_classes([])
 def company_pageable(request, *arg, **kwargs):
     """
     Data used to set pagination values for the list of companies
@@ -334,6 +345,7 @@ def company_pageable(request, *arg, **kwargs):
 
 
 @api_view(['POST'])
+@authentication_classes([])
 def company_category_pageable(request, *arg, **kwargs):
     """
     Data used to set pagination values for the list of companies of specific category
@@ -370,6 +382,7 @@ def company_category_pageable(request, *arg, **kwargs):
 
 
 @api_view(['POST'])
+@authentication_classes([])
 def refresh_token(request, *arg, **kwargs):
     """
     View that refresh jwt.
@@ -413,6 +426,7 @@ def auto_login(request, *args, **kwarg):
 
 
 @api_view(['POST'])
+@authentication_classes([])
 def search_companies(request, *arg, **kwargs):
     """
     Sorted and filtered list of companies containing search phrases within them.
@@ -437,6 +451,7 @@ def search_companies(request, *arg, **kwargs):
 
 
 @api_view(['POST'])
+@authentication_classes([])
 def reset_token(request, *arg, **kwargs):
     """
     The function is used to reset the company's token
