@@ -110,7 +110,7 @@ def company(request, pk=None, *args, **kwargs):
 def opinion(request, *arg, **kwargs):
     data = {}
     if not request.user.is_authenticated:
-        return Response(data, status=status.HTTP_400_BAD_REQUEST)
+        return Response(data, status=status.HTTP_401_UNAUTHORIZED)
     serializer = MakeOpinionSerializer(data=request.data, context={'request': request})
     if serializer.is_valid():
         new_opinion = serializer.save()
@@ -154,7 +154,7 @@ def company_opinions_pageable(request, amount, company_id,  *arg, **kwargs):
 def company_opinion(request, *arg, **kwargs):
     data = {}
     if not request.user.is_authenticated:
-        return Response(data, status=status.HTTP_400_BAD_REQUEST)
+        return Response(data, status=status.HTTP_401_UNAUTHORIZED)
     serializer = CompanyOpinionSerializer(data=request.data, context={'request': request})
     if serializer.is_valid():
         new_opinion = serializer.save()
