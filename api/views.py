@@ -72,8 +72,6 @@ def login_company(request, *args, **kwarg):
     return Response(data, status=status_code)
 
 
-
-
 @api_view(['POST', 'GET'])
 def company(request, pk=None, *args, **kwargs):
     method = request.method
@@ -117,7 +115,7 @@ def opinion(request, *arg, **kwargs):
     if serializer.is_valid():
         new_opinion = serializer.save()
         opinion_serializer = OpinionSerializer(instance=new_opinion)
-        data['response'] = "successfully added a new opinion"
+        data['response'] = "Successfully added a new opinion."
         data['new_opinion'] = opinion_serializer.data
         status_code = status.HTTP_200_OK
     else:
@@ -161,8 +159,8 @@ def company_opinion(request, *arg, **kwargs):
     if serializer.is_valid():
         new_opinion = serializer.save()
         opinion_serializer = OpinionSerializer(instance=new_opinion)
-        data['response'] = "successfully replay to opinion"
-        data['new_opinion'] = opinion_serializer.data
+        data['response'] = "Successfully replay to opinion."
+        data['newOpinion'] = opinion_serializer.data
         status_code = status.HTTP_200_OK
     else:
         data = serializer.errors
