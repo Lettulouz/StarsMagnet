@@ -6,17 +6,18 @@ User = get_user_model()
 
 
 class CompanyOpinionSerializer(serializers.ModelSerializer):
-    user_id = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+    userId = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+    companyResponse = serializers.CharField(source='company_response')
 
     class Meta:
         model = Opinions
-        fields = ('company_response', 'response_date', 'user_id')
-        extra_kwargs = {'company_response': {'required': True}}
+        fields = ('companyResponse', 'userId')
+        extra_kwargs = {'companyResponse': {'required': True}}
 
     def save(self):
         actual_time = datetime.datetime.now()
         company_id = self.context['request'].user.id
-        user_id = self.validated_data['user_id'].id
+        user_id = self.validated_data['userId'].id
 
         opinion = Opinions.objects.get(company_id=company_id, user_id=user_id)
         opinion.company_response = self.validated_data['company_response']
