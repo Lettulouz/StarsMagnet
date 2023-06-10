@@ -4,15 +4,15 @@ import datetime
 
 
 class MakeOpinionSerializer(serializers.ModelSerializer):
-    company_id = serializers.PrimaryKeyRelatedField(queryset=Companies.objects.all())
+    companyId = serializers.PrimaryKeyRelatedField(queryset=Companies.objects.all())
 
     class Meta:
         model = Opinions
-        fields = ('rating', 'comment', 'company_id')
+        fields = ('rating', 'comment', 'companyId')
 
     def save(self):
         actual_time = datetime.datetime.now()
-        company_id = self.validated_data['company_id'].id
+        company_id = self.validated_data['companyId'].id
         user_id = self.context['request'].user.id
 
         try:
@@ -27,7 +27,7 @@ class MakeOpinionSerializer(serializers.ModelSerializer):
             opinion = Opinions.objects.create(
                 rating=self.validated_data['rating'],
                 rating_date=actual_time,
-                company_id=self.validated_data['company_id'].id,
+                company_id=self.validated_data['companyId'].id,
                 user_id=self.context['request'].user.id
             )
 
