@@ -9,14 +9,14 @@ class OpinionSerializer(serializers.ModelSerializer):
     responseDate = serializers.DateTimeField(source='response_date')
     companyResponse = serializers.CharField(source='company_response')
     userId = serializers.IntegerField(source='user_id')
-    username = serializers.SerializerMethodField()
     fullname = serializers.SerializerMethodField()
+    countOfReviews = serializers.SerializerMethodField()
 
     class Meta:
         model = Opinions
         fields = ["userId",
-                  "username",
                   "fullname",
+                  "countOfReviews",
                   'rating',
                   "ratingDate",
                   'comment',
@@ -30,8 +30,8 @@ class OpinionSerializer(serializers.ModelSerializer):
             return f"{user.first_name} {user.last_name}"
         return ""
 
-    def get_username(self, obj):
+    def get_countOfReviews(self, obj):
         user = User._default_manager.filter(id=obj.user_id).first()
         if user:
-            return user.username
-        return ""
+            return Opinions.objects.filter(user_id=user.id).count()
+        return 0
