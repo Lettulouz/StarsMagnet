@@ -5,6 +5,10 @@ from ..utils.jwt_gen import generate_access_token, generate_refresh_token
 User = get_user_model()
 
 class LoginSerializer(serializers.Serializer):
+    """
+    Serializer for login by users.
+    Contains field for login and returned data.
+    """
 
     password = serializers.CharField(max_length=128, write_only=True)
     id = serializers.IntegerField(read_only=True)
@@ -14,6 +18,12 @@ class LoginSerializer(serializers.Serializer):
     refresh = serializers.CharField(max_length=255, read_only=True)
 
     def validate(self, data):
+        """
+        Method for validate request, check if users exist and is active.
+        :param data: data from request.
+        :return: jwt tokens and user data if exists,
+        otherwise raise error.
+        """
 
         username = data.get("username", None)
         password = data.get("password", None)

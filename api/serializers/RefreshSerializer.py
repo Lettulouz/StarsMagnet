@@ -6,6 +6,10 @@ from django.conf import settings
 import jwt
 
 class RefreshSerializer(serializers.Serializer):
+    """
+    Serializer for refresh jwt token and auto login for users and companies.
+    Contains field for refresh and returned data.
+    """
 
 
     id = serializers.IntegerField(read_only=True)
@@ -16,6 +20,13 @@ class RefreshSerializer(serializers.Serializer):
     refresh = serializers.CharField(max_length=255)
 
     def validate(self, data):
+        """
+        Method for validate request, check user type,
+        if users exist and is active or accepted.
+        :param data: data from request.
+        :return: jwt tokens and user data if exists and token is valid,
+        otherwise raise error.
+        """
         refresh = data.get('refresh')
 
         if refresh is None:

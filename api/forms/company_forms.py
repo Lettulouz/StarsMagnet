@@ -8,7 +8,10 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 class CompanyForm(forms.ModelForm):
-
+    """
+    Form to edit Company by admin.
+    Modify password field and add confirm_password field.
+    """
 
     password = forms.CharField(
         required=False,
@@ -26,10 +29,20 @@ class CompanyForm(forms.ModelForm):
        help_text="Enter the same password as before, for verification.",
     )
     class Meta:
+        """
+          Metadata for CustomUserForm,
+          contains used model and fields.
+        """
         model = Companies
         fields = ('name', 'site',  'token', 'email', 'username', 'password', 'confirm_password', 'status')
 
     def clean(self):
+        """
+        Method to validate edited Company,
+        checks if username or email already exists
+        and if passwords are equal or empty,
+        adds an error if unique data already exist or passwords aren't the same.
+        """
         cln_data = super().clean()
         password = cln_data.get('password')
         username = cln_data.get('username')
@@ -47,6 +60,11 @@ class CompanyForm(forms.ModelForm):
             self.add_error("username", "Username already taken")
 
     def save(self, commit=True):
+        """
+        Method to save changes for company.
+        :param commit: autosave
+        :return: Companies object
+        """
         company = super().save(commit=False)
 
         company = Companies.objects.get(pk=self.instance.pk)
@@ -64,6 +82,10 @@ class CompanyForm(forms.ModelForm):
 
 
 class AddCompanyForm(forms.ModelForm):
+    """
+    Form to add new Company by admin.
+    Modify password field and add confirm_password field.
+    """
     password = forms.CharField(
         label="Password",
         strip=False,
@@ -78,10 +100,20 @@ class AddCompanyForm(forms.ModelForm):
                                        help_text="Enter the same password as before, for verification.",
                                        )
     class Meta:
+        """
+          Metadata for CustomUserForm,
+          contains used model and fields.
+        """
         model = Companies
         fields = ('name', 'site',  'token', 'email', 'username', 'password', 'confirm_password', 'status')
 
     def clean(self):
+        """
+        Method to validate added Company,
+        checks if username or email already exists
+        and if passwords are equal,
+        adds an error if unique data already exist or passwords aren't the same.
+        """
         cln_data = super().clean()
         password = cln_data.get('password')
         username = cln_data.get('username')
@@ -98,6 +130,11 @@ class AddCompanyForm(forms.ModelForm):
             self.add_error("username", "Username already taken")
 
     def save(self, commit=True):
+        """
+        Method to save added company.
+        :param commit: autosave
+        :return: Companies object
+        """
         company = super().save(commit=False)
 
         company = Companies.objects.create(

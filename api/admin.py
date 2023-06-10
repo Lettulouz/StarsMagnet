@@ -14,10 +14,19 @@ User = get_user_model()
 
 
 class CompanyStatusListFilter(admin.SimpleListFilter):
+    """
+    Method for filter companies by status.
+    Inherited from SimpleListFilter.
+    """
     title = "company status"
     parameter_name = "status"
 
     def lookups(self, request, model_admin):
+        """
+        :param request: request
+        :param model_admin: admin model
+        :return: list of possible statuses.
+        """
         return[
             ('pending', 'Waiting for acceptation'),
             ('accepted', 'Application accepted'),
@@ -26,6 +35,12 @@ class CompanyStatusListFilter(admin.SimpleListFilter):
         ]
 
     def queryset(self, request, queryset):
+        """
+        Method for filter Companies by status.
+        :param request: request
+        :param queryset: companies queryset
+        :return: filtered queryset
+        """
         if self.value() is None:
             return queryset
         return queryset.filter(status=self.value())
@@ -34,12 +49,21 @@ class CompanyStatusListFilter(admin.SimpleListFilter):
 # Registered models
 
 class CustomUserAdmin(UserAdmin):
+    """
+    Custom users management in admin panel.
+    Contains custom forms, list, and filters.
+    Inherited from UserAdmin
+    """
     form = CustomUserChanger
     add_form = CustomUserForm
     list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff', 'is_superuser')
     list_filter = ('is_staff', 'is_superuser', 'is_active')
 
 class CompaniesInlineFormSet(BaseInlineFormSet):
+    """
+    Form for relations between categories and companies.
+    Check if relation already exists.
+    """
 
     def add_fields(self, form, index):
         super().add_fields(form, index)
@@ -65,6 +89,9 @@ class CompaniesInlineFormSet(BaseInlineFormSet):
                 existing_relations.add(relation)
 
 class JunctionTableInline(admin.TabularInline):
+    """
+    Class for management relations between categories and companies.
+    """
     model = CategoriesOfCompanies
     extra = 0
     formset = CompaniesInlineFormSet
@@ -73,18 +100,41 @@ class JunctionTableInline(admin.TabularInline):
 
 @admin.action(description="Accept selected Companies")
 def accept_companies(modeladmin, request, queryset):
+    """
+    Action for accept multiple companies.
+    :param modeladmin: admin model.
+    :param request: request.
+    :param queryset: Companies queryset.
+    """
     queryset.update(status="accepted")
 
 @admin.action(description="Reject selected Companies")
 def reject_companies(modeladmin, request, queryset):
+    """
+    Action for reject multiple companies.
+    :param modeladmin: admin model.
+    :param request: request.
+    :param queryset: Companies queryset.
+    """
     queryset.update(status="rejected")
 
 @admin.action(description="Ban selected Companies")
 def ban_companies(modeladmin, request, queryset):
+    """
+    Action for ban multiple companies.
+    :param modeladmin: admin model.
+    :param request: request.
+    :param queryset: Companies queryset.
+    """
     queryset.update(status="banned")
 
 
 class CompaniesAdmin(admin.ModelAdmin):
+    """
+    Custom companies management in admin panel.
+    Contains custom fieldsets, forms, list, filters and actions.
+    Provides adding relation between company and category.
+    """
 
     fieldsets = (
         (None, {"fields": ["name", "site", "status"]}),
@@ -106,19 +156,43 @@ class CompaniesAdmin(admin.ModelAdmin):
     inlines = [JunctionTableInline]
 
     def rating(self, obj):
+        """
+        Method that return average rating for companies list.
+        :param obj: Companies object.
+        :return: average rating.
+        """
         average = Opinions.objects.filter(company=obj).aggregate(average=Avg('rating'))['average']
         return average
     rating.admin_order_field = 'opinions__rating'
     def get_queryset(self, request):
+        """
+        Method that return queryset of companies, used to sort companies by average rating.
+        :param request: request
+        :return: Companies queryset.
+        """
         queryset = super().get_queryset(request)
         queryset = queryset.annotate(srednia=Avg('opinions__rating'))
         return queryset
     def get_fieldsets(self, request, obj=None):
+        """
+        Method that return add_fieldsets at adding company or
+        standard fieldset at editing company.
+        :param request: request
+        :param obj: company object.
+        :return: fieldsets
+        """
         if not obj:
             return self.add_fieldsets
         return super().get_fieldsets(request, obj)
 
     def get_form(self, request, obj=None, **kwargs):
+        """
+        Method that return add_form at adding company or
+        standard form at editing company.
+        :param request: request
+        :param obj: company object.
+        :return: form
+        """
         defaults = {}
         if obj is None:
             defaults["form"] = self.add_form
@@ -127,10 +201,18 @@ class CompaniesAdmin(admin.ModelAdmin):
 
 
 class OpinionsAdmin(admin.ModelAdmin):
+    """
+    Management for opinions in admin, contains custom list display
+    and search bar.
+    """
     list_display = ('user', 'rating', 'company', 'rating_date')
     search_fields = ['company__name', 'user__username']
 
 class CategoriesAdmin(admin.ModelAdmin):
+    """
+    Management for categories in admin, contains custom list display, search bar
+    and provides adding relation between category and company.
+    """
     list_display = ('name', 'icon')
     search_fields = ['name']
     inlines = [JunctionTableInline]

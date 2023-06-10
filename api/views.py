@@ -29,13 +29,18 @@ from api.utils.companies_filtr_sort import companies_sorting_filtring
 
 
 # Create your views here.
-@api_view(["GET", "POST"])
-def test(request, *args, **kwargs):
-    return Response({'hehe': 'papież tańczy'})
 
 
 @api_view(['POST'])
 def register(request, *args, **kwargs):
+    """
+    View function to register new user.
+    :param request: HttpRequest object.
+    :param args: Additional arguments passed to the view.
+    :param kwargs: Additional keyword arguments passed to the view.
+    :return: response with success status code if user successfully register, otherwise
+    error code with details.
+    """
     serializer = RegisterSerializer(data=request.data)
     data = {}
     if serializer.is_valid():
@@ -50,6 +55,14 @@ def register(request, *args, **kwargs):
 
 @api_view(['POST'])
 def login(request, *args, **kwargs):
+    """
+    View used to log in by users.
+    :param HttpRequest request: HttpRequest object.
+    :param arg: Additional arguments passed to the view.
+    :param kwargs: Additional keyword arguments passed to the view.
+    :return: Returns jwt and user data with success status code or
+    error status code with details.
+    """
     serializer = LoginSerializer(data=request.data)
     if serializer.is_valid():
         data = serializer.data
@@ -62,6 +75,14 @@ def login(request, *args, **kwargs):
 
 @api_view(['POST'])
 def login_company(request, *args, **kwarg):
+    """
+    View used to log in by companies.
+    :param HttpRequest request: HttpRequest object.
+    :param arg: Additional arguments passed to the view.
+    :param kwargs: Additional keyword arguments passed to the view.
+    :return: Returns jwt and company data with success status code or
+    error status code with details.
+    """
     serializer = LoginCompanySerializer(data=request.data)
     if serializer.is_valid():
         data = serializer.data
@@ -349,6 +370,13 @@ def company_category_pageable(request, *arg, **kwargs):
 
 @api_view(['POST'])
 def refresh_token(request, *arg, **kwargs):
+    """
+    View that refresh jwt.
+    :param request: Http request.
+    :param arg: Additional arguments passed to the view.
+    :param kwargs: Additional keyword arguments passed to the view.
+    :return: access jwt with success status code or error code with details.
+    """
     serializer = RefreshSerializer(data=request.data)
     data = {}
     if serializer.is_valid():
@@ -362,6 +390,14 @@ def refresh_token(request, *arg, **kwargs):
 
 @api_view(['POST'])
 def auto_login(request, *args, **kwarg):
+    """
+    Automatic login provided by jwt token.
+    :param request: Http request.
+    :param args: Additional arguments passed to the view.
+    :param kwarg: Additional keyword arguments passed to the view.
+    :return: Response with jwt, user data and success status code or
+    error status code with details.
+    """
     serializer = RefreshSerializer(data=request.data)
     data={}
     if serializer.is_valid():

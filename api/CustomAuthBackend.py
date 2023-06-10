@@ -11,8 +11,19 @@ USER = get_user_model()
 
 
 class UsernameOrEmailBackend(ModelBackend):
+    """
+    Authentication based on email or login, used in admin panel.
+    """
 
     def authenticate(self, request, username=None, password=None, **kwargs):
+        """
+        Method that check credential of user.
+        :param request: request
+        :param username: username or email
+        :param password: password
+        :param kwargs: additional key arguments.
+        :return: user if exits, otherwise raise error.
+        """
         if username is None:
             username = kwargs.get(USER.USERNAME_FIELD)
 
@@ -28,8 +39,16 @@ class UsernameOrEmailBackend(ModelBackend):
 
 
 class JWTAuth(BaseAuthentication):
-
+    """
+    Authentication based on JWT.
+    """
     def authenticate(self, request):
+        """
+        Authenticate users and companies by jwt.
+        Raise error if token is invalid or user isn't provided to log in.
+        :param request: request
+        :return: users or companies object if authenticated, otherwise raise error.
+        """
         auth_header = request.headers.get('Authorization')
 
         if not auth_header:
