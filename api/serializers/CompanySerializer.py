@@ -1,10 +1,9 @@
-from rest_framework.pagination import PageNumberPagination
+import math
 from rest_framework import serializers
 from api.models import Companies
 from api.models import Opinions
 from api.models import Categories
 from api.models import CategoriesOfCompanies
-from api.serializers.OpinionSerializer import OpinionSerializer
 from django.db.models import Avg
 
 
@@ -24,7 +23,7 @@ class CompanySerializer(serializers.ModelSerializer):
 
     def get_avgRatings(self, obj):
         avg_ratings = Opinions.objects.filter(company=obj).aggregate(rating=Avg('rating'))
-        return avg_ratings['rating']
+        return math.ceil(avg_ratings['rating'] * 10) / 10
 
     def get_opinionsCount(self, obj):
         return Opinions.objects.filter(company=obj).count()
