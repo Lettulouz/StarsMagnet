@@ -26,6 +26,7 @@ from .models import CategoriesOfCompanies
 from .utils.generate_safe_words import generate_safe_words
 from .utils.generate_safe_words import make_dictio
 from api.utils.companies_filtr_sort import companies_sorting_filtring
+from rest_framework.decorators import authentication_classes, permission_classes
 
 
 # Create your views here.
@@ -388,7 +389,9 @@ def refresh_token(request, *arg, **kwargs):
     return Response(data, status=status_code)
 
 
+
 @api_view(['POST'])
+@authentication_classes([])
 def auto_login(request, *args, **kwarg):
     """
     Automatic login provided by jwt token.
