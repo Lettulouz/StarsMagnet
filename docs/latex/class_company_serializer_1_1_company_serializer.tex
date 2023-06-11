@@ -1,0 +1,107 @@
+\doxysection{Company\+Serializer.\+Company\+Serializer Class Reference}
+\hypertarget{class_company_serializer_1_1_company_serializer}{}\label{class_company_serializer_1_1_company_serializer}\index{CompanySerializer.CompanySerializer@{CompanySerializer.CompanySerializer}}
+Inheritance diagram for Company\+Serializer.\+Company\+Serializer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_company_serializer_1_1_company_serializer}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_company_serializer_1_1_company_serializer_1_1_meta}{Meta}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_company_serializer_1_1_company_serializer_a6477316efddad38aa8940e7d1819166b}{get\+\_\+avg\+Ratings}} (self, obj)
+\item 
+\mbox{\hyperlink{class_company_serializer_1_1_company_serializer_a34e78b3e6b114bd69aff8f8a1fac7151}{get\+\_\+opinions\+Count}} (self, obj)
+\item 
+\mbox{\hyperlink{class_company_serializer_1_1_company_serializer_a5db2e1383ca0cd53b30fef492eb56684}{get\+\_\+categories}} (self, obj)
+\item 
+\mbox{\hyperlink{class_company_serializer_1_1_company_serializer_aa8aad246078746530d124e285c0802e3}{to\+\_\+representation}} (self, instance)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_company_serializer_1_1_company_serializer_ac538f058262065dc78618869c059372a}{avg\+Ratings}} = serializers.\+Serializer\+Method\+Field()
+\item 
+\mbox{\hyperlink{class_company_serializer_1_1_company_serializer_aee042b562f5e16378a512bf17db66ba3}{categories}} = serializers.\+Serializer\+Method\+Field()
+\item 
+\mbox{\hyperlink{class_company_serializer_1_1_company_serializer_aac0b74d2160cd1f61732f774ee6b0bc2}{opinions\+Count}} = serializers.\+Serializer\+Method\+Field()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Serializer to display companies with additional information.
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_company_serializer_1_1_company_serializer_a6477316efddad38aa8940e7d1819166b}\label{class_company_serializer_1_1_company_serializer_a6477316efddad38aa8940e7d1819166b} 
+\index{CompanySerializer.CompanySerializer@{CompanySerializer.CompanySerializer}!get\_avgRatings@{get\_avgRatings}}
+\index{get\_avgRatings@{get\_avgRatings}!CompanySerializer.CompanySerializer@{CompanySerializer.CompanySerializer}}
+\doxysubsubsection{\texorpdfstring{get\_avgRatings()}{get\_avgRatings()}}
+{\footnotesize\ttfamily Company\+Serializer.\+Company\+Serializer.\+get\+\_\+avg\+Ratings (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{obj }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}The method returns the average value of the ratings of a given company
+:param obj: company object
+:return: grade point average rounded to one decimal place
+\end{DoxyVerb}
+ \Hypertarget{class_company_serializer_1_1_company_serializer_a5db2e1383ca0cd53b30fef492eb56684}\label{class_company_serializer_1_1_company_serializer_a5db2e1383ca0cd53b30fef492eb56684} 
+\index{CompanySerializer.CompanySerializer@{CompanySerializer.CompanySerializer}!get\_categories@{get\_categories}}
+\index{get\_categories@{get\_categories}!CompanySerializer.CompanySerializer@{CompanySerializer.CompanySerializer}}
+\doxysubsubsection{\texorpdfstring{get\_categories()}{get\_categories()}}
+{\footnotesize\ttfamily Company\+Serializer.\+Company\+Serializer.\+get\+\_\+categories (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{obj }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Method collects all categories for a given company
+:param obj: company object
+:return: list of categories of a particular company
+\end{DoxyVerb}
+ \Hypertarget{class_company_serializer_1_1_company_serializer_a34e78b3e6b114bd69aff8f8a1fac7151}\label{class_company_serializer_1_1_company_serializer_a34e78b3e6b114bd69aff8f8a1fac7151} 
+\index{CompanySerializer.CompanySerializer@{CompanySerializer.CompanySerializer}!get\_opinionsCount@{get\_opinionsCount}}
+\index{get\_opinionsCount@{get\_opinionsCount}!CompanySerializer.CompanySerializer@{CompanySerializer.CompanySerializer}}
+\doxysubsubsection{\texorpdfstring{get\_opinionsCount()}{get\_opinionsCount()}}
+{\footnotesize\ttfamily Company\+Serializer.\+Company\+Serializer.\+get\+\_\+opinions\+Count (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{obj }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}The method returns the number of reviews of a given company
+:param obj: company object
+:return: the number of reviews of a given company
+\end{DoxyVerb}
+ \Hypertarget{class_company_serializer_1_1_company_serializer_aa8aad246078746530d124e285c0802e3}\label{class_company_serializer_1_1_company_serializer_aa8aad246078746530d124e285c0802e3} 
+\index{CompanySerializer.CompanySerializer@{CompanySerializer.CompanySerializer}!to\_representation@{to\_representation}}
+\index{to\_representation@{to\_representation}!CompanySerializer.CompanySerializer@{CompanySerializer.CompanySerializer}}
+\doxysubsubsection{\texorpdfstring{to\_representation()}{to\_representation()}}
+{\footnotesize\ttfamily Company\+Serializer.\+Company\+Serializer.\+to\+\_\+representation (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{instance }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Converts the model object to its representation in the format that will be returned in the response
+:param instance: model object
+:return: object representatuib
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_company_serializer_1_1_company_serializer_ac538f058262065dc78618869c059372a}\label{class_company_serializer_1_1_company_serializer_ac538f058262065dc78618869c059372a} 
+\index{CompanySerializer.CompanySerializer@{CompanySerializer.CompanySerializer}!avgRatings@{avgRatings}}
+\index{avgRatings@{avgRatings}!CompanySerializer.CompanySerializer@{CompanySerializer.CompanySerializer}}
+\doxysubsubsection{\texorpdfstring{avgRatings}{avgRatings}}
+{\footnotesize\ttfamily Company\+Serializer.\+Company\+Serializer.\+avg\+Ratings = serializers.\+Serializer\+Method\+Field()\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_company_serializer_1_1_company_serializer_aee042b562f5e16378a512bf17db66ba3}\label{class_company_serializer_1_1_company_serializer_aee042b562f5e16378a512bf17db66ba3} 
+\index{CompanySerializer.CompanySerializer@{CompanySerializer.CompanySerializer}!categories@{categories}}
+\index{categories@{categories}!CompanySerializer.CompanySerializer@{CompanySerializer.CompanySerializer}}
+\doxysubsubsection{\texorpdfstring{categories}{categories}}
+{\footnotesize\ttfamily Company\+Serializer.\+Company\+Serializer.\+categories = serializers.\+Serializer\+Method\+Field()\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_company_serializer_1_1_company_serializer_aac0b74d2160cd1f61732f774ee6b0bc2}\label{class_company_serializer_1_1_company_serializer_aac0b74d2160cd1f61732f774ee6b0bc2} 
+\index{CompanySerializer.CompanySerializer@{CompanySerializer.CompanySerializer}!opinionsCount@{opinionsCount}}
+\index{opinionsCount@{opinionsCount}!CompanySerializer.CompanySerializer@{CompanySerializer.CompanySerializer}}
+\doxysubsubsection{\texorpdfstring{opinionsCount}{opinionsCount}}
+{\footnotesize\ttfamily Company\+Serializer.\+Company\+Serializer.\+opinions\+Count = serializers.\+Serializer\+Method\+Field()\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/tenag/\+Idea\+Projects/\+Stars\+Magnet/api/serializers/\mbox{\hyperlink{_company_serializer_8py}{Company\+Serializer.\+py}}\end{DoxyCompactItemize}

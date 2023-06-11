@@ -1,0 +1,181 @@
+\doxysection{api.\+admin.\+Companies\+Admin Class Reference}
+\hypertarget{classapi_1_1admin_1_1_companies_admin}{}\label{classapi_1_1admin_1_1_companies_admin}\index{api.admin.CompaniesAdmin@{api.admin.CompaniesAdmin}}
+Inheritance diagram for api.\+admin.\+Companies\+Admin\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classapi_1_1admin_1_1_companies_admin}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classapi_1_1admin_1_1_companies_admin_aac176f0f863cd0aa0f0b1c5f372e97ea}{rating}} (self, obj)
+\item 
+\mbox{\hyperlink{classapi_1_1admin_1_1_companies_admin_a62a78bd6842adc204b014ce37a22aaa2}{get\+\_\+queryset}} (self, request)
+\item 
+\mbox{\hyperlink{classapi_1_1admin_1_1_companies_admin_a230571251107442d412666b3ec9215e5}{get\+\_\+fieldsets}} (self, request, obj=None)
+\item 
+\mbox{\hyperlink{classapi_1_1admin_1_1_companies_admin_a9eb5c931fead33199c12f7a202fdafd5}{get\+\_\+form}} (self, request, obj=None, \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}kwargs)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+tuple \mbox{\hyperlink{classapi_1_1admin_1_1_companies_admin_ac4d3a9b65a0206d0ade105204b838def}{fieldsets}}
+\item 
+tuple \mbox{\hyperlink{classapi_1_1admin_1_1_companies_admin_a1a27d0e5f1db25f749235ceef1b69e7f}{add\+\_\+fieldsets}}
+\item 
+\mbox{\hyperlink{classapi_1_1admin_1_1_companies_admin_ac1e924623e18fa57ab00b00472e8e2a8}{form}} = Company\+Form
+\item 
+\mbox{\hyperlink{classapi_1_1admin_1_1_companies_admin_ae6cf90ed694cb61cdd13c9cbaa95a7c3}{add\+\_\+form}} = Add\+Company\+Form
+\item 
+tuple \mbox{\hyperlink{classapi_1_1admin_1_1_companies_admin_a13413d8582255717d0ebf1c52678a2ac}{list\+\_\+display}} = (\textquotesingle{}name\textquotesingle{}, \textquotesingle{}username\textquotesingle{}, \textquotesingle{}email\textquotesingle{}, \textquotesingle{}status\textquotesingle{}, \textquotesingle{}\mbox{\hyperlink{classapi_1_1admin_1_1_companies_admin_aac176f0f863cd0aa0f0b1c5f372e97ea}{rating}}\textquotesingle{})
+\item 
+list \mbox{\hyperlink{classapi_1_1admin_1_1_companies_admin_ae8014b8244968358cbd80bb7a636d78b}{list\+\_\+filter}} = \mbox{[}\mbox{\hyperlink{classapi_1_1admin_1_1_company_status_list_filter}{Company\+Status\+List\+Filter}}\mbox{]}
+\item 
+list \mbox{\hyperlink{classapi_1_1admin_1_1_companies_admin_a3d55b19e28ea72af360fcd0544d81ca7}{search\+\_\+fields}} = \mbox{[}\textquotesingle{}name\textquotesingle{}, \textquotesingle{}username\textquotesingle{}, \textquotesingle{}email\textquotesingle{}\mbox{]}
+\item 
+list \mbox{\hyperlink{classapi_1_1admin_1_1_companies_admin_ae53853089752b3ac0e4ae5d842a70afd}{actions}} = \mbox{[}\mbox{\hyperlink{namespaceapi_1_1admin_a8412fd641452c2441b4949d16bb48fd2}{accept\+\_\+companies}}, \mbox{\hyperlink{namespaceapi_1_1admin_a63947e9d78b3b60a9651fd5d9afade45}{reject\+\_\+companies}}, \mbox{\hyperlink{namespaceapi_1_1admin_a2e989ba63ade24edef40e28c02fd7c90}{ban\+\_\+companies}}\mbox{]}
+\item 
+list \mbox{\hyperlink{classapi_1_1admin_1_1_companies_admin_af5d75a9af01e0f71b207589c756112b8}{inlines}} = \mbox{[}\mbox{\hyperlink{classapi_1_1admin_1_1_junction_table_inline}{Junction\+Table\+Inline}}\mbox{]}
+\item 
+\mbox{\hyperlink{classapi_1_1admin_1_1_companies_admin_ac75307361c3a21743b2b73dd0eff46cf}{admin\+\_\+order\+\_\+field}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Custom companies management in admin panel.
+Contains custom fieldsets, forms, list, filters and actions.
+Provides adding relation between company and category.
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classapi_1_1admin_1_1_companies_admin_a230571251107442d412666b3ec9215e5}\label{classapi_1_1admin_1_1_companies_admin_a230571251107442d412666b3ec9215e5} 
+\index{api.admin.CompaniesAdmin@{api.admin.CompaniesAdmin}!get\_fieldsets@{get\_fieldsets}}
+\index{get\_fieldsets@{get\_fieldsets}!api.admin.CompaniesAdmin@{api.admin.CompaniesAdmin}}
+\doxysubsubsection{\texorpdfstring{get\_fieldsets()}{get\_fieldsets()}}
+{\footnotesize\ttfamily api.\+admin.\+Companies\+Admin.\+get\+\_\+fieldsets (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{request,  }\item[{}]{obj = {\ttfamily None} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Method that return add_fieldsets at adding company or
+standard fieldset at editing company.
+:param request: request
+:param obj: company object.
+:return: fieldsets
+\end{DoxyVerb}
+ \Hypertarget{classapi_1_1admin_1_1_companies_admin_a9eb5c931fead33199c12f7a202fdafd5}\label{classapi_1_1admin_1_1_companies_admin_a9eb5c931fead33199c12f7a202fdafd5} 
+\index{api.admin.CompaniesAdmin@{api.admin.CompaniesAdmin}!get\_form@{get\_form}}
+\index{get\_form@{get\_form}!api.admin.CompaniesAdmin@{api.admin.CompaniesAdmin}}
+\doxysubsubsection{\texorpdfstring{get\_form()}{get\_form()}}
+{\footnotesize\ttfamily api.\+admin.\+Companies\+Admin.\+get\+\_\+form (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{request,  }\item[{}]{obj = {\ttfamily None},  }\item[{\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{kwargs }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Method that return add_form at adding company or
+standard form at editing company.
+:param request: request
+:param obj: company object.
+:return: form
+\end{DoxyVerb}
+ \Hypertarget{classapi_1_1admin_1_1_companies_admin_a62a78bd6842adc204b014ce37a22aaa2}\label{classapi_1_1admin_1_1_companies_admin_a62a78bd6842adc204b014ce37a22aaa2} 
+\index{api.admin.CompaniesAdmin@{api.admin.CompaniesAdmin}!get\_queryset@{get\_queryset}}
+\index{get\_queryset@{get\_queryset}!api.admin.CompaniesAdmin@{api.admin.CompaniesAdmin}}
+\doxysubsubsection{\texorpdfstring{get\_queryset()}{get\_queryset()}}
+{\footnotesize\ttfamily api.\+admin.\+Companies\+Admin.\+get\+\_\+queryset (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{request }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Method that return queryset of companies, used to sort companies by average rating.
+:param request: request
+:return: Companies queryset.
+\end{DoxyVerb}
+ \Hypertarget{classapi_1_1admin_1_1_companies_admin_aac176f0f863cd0aa0f0b1c5f372e97ea}\label{classapi_1_1admin_1_1_companies_admin_aac176f0f863cd0aa0f0b1c5f372e97ea} 
+\index{api.admin.CompaniesAdmin@{api.admin.CompaniesAdmin}!rating@{rating}}
+\index{rating@{rating}!api.admin.CompaniesAdmin@{api.admin.CompaniesAdmin}}
+\doxysubsubsection{\texorpdfstring{rating()}{rating()}}
+{\footnotesize\ttfamily api.\+admin.\+Companies\+Admin.\+rating (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{obj }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Method that return average rating for companies list.
+:param obj: Companies object.
+:return: average rating.
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classapi_1_1admin_1_1_companies_admin_ae53853089752b3ac0e4ae5d842a70afd}\label{classapi_1_1admin_1_1_companies_admin_ae53853089752b3ac0e4ae5d842a70afd} 
+\index{api.admin.CompaniesAdmin@{api.admin.CompaniesAdmin}!actions@{actions}}
+\index{actions@{actions}!api.admin.CompaniesAdmin@{api.admin.CompaniesAdmin}}
+\doxysubsubsection{\texorpdfstring{actions}{actions}}
+{\footnotesize\ttfamily list api.\+admin.\+Companies\+Admin.\+actions = \mbox{[}\mbox{\hyperlink{namespaceapi_1_1admin_a8412fd641452c2441b4949d16bb48fd2}{accept\+\_\+companies}}, \mbox{\hyperlink{namespaceapi_1_1admin_a63947e9d78b3b60a9651fd5d9afade45}{reject\+\_\+companies}}, \mbox{\hyperlink{namespaceapi_1_1admin_a2e989ba63ade24edef40e28c02fd7c90}{ban\+\_\+companies}}\mbox{]}\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{classapi_1_1admin_1_1_companies_admin_a1a27d0e5f1db25f749235ceef1b69e7f}\label{classapi_1_1admin_1_1_companies_admin_a1a27d0e5f1db25f749235ceef1b69e7f} 
+\index{api.admin.CompaniesAdmin@{api.admin.CompaniesAdmin}!add\_fieldsets@{add\_fieldsets}}
+\index{add\_fieldsets@{add\_fieldsets}!api.admin.CompaniesAdmin@{api.admin.CompaniesAdmin}}
+\doxysubsubsection{\texorpdfstring{add\_fieldsets}{add\_fieldsets}}
+{\footnotesize\ttfamily tuple api.\+admin.\+Companies\+Admin.\+add\+\_\+fieldsets\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \ (}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ (\textcolor{keywordtype}{None},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \{\textcolor{stringliteral}{"{}fields"{}}:\ (\textcolor{stringliteral}{"{}name"{}},\ \textcolor{stringliteral}{"{}site"{}},\ \textcolor{stringliteral}{"{}username"{}},\ \textcolor{stringliteral}{"{}email"{}},\ \textcolor{stringliteral}{"{}token"{}},\ \textcolor{stringliteral}{"{}password"{}},\ \textcolor{stringliteral}{"{}confirm\_password"{}},\ \textcolor{stringliteral}{"{}status"{}})\}),}
+\DoxyCodeLine{\ \ \ \ )}
+
+\end{DoxyCode}
+\Hypertarget{classapi_1_1admin_1_1_companies_admin_ae6cf90ed694cb61cdd13c9cbaa95a7c3}\label{classapi_1_1admin_1_1_companies_admin_ae6cf90ed694cb61cdd13c9cbaa95a7c3} 
+\index{api.admin.CompaniesAdmin@{api.admin.CompaniesAdmin}!add\_form@{add\_form}}
+\index{add\_form@{add\_form}!api.admin.CompaniesAdmin@{api.admin.CompaniesAdmin}}
+\doxysubsubsection{\texorpdfstring{add\_form}{add\_form}}
+{\footnotesize\ttfamily api.\+admin.\+Companies\+Admin.\+add\+\_\+form = Add\+Company\+Form\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{classapi_1_1admin_1_1_companies_admin_ac75307361c3a21743b2b73dd0eff46cf}\label{classapi_1_1admin_1_1_companies_admin_ac75307361c3a21743b2b73dd0eff46cf} 
+\index{api.admin.CompaniesAdmin@{api.admin.CompaniesAdmin}!admin\_order\_field@{admin\_order\_field}}
+\index{admin\_order\_field@{admin\_order\_field}!api.admin.CompaniesAdmin@{api.admin.CompaniesAdmin}}
+\doxysubsubsection{\texorpdfstring{admin\_order\_field}{admin\_order\_field}}
+{\footnotesize\ttfamily api.\+admin.\+Companies\+Admin.\+admin\+\_\+order\+\_\+field\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{classapi_1_1admin_1_1_companies_admin_ac4d3a9b65a0206d0ade105204b838def}\label{classapi_1_1admin_1_1_companies_admin_ac4d3a9b65a0206d0ade105204b838def} 
+\index{api.admin.CompaniesAdmin@{api.admin.CompaniesAdmin}!fieldsets@{fieldsets}}
+\index{fieldsets@{fieldsets}!api.admin.CompaniesAdmin@{api.admin.CompaniesAdmin}}
+\doxysubsubsection{\texorpdfstring{fieldsets}{fieldsets}}
+{\footnotesize\ttfamily tuple api.\+admin.\+Companies\+Admin.\+fieldsets\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \ (}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ (\textcolor{keywordtype}{None},\ \{\textcolor{stringliteral}{"{}fields"{}}:\ [\textcolor{stringliteral}{"{}name"{}},\ \textcolor{stringliteral}{"{}site"{}},\ \textcolor{stringliteral}{"{}status"{}}]\}),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ (\textcolor{stringliteral}{"{}Auth"{}},\ \{\textcolor{stringliteral}{"{}fields"{}}:\ [\textcolor{stringliteral}{"{}username"{}},\ \textcolor{stringliteral}{"{}email"{}},\ \textcolor{stringliteral}{"{}token"{}}]\}),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ (\textcolor{stringliteral}{"{}Pass"{}},\ \{\textcolor{stringliteral}{"{}fields"{}}:\ [\textcolor{stringliteral}{"{}password"{}},\ \textcolor{stringliteral}{"{}confirm\_password"{}}]\})}
+\DoxyCodeLine{\ \ \ \ )}
+
+\end{DoxyCode}
+\Hypertarget{classapi_1_1admin_1_1_companies_admin_ac1e924623e18fa57ab00b00472e8e2a8}\label{classapi_1_1admin_1_1_companies_admin_ac1e924623e18fa57ab00b00472e8e2a8} 
+\index{api.admin.CompaniesAdmin@{api.admin.CompaniesAdmin}!form@{form}}
+\index{form@{form}!api.admin.CompaniesAdmin@{api.admin.CompaniesAdmin}}
+\doxysubsubsection{\texorpdfstring{form}{form}}
+{\footnotesize\ttfamily api.\+admin.\+Companies\+Admin.\+form = Company\+Form\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{classapi_1_1admin_1_1_companies_admin_af5d75a9af01e0f71b207589c756112b8}\label{classapi_1_1admin_1_1_companies_admin_af5d75a9af01e0f71b207589c756112b8} 
+\index{api.admin.CompaniesAdmin@{api.admin.CompaniesAdmin}!inlines@{inlines}}
+\index{inlines@{inlines}!api.admin.CompaniesAdmin@{api.admin.CompaniesAdmin}}
+\doxysubsubsection{\texorpdfstring{inlines}{inlines}}
+{\footnotesize\ttfamily list api.\+admin.\+Companies\+Admin.\+inlines = \mbox{[}\mbox{\hyperlink{classapi_1_1admin_1_1_junction_table_inline}{Junction\+Table\+Inline}}\mbox{]}\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{classapi_1_1admin_1_1_companies_admin_a13413d8582255717d0ebf1c52678a2ac}\label{classapi_1_1admin_1_1_companies_admin_a13413d8582255717d0ebf1c52678a2ac} 
+\index{api.admin.CompaniesAdmin@{api.admin.CompaniesAdmin}!list\_display@{list\_display}}
+\index{list\_display@{list\_display}!api.admin.CompaniesAdmin@{api.admin.CompaniesAdmin}}
+\doxysubsubsection{\texorpdfstring{list\_display}{list\_display}}
+{\footnotesize\ttfamily tuple api.\+admin.\+Companies\+Admin.\+list\+\_\+display = (\textquotesingle{}name\textquotesingle{}, \textquotesingle{}username\textquotesingle{}, \textquotesingle{}email\textquotesingle{}, \textquotesingle{}status\textquotesingle{}, \textquotesingle{}\mbox{\hyperlink{classapi_1_1admin_1_1_companies_admin_aac176f0f863cd0aa0f0b1c5f372e97ea}{rating}}\textquotesingle{})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{classapi_1_1admin_1_1_companies_admin_ae8014b8244968358cbd80bb7a636d78b}\label{classapi_1_1admin_1_1_companies_admin_ae8014b8244968358cbd80bb7a636d78b} 
+\index{api.admin.CompaniesAdmin@{api.admin.CompaniesAdmin}!list\_filter@{list\_filter}}
+\index{list\_filter@{list\_filter}!api.admin.CompaniesAdmin@{api.admin.CompaniesAdmin}}
+\doxysubsubsection{\texorpdfstring{list\_filter}{list\_filter}}
+{\footnotesize\ttfamily list api.\+admin.\+Companies\+Admin.\+list\+\_\+filter = \mbox{[}\mbox{\hyperlink{classapi_1_1admin_1_1_company_status_list_filter}{Company\+Status\+List\+Filter}}\mbox{]}\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{classapi_1_1admin_1_1_companies_admin_a3d55b19e28ea72af360fcd0544d81ca7}\label{classapi_1_1admin_1_1_companies_admin_a3d55b19e28ea72af360fcd0544d81ca7} 
+\index{api.admin.CompaniesAdmin@{api.admin.CompaniesAdmin}!search\_fields@{search\_fields}}
+\index{search\_fields@{search\_fields}!api.admin.CompaniesAdmin@{api.admin.CompaniesAdmin}}
+\doxysubsubsection{\texorpdfstring{search\_fields}{search\_fields}}
+{\footnotesize\ttfamily list api.\+admin.\+Companies\+Admin.\+search\+\_\+fields = \mbox{[}\textquotesingle{}name\textquotesingle{}, \textquotesingle{}username\textquotesingle{}, \textquotesingle{}email\textquotesingle{}\mbox{]}\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/tenag/\+Idea\+Projects/\+Stars\+Magnet/api/\mbox{\hyperlink{admin_8py}{admin.\+py}}\end{DoxyCompactItemize}

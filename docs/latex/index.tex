@@ -1,0 +1,123 @@
+\chapter{Stars\+Magnet}
+\hypertarget{index}{}\label{index}\index{StarsMagnet@{StarsMagnet}}
+\label{index_md__c_1_2_users_2tenag_2_downloads_2_r_e_a_d_m_e}%
+\Hypertarget{index_md__c_1_2_users_2tenag_2_downloads_2_r_e_a_d_m_e}%
+ Django server created as a college project. It allows register companies and give them feedback by users.\hypertarget{index_autotoc_md1}{}\doxysection{\texorpdfstring{Tech Stack}{Tech Stack}}\label{index_autotoc_md1}
+
+\begin{DoxyItemize}
+\item Python
+\item Django framework
+\item Django rest framework
+\item My\+SQL database
+\end{DoxyItemize}
+
+{\bfseries{other python modules}}
+
+
+\begin{DoxyItemize}
+\item Py\+JWT
+\item mysqlclient
+\item django-\/cors-\/headers
+\item django-\/jazzmin
+\item python-\/dotenv
+\item requests
+\item sqlparse
+\end{DoxyItemize}\hypertarget{index_autotoc_md2}{}\doxysection{\texorpdfstring{API Reference}{API Reference}}\label{index_autotoc_md2}
+\hypertarget{index_autotoc_md3}{}\doxysubsubsection{\texorpdfstring{Log in by user}{Log in by user}}\label{index_autotoc_md3}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{POST\ /api/login}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md4}{}\doxysubsubsection{\texorpdfstring{Register new user account}{Register new user account}}\label{index_autotoc_md4}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{POST\ /api/register}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md5}{}\doxysubsubsection{\texorpdfstring{Log in by company}{Log in by company}}\label{index_autotoc_md5}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{POST\ /api/company/login}
+
+\end{DoxyCode}
+ \hypertarget{index_autotoc_md6}{}\doxysubsubsection{\texorpdfstring{Register new company}{Register new company}}\label{index_autotoc_md6}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{POST\ /api/company}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md7}{}\doxysubsubsection{\texorpdfstring{reset company token}{reset company token}}\label{index_autotoc_md7}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{POST\ /api/token/reset}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md8}{}\doxysubsubsection{\texorpdfstring{refresh jwt}{refresh jwt}}\label{index_autotoc_md8}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{POST\ /api/token/refresh}
+
+\end{DoxyCode}
+ \hypertarget{index_autotoc_md9}{}\doxysubsubsection{\texorpdfstring{auto log in}{auto log in}}\label{index_autotoc_md9}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{POST\ /api/login/auto}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md10}{}\doxysubsubsection{\texorpdfstring{Get company info}{Get company info}}\label{index_autotoc_md10}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{GET\ /api/company}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md11}{}\doxysubsubsection{\texorpdfstring{Add opinion by user}{Add opinion by user}}\label{index_autotoc_md11}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{POST\ /api/opinion}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md12}{}\doxysubsubsection{\texorpdfstring{Add response to opinion by company}{Add response to opinion by company}}\label{index_autotoc_md12}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{POST\ /api/opinion/company}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md13}{}\doxysubsubsection{\texorpdfstring{Get opinions for specific company}{Get opinions for specific company}}\label{index_autotoc_md13}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{GET\ /api/opinion/list/company/<int:company\_id>}
+\DoxyCodeLine{GET\ /api/opinion/list/company/<int:company\_id>/pageable}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md14}{}\doxysubsubsection{\texorpdfstring{Get categories}{Get categories}}\label{index_autotoc_md14}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{GET\ /api/category/pageable/<int:amount>}
+\DoxyCodeLine{GET\ /api/category}
+\DoxyCodeLine{GET\ /api/category/all}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md15}{}\doxysubsubsection{\texorpdfstring{Get companies by category}{Get companies by category}}\label{index_autotoc_md15}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{POST\ /api/category/company}
+\DoxyCodeLine{POST\ /api/category/company/pageable}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md16}{}\doxysubsubsection{\texorpdfstring{Get companies by query}{Get companies by query}}\label{index_autotoc_md16}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{POST\ /api/search}
+\DoxyCodeLine{POST\ /api/company/pageable}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md17}{}\doxysection{\texorpdfstring{Authors}{Authors}}\label{index_autotoc_md17}
+
+\begin{DoxyItemize}
+\item \href{https://www.github.com/Lettulouz}{\texttt{ @\+Lettulouz}}
+\item \href{https://www.github.com/Milosz08}{\texttt{ @\+Milosz08}}
+\item \href{https://www.github.com/patrick012016(https://github.com/patrick012016/CollegeQuizMobileApp)}{\texttt{ @patrick012016}}
+\item \href{https://www.github.com/tentegess}{\texttt{ @tentegess}}
+\item \href{https://www.github.com/kBaginskik}{\texttt{ @k\+Baginskik}} 
+\end{DoxyItemize}

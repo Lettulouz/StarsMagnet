@@ -1,0 +1,93 @@
+\doxysection{Refresh\+Serializer.\+Refresh\+Serializer Class Reference}
+\hypertarget{class_refresh_serializer_1_1_refresh_serializer}{}\label{class_refresh_serializer_1_1_refresh_serializer}\index{RefreshSerializer.RefreshSerializer@{RefreshSerializer.RefreshSerializer}}
+Inheritance diagram for Refresh\+Serializer.\+Refresh\+Serializer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_refresh_serializer_1_1_refresh_serializer}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_refresh_serializer_1_1_refresh_serializer_a9c7dd39f4a752f94d4c1f1548c713f0d}{validate}} (self, data)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_refresh_serializer_1_1_refresh_serializer_a733e1cd899b3f96c8607ed88fc0756b5}{id}} = serializers.\+Integer\+Field(read\+\_\+only=True)
+\item 
+\mbox{\hyperlink{class_refresh_serializer_1_1_refresh_serializer_a74a9121aea44f8b5cb7af240674569a0}{username}} = serializers.\+Char\+Field(max\+\_\+length=150, read\+\_\+only=True)
+\item 
+\mbox{\hyperlink{class_refresh_serializer_1_1_refresh_serializer_a5f1de487d50f712161313f2ebb299dde}{name}} = serializers.\+Char\+Field(default=None, read\+\_\+only=True)
+\item 
+\mbox{\hyperlink{class_refresh_serializer_1_1_refresh_serializer_a13ffad2d0e13d25b12cd9f1061341c4c}{role}} = serializers.\+Char\+Field(max\+\_\+length=255, read\+\_\+only=True)
+\item 
+\mbox{\hyperlink{class_refresh_serializer_1_1_refresh_serializer_adf62d5ddef71f302bcf72855e89fe74b}{access}} = serializers.\+Char\+Field(max\+\_\+length=255, read\+\_\+only=True)
+\item 
+\mbox{\hyperlink{class_refresh_serializer_1_1_refresh_serializer_a5eaed722cdcc03b588f58c59ff0117ff}{refresh}} = serializers.\+Char\+Field(max\+\_\+length=255)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Serializer for refresh jwt token and auto login for users and companies.
+Contains field for refresh and returned data.
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_refresh_serializer_1_1_refresh_serializer_a9c7dd39f4a752f94d4c1f1548c713f0d}\label{class_refresh_serializer_1_1_refresh_serializer_a9c7dd39f4a752f94d4c1f1548c713f0d} 
+\index{RefreshSerializer.RefreshSerializer@{RefreshSerializer.RefreshSerializer}!validate@{validate}}
+\index{validate@{validate}!RefreshSerializer.RefreshSerializer@{RefreshSerializer.RefreshSerializer}}
+\doxysubsubsection{\texorpdfstring{validate()}{validate()}}
+{\footnotesize\ttfamily Refresh\+Serializer.\+Refresh\+Serializer.\+validate (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{data }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Method for validate request, check user type,
+if users exist and is active or accepted.
+:param data: data from request.
+:return: jwt tokens and user data if exists and token is valid,
+otherwise raise error.
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_refresh_serializer_1_1_refresh_serializer_adf62d5ddef71f302bcf72855e89fe74b}\label{class_refresh_serializer_1_1_refresh_serializer_adf62d5ddef71f302bcf72855e89fe74b} 
+\index{RefreshSerializer.RefreshSerializer@{RefreshSerializer.RefreshSerializer}!access@{access}}
+\index{access@{access}!RefreshSerializer.RefreshSerializer@{RefreshSerializer.RefreshSerializer}}
+\doxysubsubsection{\texorpdfstring{access}{access}}
+{\footnotesize\ttfamily Refresh\+Serializer.\+Refresh\+Serializer.\+access = serializers.\+Char\+Field(max\+\_\+length=255, read\+\_\+only=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_refresh_serializer_1_1_refresh_serializer_a733e1cd899b3f96c8607ed88fc0756b5}\label{class_refresh_serializer_1_1_refresh_serializer_a733e1cd899b3f96c8607ed88fc0756b5} 
+\index{RefreshSerializer.RefreshSerializer@{RefreshSerializer.RefreshSerializer}!id@{id}}
+\index{id@{id}!RefreshSerializer.RefreshSerializer@{RefreshSerializer.RefreshSerializer}}
+\doxysubsubsection{\texorpdfstring{id}{id}}
+{\footnotesize\ttfamily Refresh\+Serializer.\+Refresh\+Serializer.\+id = serializers.\+Integer\+Field(read\+\_\+only=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_refresh_serializer_1_1_refresh_serializer_a5f1de487d50f712161313f2ebb299dde}\label{class_refresh_serializer_1_1_refresh_serializer_a5f1de487d50f712161313f2ebb299dde} 
+\index{RefreshSerializer.RefreshSerializer@{RefreshSerializer.RefreshSerializer}!name@{name}}
+\index{name@{name}!RefreshSerializer.RefreshSerializer@{RefreshSerializer.RefreshSerializer}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily Refresh\+Serializer.\+Refresh\+Serializer.\+name = serializers.\+Char\+Field(default=None, read\+\_\+only=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_refresh_serializer_1_1_refresh_serializer_a5eaed722cdcc03b588f58c59ff0117ff}\label{class_refresh_serializer_1_1_refresh_serializer_a5eaed722cdcc03b588f58c59ff0117ff} 
+\index{RefreshSerializer.RefreshSerializer@{RefreshSerializer.RefreshSerializer}!refresh@{refresh}}
+\index{refresh@{refresh}!RefreshSerializer.RefreshSerializer@{RefreshSerializer.RefreshSerializer}}
+\doxysubsubsection{\texorpdfstring{refresh}{refresh}}
+{\footnotesize\ttfamily Refresh\+Serializer.\+Refresh\+Serializer.\+refresh = serializers.\+Char\+Field(max\+\_\+length=255)\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_refresh_serializer_1_1_refresh_serializer_a13ffad2d0e13d25b12cd9f1061341c4c}\label{class_refresh_serializer_1_1_refresh_serializer_a13ffad2d0e13d25b12cd9f1061341c4c} 
+\index{RefreshSerializer.RefreshSerializer@{RefreshSerializer.RefreshSerializer}!role@{role}}
+\index{role@{role}!RefreshSerializer.RefreshSerializer@{RefreshSerializer.RefreshSerializer}}
+\doxysubsubsection{\texorpdfstring{role}{role}}
+{\footnotesize\ttfamily Refresh\+Serializer.\+Refresh\+Serializer.\+role = serializers.\+Char\+Field(max\+\_\+length=255, read\+\_\+only=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_refresh_serializer_1_1_refresh_serializer_a74a9121aea44f8b5cb7af240674569a0}\label{class_refresh_serializer_1_1_refresh_serializer_a74a9121aea44f8b5cb7af240674569a0} 
+\index{RefreshSerializer.RefreshSerializer@{RefreshSerializer.RefreshSerializer}!username@{username}}
+\index{username@{username}!RefreshSerializer.RefreshSerializer@{RefreshSerializer.RefreshSerializer}}
+\doxysubsubsection{\texorpdfstring{username}{username}}
+{\footnotesize\ttfamily Refresh\+Serializer.\+Refresh\+Serializer.\+username = serializers.\+Char\+Field(max\+\_\+length=150, read\+\_\+only=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/tenag/\+Idea\+Projects/\+Stars\+Magnet/api/serializers/\mbox{\hyperlink{_refresh_serializer_8py}{Refresh\+Serializer.\+py}}\end{DoxyCompactItemize}

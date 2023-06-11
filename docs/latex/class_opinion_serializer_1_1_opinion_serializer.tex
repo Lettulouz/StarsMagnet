@@ -1,0 +1,115 @@
+\doxysection{Opinion\+Serializer.\+Opinion\+Serializer Class Reference}
+\hypertarget{class_opinion_serializer_1_1_opinion_serializer}{}\label{class_opinion_serializer_1_1_opinion_serializer}\index{OpinionSerializer.OpinionSerializer@{OpinionSerializer.OpinionSerializer}}
+Inheritance diagram for Opinion\+Serializer.\+Opinion\+Serializer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_opinion_serializer_1_1_opinion_serializer}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_opinion_serializer_1_1_opinion_serializer_1_1_meta}{Meta}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_opinion_serializer_1_1_opinion_serializer_af1c6b9d7a13eabf2c96906adb38667be}{get\+\_\+fullname}} (self, obj)
+\item 
+\mbox{\hyperlink{class_opinion_serializer_1_1_opinion_serializer_acc9c67c335e1e51069f02b8520244d1f}{get\+\_\+count\+Of\+Reviews}} (self, obj)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_opinion_serializer_1_1_opinion_serializer_a70350279541e075a69789dacd0f24e3e}{rating\+Date}} = serializers.\+Date\+Time\+Field(source=\textquotesingle{}rating\+\_\+date\textquotesingle{})
+\item 
+\mbox{\hyperlink{class_opinion_serializer_1_1_opinion_serializer_a260f090af9520d4a30eb764095c7931a}{comment\+Date}} = serializers.\+Date\+Time\+Field(source=\textquotesingle{}comment\+\_\+date\textquotesingle{})
+\item 
+\mbox{\hyperlink{class_opinion_serializer_1_1_opinion_serializer_aac5ab84dbf992e86e4832098b31ea526}{response\+Date}} = serializers.\+Date\+Time\+Field(source=\textquotesingle{}response\+\_\+date\textquotesingle{})
+\item 
+\mbox{\hyperlink{class_opinion_serializer_1_1_opinion_serializer_a671e70578e645e915882e3aa5bf0f578}{company\+Response}} = serializers.\+Char\+Field(source=\textquotesingle{}company\+\_\+response\textquotesingle{})
+\item 
+\mbox{\hyperlink{class_opinion_serializer_1_1_opinion_serializer_a76beb40a74c31f0eab8d30a8aff0d38e}{user\+Id}} = serializers.\+Integer\+Field(source=\textquotesingle{}user\+\_\+id\textquotesingle{})
+\item 
+\mbox{\hyperlink{class_opinion_serializer_1_1_opinion_serializer_a9e0eb5625ad5676745c71599efe5db3c}{fullname}} = serializers.\+Serializer\+Method\+Field()
+\item 
+\mbox{\hyperlink{class_opinion_serializer_1_1_opinion_serializer_a504cdfdf7c5b4cd2368de29656b3ae5f}{count\+Of\+Reviews}} = serializers.\+Serializer\+Method\+Field()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Serializer to display opinions.
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_opinion_serializer_1_1_opinion_serializer_acc9c67c335e1e51069f02b8520244d1f}\label{class_opinion_serializer_1_1_opinion_serializer_acc9c67c335e1e51069f02b8520244d1f} 
+\index{OpinionSerializer.OpinionSerializer@{OpinionSerializer.OpinionSerializer}!get\_countOfReviews@{get\_countOfReviews}}
+\index{get\_countOfReviews@{get\_countOfReviews}!OpinionSerializer.OpinionSerializer@{OpinionSerializer.OpinionSerializer}}
+\doxysubsubsection{\texorpdfstring{get\_countOfReviews()}{get\_countOfReviews()}}
+{\footnotesize\ttfamily Opinion\+Serializer.\+Opinion\+Serializer.\+get\+\_\+count\+Of\+Reviews (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{obj }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}The method returns the number of reviews of a given user
+:param obj: opinion object
+:return: the number of reviews of a given user
+\end{DoxyVerb}
+ \Hypertarget{class_opinion_serializer_1_1_opinion_serializer_af1c6b9d7a13eabf2c96906adb38667be}\label{class_opinion_serializer_1_1_opinion_serializer_af1c6b9d7a13eabf2c96906adb38667be} 
+\index{OpinionSerializer.OpinionSerializer@{OpinionSerializer.OpinionSerializer}!get\_fullname@{get\_fullname}}
+\index{get\_fullname@{get\_fullname}!OpinionSerializer.OpinionSerializer@{OpinionSerializer.OpinionSerializer}}
+\doxysubsubsection{\texorpdfstring{get\_fullname()}{get\_fullname()}}
+{\footnotesize\ttfamily Opinion\+Serializer.\+Opinion\+Serializer.\+get\+\_\+fullname (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{obj }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Method returns the name of the commenter for a given opinions
+:param obj: opinion obj
+:return: fullname of commenter
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_opinion_serializer_1_1_opinion_serializer_a260f090af9520d4a30eb764095c7931a}\label{class_opinion_serializer_1_1_opinion_serializer_a260f090af9520d4a30eb764095c7931a} 
+\index{OpinionSerializer.OpinionSerializer@{OpinionSerializer.OpinionSerializer}!commentDate@{commentDate}}
+\index{commentDate@{commentDate}!OpinionSerializer.OpinionSerializer@{OpinionSerializer.OpinionSerializer}}
+\doxysubsubsection{\texorpdfstring{commentDate}{commentDate}}
+{\footnotesize\ttfamily Opinion\+Serializer.\+Opinion\+Serializer.\+comment\+Date = serializers.\+Date\+Time\+Field(source=\textquotesingle{}comment\+\_\+date\textquotesingle{})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_opinion_serializer_1_1_opinion_serializer_a671e70578e645e915882e3aa5bf0f578}\label{class_opinion_serializer_1_1_opinion_serializer_a671e70578e645e915882e3aa5bf0f578} 
+\index{OpinionSerializer.OpinionSerializer@{OpinionSerializer.OpinionSerializer}!companyResponse@{companyResponse}}
+\index{companyResponse@{companyResponse}!OpinionSerializer.OpinionSerializer@{OpinionSerializer.OpinionSerializer}}
+\doxysubsubsection{\texorpdfstring{companyResponse}{companyResponse}}
+{\footnotesize\ttfamily Opinion\+Serializer.\+Opinion\+Serializer.\+company\+Response = serializers.\+Char\+Field(source=\textquotesingle{}company\+\_\+response\textquotesingle{})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_opinion_serializer_1_1_opinion_serializer_a504cdfdf7c5b4cd2368de29656b3ae5f}\label{class_opinion_serializer_1_1_opinion_serializer_a504cdfdf7c5b4cd2368de29656b3ae5f} 
+\index{OpinionSerializer.OpinionSerializer@{OpinionSerializer.OpinionSerializer}!countOfReviews@{countOfReviews}}
+\index{countOfReviews@{countOfReviews}!OpinionSerializer.OpinionSerializer@{OpinionSerializer.OpinionSerializer}}
+\doxysubsubsection{\texorpdfstring{countOfReviews}{countOfReviews}}
+{\footnotesize\ttfamily Opinion\+Serializer.\+Opinion\+Serializer.\+count\+Of\+Reviews = serializers.\+Serializer\+Method\+Field()\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_opinion_serializer_1_1_opinion_serializer_a9e0eb5625ad5676745c71599efe5db3c}\label{class_opinion_serializer_1_1_opinion_serializer_a9e0eb5625ad5676745c71599efe5db3c} 
+\index{OpinionSerializer.OpinionSerializer@{OpinionSerializer.OpinionSerializer}!fullname@{fullname}}
+\index{fullname@{fullname}!OpinionSerializer.OpinionSerializer@{OpinionSerializer.OpinionSerializer}}
+\doxysubsubsection{\texorpdfstring{fullname}{fullname}}
+{\footnotesize\ttfamily Opinion\+Serializer.\+Opinion\+Serializer.\+fullname = serializers.\+Serializer\+Method\+Field()\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_opinion_serializer_1_1_opinion_serializer_a70350279541e075a69789dacd0f24e3e}\label{class_opinion_serializer_1_1_opinion_serializer_a70350279541e075a69789dacd0f24e3e} 
+\index{OpinionSerializer.OpinionSerializer@{OpinionSerializer.OpinionSerializer}!ratingDate@{ratingDate}}
+\index{ratingDate@{ratingDate}!OpinionSerializer.OpinionSerializer@{OpinionSerializer.OpinionSerializer}}
+\doxysubsubsection{\texorpdfstring{ratingDate}{ratingDate}}
+{\footnotesize\ttfamily Opinion\+Serializer.\+Opinion\+Serializer.\+rating\+Date = serializers.\+Date\+Time\+Field(source=\textquotesingle{}rating\+\_\+date\textquotesingle{})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_opinion_serializer_1_1_opinion_serializer_aac5ab84dbf992e86e4832098b31ea526}\label{class_opinion_serializer_1_1_opinion_serializer_aac5ab84dbf992e86e4832098b31ea526} 
+\index{OpinionSerializer.OpinionSerializer@{OpinionSerializer.OpinionSerializer}!responseDate@{responseDate}}
+\index{responseDate@{responseDate}!OpinionSerializer.OpinionSerializer@{OpinionSerializer.OpinionSerializer}}
+\doxysubsubsection{\texorpdfstring{responseDate}{responseDate}}
+{\footnotesize\ttfamily Opinion\+Serializer.\+Opinion\+Serializer.\+response\+Date = serializers.\+Date\+Time\+Field(source=\textquotesingle{}response\+\_\+date\textquotesingle{})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_opinion_serializer_1_1_opinion_serializer_a76beb40a74c31f0eab8d30a8aff0d38e}\label{class_opinion_serializer_1_1_opinion_serializer_a76beb40a74c31f0eab8d30a8aff0d38e} 
+\index{OpinionSerializer.OpinionSerializer@{OpinionSerializer.OpinionSerializer}!userId@{userId}}
+\index{userId@{userId}!OpinionSerializer.OpinionSerializer@{OpinionSerializer.OpinionSerializer}}
+\doxysubsubsection{\texorpdfstring{userId}{userId}}
+{\footnotesize\ttfamily Opinion\+Serializer.\+Opinion\+Serializer.\+user\+Id = serializers.\+Integer\+Field(source=\textquotesingle{}user\+\_\+id\textquotesingle{})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/tenag/\+Idea\+Projects/\+Stars\+Magnet/api/serializers/\mbox{\hyperlink{_opinion_serializer_8py}{Opinion\+Serializer.\+py}}\end{DoxyCompactItemize}

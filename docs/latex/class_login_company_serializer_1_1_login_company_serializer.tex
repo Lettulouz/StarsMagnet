@@ -1,0 +1,100 @@
+\doxysection{Login\+Company\+Serializer.\+Login\+Company\+Serializer Class Reference}
+\hypertarget{class_login_company_serializer_1_1_login_company_serializer}{}\label{class_login_company_serializer_1_1_login_company_serializer}\index{LoginCompanySerializer.LoginCompanySerializer@{LoginCompanySerializer.LoginCompanySerializer}}
+Inheritance diagram for Login\+Company\+Serializer.\+Login\+Company\+Serializer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_login_company_serializer_1_1_login_company_serializer}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_login_company_serializer_1_1_login_company_serializer_a2158aee0eaa1b302320d3eedeabdcf84}{validate}} (self, data)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_login_company_serializer_1_1_login_company_serializer_a12ad33f2dcb3b5e109fd5c0a78202eab}{id}} = serializers.\+Integer\+Field(read\+\_\+only=True)
+\item 
+\mbox{\hyperlink{class_login_company_serializer_1_1_login_company_serializer_ad86ec355bbdab4e258b5b1c7c3ac7a35}{username}} = serializers.\+Char\+Field(max\+\_\+length=150)
+\item 
+\mbox{\hyperlink{class_login_company_serializer_1_1_login_company_serializer_a3332ae0732bbb066bc045244a28a2652}{name}} = serializers.\+Char\+Field(read\+\_\+only=True)
+\item 
+\mbox{\hyperlink{class_login_company_serializer_1_1_login_company_serializer_a2f694824e342cebb5b911bd359548b2e}{password}} = serializers.\+Char\+Field(max\+\_\+length=128, write\+\_\+only=True)
+\item 
+\mbox{\hyperlink{class_login_company_serializer_1_1_login_company_serializer_a0f7542215726d4f47a835e6c0d1e5adf}{token}} = serializers.\+Char\+Field(max\+\_\+length=32, write\+\_\+only=True)
+\item 
+\mbox{\hyperlink{class_login_company_serializer_1_1_login_company_serializer_aec5ffd1af65ffaa331c3d4bbc38305b6}{access}} = serializers.\+Char\+Field(max\+\_\+length=255, read\+\_\+only=True)
+\item 
+\mbox{\hyperlink{class_login_company_serializer_1_1_login_company_serializer_a4c84900cba219e612c76d6c97a8b74ea}{refresh}} = serializers.\+Char\+Field(max\+\_\+length=255, read\+\_\+only=True)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Serializer for login by companies.
+Contains field for login and returned data.
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_login_company_serializer_1_1_login_company_serializer_a2158aee0eaa1b302320d3eedeabdcf84}\label{class_login_company_serializer_1_1_login_company_serializer_a2158aee0eaa1b302320d3eedeabdcf84} 
+\index{LoginCompanySerializer.LoginCompanySerializer@{LoginCompanySerializer.LoginCompanySerializer}!validate@{validate}}
+\index{validate@{validate}!LoginCompanySerializer.LoginCompanySerializer@{LoginCompanySerializer.LoginCompanySerializer}}
+\doxysubsubsection{\texorpdfstring{validate()}{validate()}}
+{\footnotesize\ttfamily Login\+Company\+Serializer.\+Login\+Company\+Serializer.\+validate (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{data }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Method for validate request, check if company exist and is accepted.
+:param data: data from request.
+:return: jwt tokens and company data if exists,
+otherwise raise error.
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_login_company_serializer_1_1_login_company_serializer_aec5ffd1af65ffaa331c3d4bbc38305b6}\label{class_login_company_serializer_1_1_login_company_serializer_aec5ffd1af65ffaa331c3d4bbc38305b6} 
+\index{LoginCompanySerializer.LoginCompanySerializer@{LoginCompanySerializer.LoginCompanySerializer}!access@{access}}
+\index{access@{access}!LoginCompanySerializer.LoginCompanySerializer@{LoginCompanySerializer.LoginCompanySerializer}}
+\doxysubsubsection{\texorpdfstring{access}{access}}
+{\footnotesize\ttfamily Login\+Company\+Serializer.\+Login\+Company\+Serializer.\+access = serializers.\+Char\+Field(max\+\_\+length=255, read\+\_\+only=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_login_company_serializer_1_1_login_company_serializer_a12ad33f2dcb3b5e109fd5c0a78202eab}\label{class_login_company_serializer_1_1_login_company_serializer_a12ad33f2dcb3b5e109fd5c0a78202eab} 
+\index{LoginCompanySerializer.LoginCompanySerializer@{LoginCompanySerializer.LoginCompanySerializer}!id@{id}}
+\index{id@{id}!LoginCompanySerializer.LoginCompanySerializer@{LoginCompanySerializer.LoginCompanySerializer}}
+\doxysubsubsection{\texorpdfstring{id}{id}}
+{\footnotesize\ttfamily Login\+Company\+Serializer.\+Login\+Company\+Serializer.\+id = serializers.\+Integer\+Field(read\+\_\+only=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_login_company_serializer_1_1_login_company_serializer_a3332ae0732bbb066bc045244a28a2652}\label{class_login_company_serializer_1_1_login_company_serializer_a3332ae0732bbb066bc045244a28a2652} 
+\index{LoginCompanySerializer.LoginCompanySerializer@{LoginCompanySerializer.LoginCompanySerializer}!name@{name}}
+\index{name@{name}!LoginCompanySerializer.LoginCompanySerializer@{LoginCompanySerializer.LoginCompanySerializer}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily Login\+Company\+Serializer.\+Login\+Company\+Serializer.\+name = serializers.\+Char\+Field(read\+\_\+only=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_login_company_serializer_1_1_login_company_serializer_a2f694824e342cebb5b911bd359548b2e}\label{class_login_company_serializer_1_1_login_company_serializer_a2f694824e342cebb5b911bd359548b2e} 
+\index{LoginCompanySerializer.LoginCompanySerializer@{LoginCompanySerializer.LoginCompanySerializer}!password@{password}}
+\index{password@{password}!LoginCompanySerializer.LoginCompanySerializer@{LoginCompanySerializer.LoginCompanySerializer}}
+\doxysubsubsection{\texorpdfstring{password}{password}}
+{\footnotesize\ttfamily Login\+Company\+Serializer.\+Login\+Company\+Serializer.\+password = serializers.\+Char\+Field(max\+\_\+length=128, write\+\_\+only=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_login_company_serializer_1_1_login_company_serializer_a4c84900cba219e612c76d6c97a8b74ea}\label{class_login_company_serializer_1_1_login_company_serializer_a4c84900cba219e612c76d6c97a8b74ea} 
+\index{LoginCompanySerializer.LoginCompanySerializer@{LoginCompanySerializer.LoginCompanySerializer}!refresh@{refresh}}
+\index{refresh@{refresh}!LoginCompanySerializer.LoginCompanySerializer@{LoginCompanySerializer.LoginCompanySerializer}}
+\doxysubsubsection{\texorpdfstring{refresh}{refresh}}
+{\footnotesize\ttfamily Login\+Company\+Serializer.\+Login\+Company\+Serializer.\+refresh = serializers.\+Char\+Field(max\+\_\+length=255, read\+\_\+only=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_login_company_serializer_1_1_login_company_serializer_a0f7542215726d4f47a835e6c0d1e5adf}\label{class_login_company_serializer_1_1_login_company_serializer_a0f7542215726d4f47a835e6c0d1e5adf} 
+\index{LoginCompanySerializer.LoginCompanySerializer@{LoginCompanySerializer.LoginCompanySerializer}!token@{token}}
+\index{token@{token}!LoginCompanySerializer.LoginCompanySerializer@{LoginCompanySerializer.LoginCompanySerializer}}
+\doxysubsubsection{\texorpdfstring{token}{token}}
+{\footnotesize\ttfamily Login\+Company\+Serializer.\+Login\+Company\+Serializer.\+token = serializers.\+Char\+Field(max\+\_\+length=32, write\+\_\+only=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_login_company_serializer_1_1_login_company_serializer_ad86ec355bbdab4e258b5b1c7c3ac7a35}\label{class_login_company_serializer_1_1_login_company_serializer_ad86ec355bbdab4e258b5b1c7c3ac7a35} 
+\index{LoginCompanySerializer.LoginCompanySerializer@{LoginCompanySerializer.LoginCompanySerializer}!username@{username}}
+\index{username@{username}!LoginCompanySerializer.LoginCompanySerializer@{LoginCompanySerializer.LoginCompanySerializer}}
+\doxysubsubsection{\texorpdfstring{username}{username}}
+{\footnotesize\ttfamily Login\+Company\+Serializer.\+Login\+Company\+Serializer.\+username = serializers.\+Char\+Field(max\+\_\+length=150)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/tenag/\+Idea\+Projects/\+Stars\+Magnet/api/serializers/\mbox{\hyperlink{_login_company_serializer_8py}{Login\+Company\+Serializer.\+py}}\end{DoxyCompactItemize}

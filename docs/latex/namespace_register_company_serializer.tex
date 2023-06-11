@@ -1,0 +1,63 @@
+\doxysection{Register\+Company\+Serializer Namespace Reference}
+\hypertarget{namespace_register_company_serializer}{}\label{namespace_register_company_serializer}\index{RegisterCompanySerializer@{RegisterCompanySerializer}}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_register_company_serializer_1_1_register_company_serializer}{Register\+Company\+Serializer}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespace_register_company_serializer_a4ac598a9b5e8dc8c7900fca3c219e19f}{unique\+\_\+username}} (value)
+\item 
+\mbox{\hyperlink{namespace_register_company_serializer_ab401997f0da4edffd510982386905bbe}{unique\+\_\+email}} (value)
+\item 
+\mbox{\hyperlink{namespace_register_company_serializer_a42d0888e7be3f0975a728ecde35b1177}{category\+\_\+exists}} (category\+\_\+id)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespace_register_company_serializer_a918355760b4dff4f5c62542e0d9e12a9}{User}} = get\+\_\+user\+\_\+model()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespace_register_company_serializer_a42d0888e7be3f0975a728ecde35b1177}\label{namespace_register_company_serializer_a42d0888e7be3f0975a728ecde35b1177} 
+\index{RegisterCompanySerializer@{RegisterCompanySerializer}!category\_exists@{category\_exists}}
+\index{category\_exists@{category\_exists}!RegisterCompanySerializer@{RegisterCompanySerializer}}
+\doxysubsubsection{\texorpdfstring{category\_exists()}{category\_exists()}}
+{\footnotesize\ttfamily Register\+Company\+Serializer.\+category\+\_\+exists (\begin{DoxyParamCaption}\item[{}]{category\+\_\+id }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}The function checks if there is a company with the given identifier
+:param category_id: company identifier
+:return: whether the category exists
+\end{DoxyVerb}
+ \Hypertarget{namespace_register_company_serializer_ab401997f0da4edffd510982386905bbe}\label{namespace_register_company_serializer_ab401997f0da4edffd510982386905bbe} 
+\index{RegisterCompanySerializer@{RegisterCompanySerializer}!unique\_email@{unique\_email}}
+\index{unique\_email@{unique\_email}!RegisterCompanySerializer@{RegisterCompanySerializer}}
+\doxysubsubsection{\texorpdfstring{unique\_email()}{unique\_email()}}
+{\footnotesize\ttfamily Register\+Company\+Serializer.\+unique\+\_\+email (\begin{DoxyParamCaption}\item[{}]{value }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Validator to check if email is unique,
+raise error if not.
+:param value: email
+\end{DoxyVerb}
+ \Hypertarget{namespace_register_company_serializer_a4ac598a9b5e8dc8c7900fca3c219e19f}\label{namespace_register_company_serializer_a4ac598a9b5e8dc8c7900fca3c219e19f} 
+\index{RegisterCompanySerializer@{RegisterCompanySerializer}!unique\_username@{unique\_username}}
+\index{unique\_username@{unique\_username}!RegisterCompanySerializer@{RegisterCompanySerializer}}
+\doxysubsubsection{\texorpdfstring{unique\_username()}{unique\_username()}}
+{\footnotesize\ttfamily Register\+Company\+Serializer.\+unique\+\_\+username (\begin{DoxyParamCaption}\item[{}]{value }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Validator to check if username is unique,
+raise error if not.
+:param value: username
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{namespace_register_company_serializer_a918355760b4dff4f5c62542e0d9e12a9}\label{namespace_register_company_serializer_a918355760b4dff4f5c62542e0d9e12a9} 
+\index{RegisterCompanySerializer@{RegisterCompanySerializer}!User@{User}}
+\index{User@{User}!RegisterCompanySerializer@{RegisterCompanySerializer}}
+\doxysubsubsection{\texorpdfstring{User}{User}}
+{\footnotesize\ttfamily Register\+Company\+Serializer.\+User = get\+\_\+user\+\_\+model()}
+

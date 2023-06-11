@@ -1,0 +1,106 @@
+\doxysection{Register\+Serializer.\+Register\+Serializer Class Reference}
+\hypertarget{class_register_serializer_1_1_register_serializer}{}\label{class_register_serializer_1_1_register_serializer}\index{RegisterSerializer.RegisterSerializer@{RegisterSerializer.RegisterSerializer}}
+Inheritance diagram for Register\+Serializer.\+Register\+Serializer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_register_serializer_1_1_register_serializer}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_register_serializer_1_1_register_serializer_1_1_meta}{Meta}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_register_serializer_1_1_register_serializer_a4eb8a815224ea550b2402fc050594b54}{validate}} (self, attr)
+\item 
+\mbox{\hyperlink{class_register_serializer_1_1_register_serializer_aa1af281a30e0c746097e623b801fe144}{save}} (self)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_register_serializer_1_1_register_serializer_aa84c10019733c13473e639976b340fd5}{email}}
+\item 
+\mbox{\hyperlink{class_register_serializer_1_1_register_serializer_ae26cfd7180e83c061acc78dc55109a87}{username}}
+\item 
+\mbox{\hyperlink{class_register_serializer_1_1_register_serializer_ae19a0084cde94a578d206aa6f30245b4}{password}} = serializers.\+Char\+Field(write\+\_\+only=True, required=True, validators=\mbox{[}validate\+\_\+password\mbox{]})
+\item 
+\mbox{\hyperlink{class_register_serializer_1_1_register_serializer_a0c4c3942711f904c6489a879cd03dfd3}{confirm\+\_\+password}} = serializers.\+Char\+Field(write\+\_\+only=True, required=True)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Serializer for register a new user.
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_register_serializer_1_1_register_serializer_aa1af281a30e0c746097e623b801fe144}\label{class_register_serializer_1_1_register_serializer_aa1af281a30e0c746097e623b801fe144} 
+\index{RegisterSerializer.RegisterSerializer@{RegisterSerializer.RegisterSerializer}!save@{save}}
+\index{save@{save}!RegisterSerializer.RegisterSerializer@{RegisterSerializer.RegisterSerializer}}
+\doxysubsubsection{\texorpdfstring{save()}{save()}}
+{\footnotesize\ttfamily Register\+Serializer.\+Register\+Serializer.\+save (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Method to save new user in database.
+:return: user object.
+\end{DoxyVerb}
+ \Hypertarget{class_register_serializer_1_1_register_serializer_a4eb8a815224ea550b2402fc050594b54}\label{class_register_serializer_1_1_register_serializer_a4eb8a815224ea550b2402fc050594b54} 
+\index{RegisterSerializer.RegisterSerializer@{RegisterSerializer.RegisterSerializer}!validate@{validate}}
+\index{validate@{validate}!RegisterSerializer.RegisterSerializer@{RegisterSerializer.RegisterSerializer}}
+\doxysubsubsection{\texorpdfstring{validate()}{validate()}}
+{\footnotesize\ttfamily Register\+Serializer.\+Register\+Serializer.\+validate (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{attr }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Method for additional validations, check if passwords are the same.
+:param attr: pre-cleaned data.
+:return: cleaned data
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_register_serializer_1_1_register_serializer_a0c4c3942711f904c6489a879cd03dfd3}\label{class_register_serializer_1_1_register_serializer_a0c4c3942711f904c6489a879cd03dfd3} 
+\index{RegisterSerializer.RegisterSerializer@{RegisterSerializer.RegisterSerializer}!confirm\_password@{confirm\_password}}
+\index{confirm\_password@{confirm\_password}!RegisterSerializer.RegisterSerializer@{RegisterSerializer.RegisterSerializer}}
+\doxysubsubsection{\texorpdfstring{confirm\_password}{confirm\_password}}
+{\footnotesize\ttfamily Register\+Serializer.\+Register\+Serializer.\+confirm\+\_\+password = serializers.\+Char\+Field(write\+\_\+only=True, required=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_register_serializer_1_1_register_serializer_aa84c10019733c13473e639976b340fd5}\label{class_register_serializer_1_1_register_serializer_aa84c10019733c13473e639976b340fd5} 
+\index{RegisterSerializer.RegisterSerializer@{RegisterSerializer.RegisterSerializer}!email@{email}}
+\index{email@{email}!RegisterSerializer.RegisterSerializer@{RegisterSerializer.RegisterSerializer}}
+\doxysubsubsection{\texorpdfstring{email}{email}}
+{\footnotesize\ttfamily Register\+Serializer.\+Register\+Serializer.\+email\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \ serializers.EmailField(}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ required=\textcolor{keyword}{True},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ validators=[unique\_email]}
+\DoxyCodeLine{\ \ \ \ )}
+
+\end{DoxyCode}
+\Hypertarget{class_register_serializer_1_1_register_serializer_ae19a0084cde94a578d206aa6f30245b4}\label{class_register_serializer_1_1_register_serializer_ae19a0084cde94a578d206aa6f30245b4} 
+\index{RegisterSerializer.RegisterSerializer@{RegisterSerializer.RegisterSerializer}!password@{password}}
+\index{password@{password}!RegisterSerializer.RegisterSerializer@{RegisterSerializer.RegisterSerializer}}
+\doxysubsubsection{\texorpdfstring{password}{password}}
+{\footnotesize\ttfamily Register\+Serializer.\+Register\+Serializer.\+password = serializers.\+Char\+Field(write\+\_\+only=True, required=True, validators=\mbox{[}validate\+\_\+password\mbox{]})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{class_register_serializer_1_1_register_serializer_ae26cfd7180e83c061acc78dc55109a87}\label{class_register_serializer_1_1_register_serializer_ae26cfd7180e83c061acc78dc55109a87} 
+\index{RegisterSerializer.RegisterSerializer@{RegisterSerializer.RegisterSerializer}!username@{username}}
+\index{username@{username}!RegisterSerializer.RegisterSerializer@{RegisterSerializer.RegisterSerializer}}
+\doxysubsubsection{\texorpdfstring{username}{username}}
+{\footnotesize\ttfamily Register\+Serializer.\+Register\+Serializer.\+username\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \ serializers.CharField(}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ required=\textcolor{keyword}{True},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ validators=[unique\_username]}
+\DoxyCodeLine{\ \ \ \ )}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/tenag/\+Idea\+Projects/\+Stars\+Magnet/api/serializers/\mbox{\hyperlink{_register_serializer_8py}{Register\+Serializer.\+py}}\end{DoxyCompactItemize}
