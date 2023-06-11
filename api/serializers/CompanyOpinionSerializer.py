@@ -6,15 +6,26 @@ User = get_user_model()
 
 
 class CompanyOpinionSerializer(serializers.ModelSerializer):
+    """
+    Serializer for adding response by company to user opinion.
+    """
     userId = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
     companyResponse = serializers.CharField(source='company_response')
 
     class Meta:
+        """
+       Metadata for CompanyOpinionSerializer.
+       Contains opinions model, field and extra_kwargs
+       """
         model = Opinions
         fields = ('companyResponse', 'userId')
         extra_kwargs = {'companyResponse': {'required': True}}
 
     def save(self):
+        """
+        Method to save new company response in database.
+        :return: opinion object
+        """
         actual_time = datetime.datetime.now()
         company_id = self.context['request'].user.id
         user_id = self.validated_data['userId'].id

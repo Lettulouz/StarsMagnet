@@ -4,13 +4,24 @@ import datetime
 
 
 class MakeOpinionSerializer(serializers.ModelSerializer):
+    """
+    Serializer for adding and editing user reviews, i.e. ratings and comments
+    """
     companyId = serializers.PrimaryKeyRelatedField(queryset=Companies.objects.all())
 
     class Meta:
+        """
+        Metadata for MakeOpinionSerializer.
+        Contains opinions model and field
+        """
         model = Opinions
         fields = ('rating', 'comment', 'companyId')
 
     def save(self):
+        """
+        Method to save new or edited opinion in database.
+        :return: opinion object
+        """
         actual_time = datetime.datetime.now()
         company_id = self.validated_data['companyId'].id
         user_id = self.context['request'].user.id

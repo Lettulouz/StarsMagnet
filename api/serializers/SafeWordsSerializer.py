@@ -3,8 +3,14 @@ from api.models import Safety_Words
 
 
 class SafeWordsSerializer(serializers.ModelSerializer):
-
+    """
+    Serializer to add safe words to database.
+    """
     class Meta:
+        """
+        Metadata for SafeWordsSerializer.
+        Contains safety_words model and fields
+        """
         model = Safety_Words
         fields = ('word1',
                   'word2',
@@ -18,6 +24,10 @@ class SafeWordsSerializer(serializers.ModelSerializer):
                   'word10')
 
     def save(self):
+        """
+        Method to save new or edited safe words in database.
+        :return: safe_word object
+        """
         if 'user_id' in self.context:
             safe_word = Safety_Words.objects.get(id=self.context['user_id'])
             safe_word.word1=self.validated_data['word1']

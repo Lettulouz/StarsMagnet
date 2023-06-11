@@ -6,12 +6,12 @@ from api.models import Opinions, Companies
 def companies_sorting_filtring(avg_grade, sort_by, sort_dir, has_grades, query=""):
     """
     The function is used to filter, sort and search for companies by the indicated phrase
-    :param avg_grade: minimum company ratings
-    :param sort_by:
-    :param sort_dir:
-    :param has_grades:
-    :param query:
-    :return:
+    :param avg_grade: minimum company ratings [0-10]
+    :param sort_by: sorting by given attribute. Possible values are alphabetically, gradesCount and gradesLevel
+    :param sort_dir: sorting direction. Possible values are ASC and DESC.
+    :param has_grades: if set to true it only searches for reviews with ratings
+    :param query: company search phrase.
+    :return: sorted and filtered list of companies.
     """
     avg_ratings = Opinions.objects.values('company_id').annotate(avg_rating=Avg('rating')) \
         .filter(avg_rating__range=(avg_grade, 10)).order_by('-avg_rating').values_list('company_id', flat=True)

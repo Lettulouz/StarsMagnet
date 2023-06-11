@@ -8,11 +8,23 @@ from .SafeWordsSerializer import SafeWordsSerializer
 
 
 class ResetTokenSerializer(serializers.Serializer):
+    """
+    Serializer to reset token
+    """
 
     class Meta:
+        """
+        Metadata for ResetTokenSerializer.
+        Contains fields
+        """
         fields = ('words', 'user')
 
     def check_words(self, data):
+        """
+        Method to reset the company's token if given safe words in the correct order
+        :param data: input data
+        :return: new token, secure words and token reset process information
+        """
         user = data.get("user", None)
         words_input = data.get("words", None)
 

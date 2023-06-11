@@ -1,3 +1,5 @@
+import jwt
+from django.contrib.auth import get_user_model
 from django.http import Http404
 
 from rest_framework.response import Response
@@ -7,7 +9,9 @@ from rest_framework.pagination import LimitOffsetPagination
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from rest_framework import serializers
+from rest_framework import exceptions
 
+from StarsMagnet import settings
 from .serializers.RegisterSerializer import RegisterSerializer
 from .serializers.RegisterCompanySerializer import RegisterCompanySerializer
 from .serializers.CompanySerializer import CompanySerializer
@@ -22,7 +26,7 @@ from .serializers.CompanyOpinionSerializer import CompanyOpinionSerializer
 from .serializers.OpinionSerializer import OpinionSerializer
 from .models import Companies
 from .models import Categories, Opinions
-from .models import CategoriesOfCompanies
+from .models import CategoriesOfCompanies, User
 from .utils.generate_safe_words import generate_safe_words
 from .utils.generate_safe_words import make_dictio
 from api.utils.companies_filtr_sort import companies_sorting_filtring
@@ -144,8 +148,21 @@ def company(request, pk=None, *args, **kwargs):
 
 @api_view(['POST'])
 def opinion(request, *arg, **kwargs):
+    """
+    A function that allows the user to add reviews of a particular company.
+    :param request: HttpRequest object.
+    :param args: Additional arguments passed to the view.
+    :param kwargs: Additional keyword arguments passed to the view.
+    :return: Information about the newly added opinion and the HTTP code
+    """
     data = {}
     if not request.user.is_authenticated:
+        return Response(data, status=status.HTTP_401_UNAUTHORIZED)
+    auth_header = request.headers.get('Authorization')
+    access = auth_header.split(' ')[1]
+    payload = jwt.decode(
+        access, settings.SECRET_KEY, algorithms=['HS256'])
+    if payload['user_type'] != 'user':
         return Response(data, status=status.HTTP_401_UNAUTHORIZED)
     serializer = MakeOpinionSerializer(data=request.data, context={'request': request})
     if serializer.is_valid():
@@ -171,7 +188,6 @@ def list_company_opinions(request, company_id,  *arg, **kwargs):
     :param kwargs: Additional keyword arguments passed to the view.
     :return: Response with list of opinions with pagination and HTTP code
     """
-    data = {}
     opinions = Opinions.objects.filter(company_id=company_id)
     if opinions is None:
         status_code = status.HTTP_400_BAD_REQUEST
@@ -213,9 +229,23 @@ def company_opinions_pageable(request, company_id,  *arg, **kwargs):
 
 @api_view(['POST'])
 def company_opinion(request, *arg, **kwargs):
+    """
+     A function that allows a company to leave a response to user feedback.
+    :param request: HttpRequest object.
+    :param args: Additional arguments passed to the view.
+    :param kwargs: Additional keyword arguments passed to the view.
+    :return: Information about the opinion to which the company added a response and HTTP code.
+    """
     data = {}
     if not request.user.is_authenticated:
         return Response(data, status=status.HTTP_401_UNAUTHORIZED)
+    auth_header = request.headers.get('Authorization')
+    access = auth_header.split(' ')[1]
+    payload = jwt.decode(
+        access, settings.SECRET_KEY, algorithms=['HS256'])
+    if payload['user_type'] != 'company':
+        return Response(data, status=status.HTTP_401_UNAUTHORIZED)
+    get_object_or_404(Opinions, user_id=request.data.get('userId'), company_id=request.user.id)
     serializer = CompanyOpinionSerializer(data=request.data, context={'request': request})
     if serializer.is_valid():
         new_opinion = serializer.save()

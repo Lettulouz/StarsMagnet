@@ -10,20 +10,38 @@ User = get_user_model()
 
 
 def unique_username(value):
+    """
+    Validator to check if username is unique,
+    raise error if not.
+    :param value: username
+    """
     if User.objects.filter(username=value).exists() or Companies.objects.filter(username=value).exists():
         raise serializers.ValidationError("This field must be unique.")
 
 
 def unique_email(value):
+    """
+    Validator to check if email is unique,
+    raise error if not.
+    :param value: email
+    """
     if User.objects.filter(email=value).exists() or Companies.objects.filter(email=value).exists():
         raise serializers.ValidationError('This field must be unique.')
 
 
 def category_exists(category_id):
+    """
+    The function checks if there is a company with the given identifier
+    :param category_id: company identifier
+    :return: whether the category exists
+    """
     return Categories.objects.filter(id=category_id).exists()
 
 
 class RegisterCompanySerializer(serializers.ModelSerializer):
+    """
+    Serializer for register a new company.
+    """
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
     confirm_password = serializers.CharField(write_only=True, required=True)
     categories = serializers.ListField(child=serializers.IntegerField(), required=True)
@@ -39,15 +57,28 @@ class RegisterCompanySerializer(serializers.ModelSerializer):
     )
 
     class Meta:
+        """
+        Metadata for RegisterCompanySerializer.
+        Contains companies model and fields
+        """
         model = Companies
         fields = ('name', 'site', 'username', 'password', "confirm_password", "email", "categories")
 
     def validate(self, attr):
+        """
+        Method for additional validations, check if passwords are the same.
+        :param attr: pre-cleaned data.
+        :return: cleaned data
+        """
         if attr['password'] != attr['confirm_password']:
             raise serializers.ValidationError({"password": "Passwords must be the same"})
         return attr
 
     def save(self):
+        """
+        Method to save new company in database.
+        :return: company object.
+        """
 
         company = Companies.objects.create(
             name=self.validated_data['name'],
